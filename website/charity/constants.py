@@ -1,0 +1,2 @@
+# linking-charities API constants
+

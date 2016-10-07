@@ -1,0 +1,12 @@
+.idea/
+*.log
+*.pot
+*.pyc
+website/htmlcov/
+website/.coverage
+*.jpg
+*.png
+*.gif
+website/assets/static/dependencies/*
+website/assets/static/compressed/*
+website/db.sqlite3
