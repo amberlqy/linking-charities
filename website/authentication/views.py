@@ -7,28 +7,27 @@ from rest_framework_jwt.settings import api_settings
 from django.contrib.auth import logout
 from django.http.response import HttpResponse
 import json
+from django.http import QueryDict
 
 from django.contrib.auth.models import User
 from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
+from authentication.roles import roles
+from authentication.models import UserRole
 
 
-class AccountViewSet(viewsets.ModelViewSet):
-    lookup_field = 'username'
-    queryset = User.objects.all()
-    serializer_class = AccountSerializer
+class RegistrationView(APIView):
+    permission_classes = (permissions.AllowAny,)
 
-    def get_permissions(self):
-        if self.request.method in permissions.SAFE_METHODS:
-            return (permissions.AllowAny(),)
+    def post(self, request, format=None):
+        data = request.data
+        username = data.get('username', None)
+        password = data.get('password', None)
+        account_data = {'username': username, 'password': password, }
+        account_data_qd = QueryDict('', mutable=True)
+        account_data_qd.update(account_data)
 
-        if self.request.method == 'POST':
-            return (permissions.AllowAny(),)
-
-        return (permissions.IsAuthenticated(), IsAccountOwner(),)
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
+        serializer = AccountSerializer(data=account_data_qd)
 
         if serializer.is_valid():
 
@@ -36,7 +35,9 @@ class AccountViewSet(viewsets.ModelViewSet):
             jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
             jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
+            # Create the user entity and add 'user' as its role
             user = User.objects.create_user(**serializer.validated_data)
+            UserRole.objects.create(name=data.get('user_type', None), user=user)
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
 
@@ -114,3 +115,19 @@ class RestrictedView(APIView):
         # If the user can access this view, that means the user is authenticated
         response_data = json.dumps({"authenticated": True})
         return HttpResponse(response_data, content_type='application/json')
+
+
+class CharityRestrictedView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    def post(self, request):
+
+        user = request.user
+        if user.role == roles.charity:
+            # If the user can access this view, that means the user is autharised as a charity
+            response_data = json.dumps({"authenticated": True})
+            return HttpResponse(response_data, content_type='application/json')
+        else:
+            response_data = json.dumps({"authenticated": False})
+            return HttpResponse(response_data, content_type='application/json')

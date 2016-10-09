@@ -10,8 +10,8 @@ class AuthenticationViewTestCase(TestCase):
     response = None
 
     def setUp(self):
-        self.response = self.client.post("/auth/api/accounts/", {"username": "Heffalumps", "password": "Woozles"})
-
+        self.response = self.client.post("/auth/api/register/", {"username": "Heffalumps", "password": "Woozles", "user_type": "user"})
+        self.response_charity = self.client.post("/auth/api/register/", {"username": "Charity1", "password": "Woozles123", "user_type": "charity"})
 
     def test_create_account(self):
         response_content = json.loads(self.response.content.decode('utf-8'))
@@ -19,7 +19,7 @@ class AuthenticationViewTestCase(TestCase):
         self.assertGreater(len(response_content["token"]), 0, "Response should contain the token.")
 
         latest_account = User.objects.latest('date_joined')
-        self.assertEqual("Heffalumps", latest_account.username, "The username must be present in the database.")
+        self.assertEqual("Charity1", latest_account.username, "The username must be present in the database.")
 
     def test_unauthorised_access(self):
         response = self.client.post("/auth/api/get_token/", {"username": "Mango", "password": "Apple"})
@@ -48,6 +48,18 @@ class AuthenticationViewTestCase(TestCase):
         token = response_content["token"]
 
         response = self.client.post("/auth/api/authenticated/", {}, HTTP_AUTHORIZATION='JWT {}'.format(token))
+        response_content = json.loads(response.content.decode('utf-8'))
+
+        self.assertTrue(response_content["authenticated"], "The user should be able to access this endpoint.")
+
+    def test_charity_access_via_login(self):
+        response = self.client.post("/auth/api/login/", {"username": "Charity1", "password": "Woozles123"})
+        self.assertEqual(response.status_code, 200, "The token should be successfully returned.")
+
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        response = self.client.post("/auth/api/authenticated_charity/", {}, HTTP_AUTHORIZATION='JWT {}'.format(token))
         response_content = json.loads(response.content.decode('utf-8'))
 
         self.assertTrue(response_content["authenticated"], "The user should be able to access this endpoint.")
