@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url
+from charity.views.charity_management import CharityTagsView
 
 
 urlpatterns = patterns(
     '',
-    # For example
-    # url(r'^api/services_for_stop', ServicesForStopView.as_view(), name='services_for_stop'),
+    url(r'^api/charity_tags/$', CharityTagsView.as_view(), name='charity_tags'),
 )

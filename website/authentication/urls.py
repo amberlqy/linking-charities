@@ -12,5 +12,4 @@ urlpatterns = patterns(
     url(r'^api/authenticated/$', RestrictedView.as_view(), name='test_token'),
     # For testing purpose only
     url(r'^api/authenticated_charity/$', CharityRestrictedView.as_view(), name='test_authorisation_token'),
-    url(r'^admin/', include(admin.site.urls)),
 )

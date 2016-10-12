@@ -82,7 +82,8 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'charity',
     'authentication',
-    'silk'
+    'silk',
+    'tagging'
 )
 
 MIDDLEWARE_CLASSES = (

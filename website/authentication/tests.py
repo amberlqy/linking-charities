@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+from authentication.models import CharityProfile
 from django.test import Client
 import json
 
@@ -10,8 +11,14 @@ class AuthenticationViewTestCase(TestCase):
     response = None
 
     def setUp(self):
-        self.response = self.client.post("/auth/api/register/", {"username": "Heffalumps", "password": "Woozles", "user_type": "user"})
-        self.response_charity = self.client.post("/auth/api/register/", {"username": "Charity1", "password": "Woozles123", "user_type": "charity"})
+        self.response = self.client.post("/auth/api/register/", {"username": "Heffalumps",
+                                                                 "password": "Woozles",
+                                                                 "user_type": "user"})
+        self.response_charity = self.client.post("/auth/api/register/", {"username": "Charity1",
+                                                                         "password": "Woozles123",
+                                                                         "user_type": "charity",
+                                                                         "location": "Monaco",
+                                                                         "goal": "To save lonely kittens."})
 
     def test_create_account(self):
         response_content = json.loads(self.response.content.decode('utf-8'))
@@ -64,4 +71,11 @@ class AuthenticationViewTestCase(TestCase):
 
         self.assertTrue(response_content["authenticated"], "The user should be able to access this endpoint.")
 
+    def test_charity_profile_exists(self):
+        charity = User.objects.get(username="Charity1")
+        charity_profile = charity.charity_profile
+
+        self.assertEqual(charity_profile.location, "Monaco")
+        self.assertEqual(charity_profile.goal, "To save lonely kittens.")
+        self.assertEqual(charity_profile.description, None)
 

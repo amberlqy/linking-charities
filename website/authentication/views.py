@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status, permissions
+from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -10,34 +10,43 @@ import json
 from django.http import QueryDict
 
 from django.contrib.auth.models import User
-from authentication.permissions import IsAccountOwner
 from authentication.serializers import AccountSerializer
 from authentication.roles import roles
-from authentication.models import UserRole
+from authentication.models import UserRole, CharityProfile
+from django.db import transaction
 
 
 class RegistrationView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
+
+        # Read basic required parameters
         data = request.data
         username = data.get('username', None)
         password = data.get('password', None)
         account_data = {'username': username, 'password': password, }
         account_data_qd = QueryDict('', mutable=True)
         account_data_qd.update(account_data)
-
         serializer = AccountSerializer(data=account_data_qd)
 
         if serializer.is_valid():
 
+            # Create the user entity and add 'user' as its role
+            user = User.objects.create_user(**serializer.validated_data)
+            user_type = data.get('user_type', None)
+            UserRole.objects.create(name=user_type, user=user)
+
+            if user_type == 'charity':
+                # Read charity specific parameters
+                location = data.get('location', None)
+                goal = data.get('goal', None)
+                description = data.get('description', None)
+                CharityProfile.objects.create(location=location, goal=goal, description=description, user=user)
+
             # Manually generate a token for the new user
             jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
             jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-
-            # Create the user entity and add 'user' as its role
-            user = User.objects.create_user(**serializer.validated_data)
-            UserRole.objects.create(name=data.get('user_type', None), user=user)
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
 
