@@ -1,0 +1,83 @@
+<!-- 
+  Copyright (c) 2014 Kinvey Inc.
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+  in compliance with the License. You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software distributed under the License
+  is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+  or implied. See the License for the specific language governing permissions and limitations under
+  the License.
+ -->
+<div class="center-align-div" xmlns="http://www.w3.org/1999/html">
+    <div id="main-login-div" >
+        <div class="block-div" ng-controller="LoginController">
+            <form name="loginForm" novalidate>
+                <h4>Login</h4>
+
+                <div class="block-input-label">
+                    <label id="login-email-label" ng-class="{'error-style': submittedEmail}" for="login-email">Email:</label>
+                    <input id="login-email" type="email" name="email" ng-class="{'error-style': submittedEmail}" ng-model="username"
+                           placeholder="john@example.com"
+                           required/>
+                    <span class="login" id="login-span"  ng-show="submittedEmail">A valid email address is required.</span>
+                </div>
+                <div>
+                    <label class="password-label" ng-class="{'error-style': submittedPassword}" for="login-password">Password:</label>
+                    <input id="login-password" class="password-input" type="password" name="password" ng-model="password" ng-class="{'error-style': submittedPassword}"
+                           placeholder="********" required/>
+                    <span class="login"  ng-show="submittedPassword">A password is required.</span>
+                </div>
+
+            <div>
+                <button id="login-button" ng-click="login()">
+                    Login
+                </button>
+                <span class="error" ng-show="submittedError">{{errorDescription}}</span>
+            </div>
+            </form>
+            <div id="forget-password-div">
+                <a ng-click="forgetPassword()">Forgot your password?</a>
+            </div>
+
+        </div>
+        <hr>
+        <div ng-controller="SignUpController">
+            <h4>Signup</h4>
+
+            <form name="registrationForm" novalidate>
+                <div class="block-input-label">
+                    <label id="signup-email-label" ng-class="{'error-style': submittedEmail}" for="signup-email">Email:</label>
+                    <input id="signup-email" type="email" name="email" ng-class="{'error-style': submittedEmail}" ng-model="email" placeholder="john@example.com"
+                          required/>
+                    <span class="login" id="signup-email-span"  ng-show="submittedEmail">A valid email address is required.</span>
+                </div>
+
+                <div>
+                    <label class="password-label" for="signup-password" ng-class="{'error-style': submittedPassword}">Password:</label>
+                    <input id="signup-password" class="password-input" type="password" ng-model="password" name="password" ng-class="{'error-style': submittedPassword}"
+                           placeholder="********"
+                           ng-change="checkPassword()" required/>
+                    <span class="login"  ng-show="submittedPassword">A password is required.</span>
+                </div>
+
+
+            <div id="signup_button-div">
+                <button type="submit" ng-click="signUp()">
+                    Sign up
+                </button>
+                <span class="error" ng-show="submittedError">{{errorDescription}}</span>
+            </div>
+            </form>
+
+            <div class="block-div">
+            	<button  id="facebook-button"  ng-click="loginFacebook()" ></button>
+                <span class="error" ng-show="submittedFacebookError">{{errorDescription}}</span>
+
+				<button id="twitter-button"  ng-click="loginTwitter()" ></button>
+                <span class="error" ng-show="submittedTwitterError">{{errorDescription}}</span>
+            </div>
+        </div>
+    </div>
+</div>
