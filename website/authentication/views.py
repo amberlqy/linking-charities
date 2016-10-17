@@ -12,8 +12,7 @@ from django.http import QueryDict
 from django.contrib.auth.models import User
 from authentication.serializers import AccountSerializer
 from authentication.roles import roles
-from authentication.models import UserRole, CharityProfile
-from django.db import transaction
+from authentication.models import UserRole, CharityProfile, UserProfile
 
 
 class RegistrationView(APIView):
@@ -43,6 +42,11 @@ class RegistrationView(APIView):
                 goal = data.get('goal', None)
                 description = data.get('description', None)
                 CharityProfile.objects.create(location=location, goal=goal, description=description, user=user)
+
+            if user_type == 'user':
+                # Read user specific parameters
+                introduction = data.get('introduction', None)
+                UserProfile.objects.create(introduction=introduction, user=user)
 
             # Manually generate a token for the new user
             jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER

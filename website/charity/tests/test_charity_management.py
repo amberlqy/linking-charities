@@ -93,6 +93,50 @@ class CharityManagementViewTestCase(TestCase):
         search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
         self.assertEqual(len(search_result_response_content["charity_profiles"]), 2)
 
+    # Tests if a user profile can like a charity profile
+    def test_liking_a_charity(self):
 
+        # Log in as a user
+        response = self.client.post("/auth/api/login/", {"username": "Heffalumps", "password": "Woozles"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
 
+        # Get the ID of the already created charity
+        existing_charity = User.objects.get(username="Charity1")
+        existing_charity_profile = existing_charity.charity_profile
 
+        self.client.post("/charity/api/charity_like/", {"id": existing_charity_profile.id},
+                                        HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        self.assertEqual(len(existing_charity_profile.likes.all()), 1)
+
+        # Try liking the same charity again. We expect this to have no effect.
+        self.client.post("/charity/api/charity_like/", {"id": existing_charity_profile.id},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        self.assertEqual(len(existing_charity_profile.likes.all()), 1)
+
+        # Log in as a charity
+        response = self.client.post("/auth/api/login/", {"username": "Charity1", "password": "Woozles123"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        # Try liking the same charity again. We expect this to have no effect.
+        self.client.post("/charity/api/charity_like/", {"id": existing_charity_profile.id},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        self.assertEqual(len(existing_charity_profile.likes.all()), 1)
+
+        # Register a second user and like the same charity
+        user_registration_response = self.client.post("/auth/api/register/", {"username": "SecondUser",
+                                                                 "password": "1234",
+                                                                 "user_type": "user"})
+
+        user_registration_response_content = json.loads(user_registration_response.content.decode('utf-8'))
+        token = user_registration_response_content["token"]
+
+        self.client.post("/charity/api/charity_like/", {"id": existing_charity_profile.id},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        # We expect the charity to have 2 likes now
+        self.assertEqual(len(existing_charity_profile.likes.all()), 2)

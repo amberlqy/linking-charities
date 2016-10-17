@@ -23,7 +23,14 @@ class UserRole(models.Model):
 
 
 # Specifies the profile of the charity
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, related_name='user_profile')
+    introduction = models.TextField(max_length=1000, null=True)
+
+
+# Specifies the profile of the charity
 class CharityProfile(models.Model):
+    likes = models.ManyToManyField(UserProfile, related_name='likes')
     user = models.OneToOneField(User, related_name='charity_profile')
     location = models.CharField(max_length=100, null=True)
     goal = models.CharField(max_length=255, null=True)
