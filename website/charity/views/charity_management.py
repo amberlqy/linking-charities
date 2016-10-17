@@ -1,20 +1,16 @@
 from rest_framework import status, permissions
+from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework_jwt.settings import api_settings
-
-from django.contrib.auth import logout
 from django.http.response import HttpResponse
 import json
-from django.http import QueryDict
 
-from django.contrib.auth.models import User
-from authentication.serializers import AccountSerializer
+from authentication.models import CharityProfile
 from authentication.roles import roles
-from authentication.models import UserRole, CharityProfile
-from django.db import transaction
-from tagging.models import Tag
+from tagging.models import Tag, TaggedItem
+
+from authentication.serializers import CharityProfileSerializer
 
 
 class CharityTagsView(APIView):
@@ -36,3 +32,22 @@ class CharityTagsView(APIView):
         Tag.objects.update_tags(user.charity_profile, tags)
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+
+class CharitySearchView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    # Search for charities based on tags
+    def get(self, request, format=None):
+
+        # Read basic GET parameters
+        tags = request.GET.get('tags', None)
+
+        # Search for all relevant charities
+        charity_profiles = list(TaggedItem.objects.get_union_by_model(CharityProfile, tags))
+
+        charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
+        return_dictionary = {"charity_profiles": charity_profile_serializer.data}
+        json_charity_profiles = JSONRenderer().render(return_dictionary)
+
+        return HttpResponse(json_charity_profiles, content_type='application/json')
