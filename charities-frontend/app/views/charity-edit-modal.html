@@ -3,7 +3,7 @@
 </div>
 
 <div class="modal-body">
-    <form name="sprintForm" class="form-horizontal">
+    <form name="charityInfoForm" class="form-horizontal">
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name<font color="#FF0000"> *</font></label>
 
@@ -31,7 +31,7 @@
 </div>
 
 <div class="modal-footer">
-    <button id="sprint-button-save" ng-click="save()" ng-disabled="!sprintForm.$valid" class="btn btn-primary">Save</button>
+    <button id="sprint-button-save" ng-click="save()" ng-disabled="!charityInfoForm.$valid" class="btn btn-primary">Save</button>
     <button id="sprint-button-cancel" ng-click="cancel()" class="btn btn-default">Cancel</button>
     <button id="sprint-button-remove" ng-click="remove()" ng-show="item.id" class="btn btn-danger">Delete</button>
 </div>
