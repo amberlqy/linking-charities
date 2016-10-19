@@ -1,5 +1,5 @@
 {
-  "name": "linking-charities",
+  "name": "linking-charities-worldwide-app",
   "version": "0.0.0",
   "license": "MIT",
   "directory": "assets/static",
@@ -11,22 +11,21 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.0",
-    "angular-cookies": "~1.4.0",
-    "angular-route": "~1.4.0",
-    "angular-ui-router": null,
-    "bootstrap": "~3.3.0",
-    "bootstrap-material-design": "~0.1.5",
-    "jquery": "~2.1.1",
-    "material-design-lite": null,
-    "ngDialog": "~0.5.1",
-    "snackbarjs": null,
-    "underscore": "~1.7.0",
-    "angular-material": null,
-    "angular-chart.js":null,
-    "Chart.js":null,
-    "angular-google-maps":null,
-    "heatmap.js-amd":null
+    "angular": "^1.4.0",
+    "bootstrap": "^3.2.0",
+    "angular-animate": "^1.4.0",
+    "angular-aria": "^1.4.0",
+    "angular-cookies": "^1.4.0",
+    "angular-messages": "^1.4.0",
+    "angular-resource": "^1.4.0",
+    "angular-route": "^1.4.0",
+    "angular-sanitize": "^1.4.0",
+    "angular-touch": "^1.4.0",
+    "angular-ui-bootstrap-bower": "^0.13.4",
+    "jquery": "^3.1.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
   },
   "homepage": "https://github.com/Marlyyyyy/linking-charities",
   "authors": [
@@ -34,5 +33,16 @@
   ],
   "description": "linking-charities dependencies",
   "main": "donno",
-  "moduleType": []
+  "moduleType": [],
+  "appPath": "app",
+  "moduleName": "linkingCharitiesWorldwideAppApp",
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
 }

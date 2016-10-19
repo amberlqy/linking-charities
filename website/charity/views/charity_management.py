@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.http.response import HttpResponse
+from django.template import loader
 import json
 
 from authentication.models import CharityProfile
@@ -12,6 +13,15 @@ from tagging.models import Tag, TaggedItem
 
 from authentication.serializers import CharityProfileSerializer
 
+
+# Returns the default home page
+class IndexView(APIView):
+    permission_classes = (permissions.AllowAny, )
+
+    def get(self, request):
+        template = loader.get_template('charity/index.html')
+
+        return HttpResponse(template.render())
 
 class CharityTagsView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
