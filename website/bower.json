@@ -22,6 +22,11 @@
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
     "angular-ui-bootstrap-bower": "^0.13.4",
+    "material-design-lite": null,
+    "ngDialog": "~0.5.1",
+    "snackbarjs": null,
+    "underscore": "~1.7.0",
+    "angular-material": null,
     "jquery": "^3.1.1"
   },
   "devDependencies": {
@@ -44,5 +49,9 @@
         "dist/js/bootstrap.js"
       ]
     }
+  },
+  "resolutions": {
+    "angular": "1.5.8",
+    "jquery": "^3.1.1"
   }
 }

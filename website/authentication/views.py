@@ -45,7 +45,7 @@ class RegistrationView(APIView):
 
             if user_type == 'user':
                 # Read user specific parameters
-                introduction = data.get('introduction', None)
+                introduction = data.get('introduction', "Default Introduction")
                 UserProfile.objects.create(introduction=introduction, user=user)
 
             # Manually generate a token for the new user
