@@ -1,11 +1,59 @@
 'use strict';
 
 angular.module('linkingCharitiesWorldwideAppApp')
-    .controller('CharityModalInstanceCtrl', ['$scope', '$modalInstance', // 'action', 'Charity',
+    .controller('CharityModalInstanceCtrl', ['$scope', '$modalInstance', '$http', // 'action', 'Charity',
         //function ($scope, $modalInstance, action, Charity) {
-         function ($scope, $modalInstance) {
+         function ($scope, $modalInstance, $http) {
            $scope.save = function () {
              loading();
+
+             saveCharity();
+
+             function saveCharity() {
+               // use $.param jQuery function to serialize data from JSON
+               var data = $.param({
+                 fName: $scope.firstName,
+                 lName: $scope.lastName
+               });
+
+               var dataObj = {
+                 name : $scope.name,
+                 employees : $scope.employees,
+                 headoffice : $scope.headoffice
+               };
+
+               var res = $http.post('URL Here', dataObj);
+               res.success(function(data, status, headers, config) {
+                 $scope.message = data;
+               });
+               res.error(function(data, status, headers, config) {
+                 alert( "failure message: " + JSON.stringify({data: data}));
+               });
+
+               $modalInstance.close();
+
+               /*
+               var config = {
+                 headers : {
+                   'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                 }
+               }
+
+              // 3 parameters for content-type
+               $http.post('/ServerRequest/PostDataResponse', data, config)
+                 .success(function (data, status, headers, config) {
+                   alert('aaaa');
+                   $scope.PostDataResponse = data;
+                 })
+                 .error(function (data, status, header, config) {
+                   alert('bbb');
+                   $scope.ResponseDetails = "Data: " + data +
+                     "<hr />status: " + status +
+                     "<hr />headers: " + header +
+                     "<hr />config: " + config;
+                 });*/
+             };
+
              //Charity.save($scope.item).then(function () {
                //$modalInstance.close();
              //});

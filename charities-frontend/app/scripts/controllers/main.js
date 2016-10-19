@@ -7,6 +7,8 @@
  * # MainCtrl
  * Controller of the linkingCharitiesWorldwideAppApp
  */
+
+
 angular.module('linkingCharitiesWorldwideAppApp')
   .controller('MainCtrl', function ($scope, $modal) {
     $scope.firstCharity = 'firstCharity';
@@ -39,5 +41,46 @@ angular.module('linkingCharitiesWorldwideAppApp')
       modalInstance.result.then(function () {
         //fetchProject();
       });
+    }
+  });
+
+
+angular.module('linkingCharitiesWorldwideAppApp')
+  .controller('LoginCtrl', function ($scope, $location, $rootScope, AuthenticationService, $localStorage) {
+    // reset login status
+    AuthenticationService.ClearCredentials();
+
+    $scope.isLogin = $localStorage.isLogin;
+    //alert($rootScope.globals.isLogin);
+
+    $scope.login = function(){
+      $scope.dataLoading = true;
+      AuthenticationService.Login($scope.username, $scope.password, function(response) {
+        if(response.success) {
+          AuthenticationService.SetCredentials($scope.username, $scope.password);
+          $scope.dataLoading = false;
+          $scope.isLogin = true;
+          $scope.error = null;
+          $localStorage.isLogin = true;
+          $localStorage.token = response.token;
+          //$location.path('/about');
+        } else {
+          $scope.error = response.message;
+          $scope.dataLoading = false;
+          $scope.isLogin = false;
+        }
+      });
+    }
+
+    $scope.logout = function(){
+      // reset login status
+      AuthenticationService.ClearCredentials();
+      $scope.isLogin = false;
+      $scope.error = null;
+      $scope.username = '';
+      $scope.password = '';
+      delete $localStorage.isLogin;
+      delete $localStorage.token;
+      $location.path('/');
     }
   });
