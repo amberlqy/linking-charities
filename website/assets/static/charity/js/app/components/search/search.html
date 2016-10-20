@@ -1,0 +1,8 @@
+<div class="search"> <!--ng-show="vm.profile" -->
+    <table border=1>
+        <tr ng-repeat="data in searchResults | filter : searchKeyWord">
+            <td>{{data.Number}}</td>
+            <td><a href="javascript:void(0);" ng-click="profilePage(data.Name)"><font color="FF00CC">{{data.Name}}</font></a></td>
+        </tr>
+    </table>
+</div>

@@ -38,6 +38,14 @@
             controller: 'DashboardController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/dashboard/dashboard.html'
+        }).when('/search', {
+            controller: 'SearchController',
+            controllerAs: 'vm',
+            templateUrl: '/static/charity/js/app/components/search/search.html'
+        }).when('/charityprofile/:id', {
+            controller: 'CharityProfileController',
+            controllerAs: 'vm',
+            templateUrl: '/static/charity/js/app/components/charityprofile/charityprofile.html'
         }).otherwise({
             redirectTo: '/home'
         });

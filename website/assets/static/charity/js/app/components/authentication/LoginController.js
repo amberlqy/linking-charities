@@ -9,7 +9,6 @@
     LoginController.$inject = ['$location', '$scope', 'Authentication'];
 
     function LoginController($location, $scope, Authentication) {
-
         var vm = this;
         vm.login = login;
 
