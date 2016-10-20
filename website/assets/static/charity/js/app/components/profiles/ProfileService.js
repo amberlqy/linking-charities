@@ -6,9 +6,9 @@
         .module('charity.profiles.services')
         .factory('Profile', Profile);
 
-    Profile.$inject = ['$http'];
+    Profile.$inject = ['$http', '$cookies'];
 
-    function Profile($http) {
+    function Profile($http, $cookies) {
 
         return {
             destroy: destroy,
@@ -25,7 +25,8 @@
         }
 
         function update(profile) {
-            return $http.put('/auth/api/accounts/' + profile.username + '/', profile);
+            return $http.post('/auth/api/charity_profile/' + profile + '/' + $cookies.get('token') + '/');
+            //return $http.put('/auth/api/accounts/' + profile.username + '/', profile);
         }
     }
 })();

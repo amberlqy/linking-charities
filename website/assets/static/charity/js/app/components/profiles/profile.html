@@ -1,29 +1,56 @@
+<!--
 <div class="profile" ng-show="vm.profile">
-    <div class="jumbotron profile__header">
-        <h1 class="profile__username">{{ vm.profile.username }}</h1>
-        <p class="profile__tagline">{{ vm.profile.tagline }}</p>
-    </div>
+    <form role="form" class="profilesetting" ng-submit="vm.update()">
+      <div class="form-group">
+        <label for="settings__name">Name</label>
+        <input type="text" class="form-control" ng-model="vm.profile.name" placeholder="ex. Imperial Charity Soc." />
+      </div>
 
-    <div ng-show="vm.logs && vm.logs.length">
+      <div class="form-group">
+        <label for="settings__description">Description</label>
+        <input type="text" class="form-control" ng-model="vm.profile.description" placeholder="ex. Imperial Charity Soc was found in ..." />
+      </div>
 
-        <div class="row">
-            <div class="col-md-1">Location</div>
-            <div class="col-md-1">Date</div>
-            <div class="col-md-1">Description</div>
-            <div class="col-md-1">Distance</div>
-            <div class="col-md-1">Duration</div>
-            <div class="col-md-1">Pace</div>
-        </div>
+      <div class="form-group">
+        <label for="settings__address">Address</label>
+        <input type="text" class="form-control" ng-model="vm.profile.address" placeholder="ex. Queens Gate" />
+      </div>
 
-        <div class="row" ng-repeat="log in vm.logs">
-            <div class="col-md-1">{{ log.location }}</div>
-            <div class="col-md-1">{{ log.date }}</div>
-            <div class="col-md-1">{{ log.description }}</div>
-            <div class="col-md-1">{{ log.distance }}</div>
-            <div class="col-md-1">{{ log.duration }}</div>
-            <div class="col-md-1">{{ log.pace }}</div>
-        </div>
+      <div class="form-group">
+        <label for="settings__phonenumber">Phone Number</label>
+        <input type="text" class="form-control" ng-model="vm.profile.phonenumber" placeholder="ex. 078999487965" />
+      </div>
 
-    </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+</div>-->
 
+<div class="profile" ng-show="vm.profile">
+    <form role="form" class="profilesetting" ng-submit="vm.update()">
+      <div class="form-group">
+        <label for="settings__name">Name</label>
+        <input type="text" class="form-control" ng-model="profile.name" placeholder="ex. Imperial Charity Soc." />
+      </div>
+
+      <div class="form-group">
+        <label for="settings__description">Description</label>
+        <input type="text" class="form-control" ng-model="profile.description" placeholder="ex. Imperial Charity Soc was found in ..." />
+      </div>
+
+      <div class="form-group">
+        <label for="settings__address">Address</label>
+        <input type="text" class="form-control" ng-model="profile.address" placeholder="ex. Queens Gate" />
+      </div>
+
+      <div class="form-group">
+        <label for="settings__phonenumber">Phone Number</label>
+        <input type="text" class="form-control" ng-model="profile.phonenumber" placeholder="ex. 078999487965" />
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
 </div>
