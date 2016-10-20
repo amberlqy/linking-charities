@@ -38,10 +38,19 @@ class RegistrationView(APIView):
 
             if user_type == 'charity':
                 # Read charity specific parameters
+                charity_name = data.get('charity_name', None)
                 location = data.get('location', None)
                 goal = data.get('goal', None)
                 description = data.get('description', None)
-                CharityProfile.objects.create(location=location, goal=goal, description=description, user=user)
+                address = data.get('address', None)
+                phone_number = data.get('phone_number', None)
+                CharityProfile.objects.create(charity_name=charity_name,
+                                              location=location,
+                                              goal=goal,
+                                              description=description,
+                                              address=address,
+                                              phone_number=phone_number,
+                                              user=user)
 
             if user_type == 'user':
                 # Read user specific parameters
@@ -65,6 +74,40 @@ class RegistrationView(APIView):
             'status': 'Bad request',
             'message': 'Account could not be created with received data.'
         }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CharityProfileView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    def post(self, request):
+
+        user = request.user
+        if user.role == roles.charity:
+            # If the user can access this view, that means the user is autharised as a charity
+
+            data = request.data
+            charity_name = data.get('charity_name', None)
+            location = data.get('location', None)
+            goal = data.get('goal', None)
+            description = data.get('description', None)
+            address = data.get('address', None)
+            phone_number = data.get('phone_number', None)
+
+            charity_profile = user.charity_profile
+            charity_profile.charity_name = charity_name
+            charity_profile.location = location
+            charity_profile.goal = goal
+            charity_profile.address = address
+            charity_profile.phone_number = phone_number
+            charity_profile.description = description
+            charity_profile.save()
+
+            response_data = json.dumps({"success": True})
+            return HttpResponse(response_data, content_type='application/json')
+        else:
+            response_data = json.dumps({"authenticated": False})
+            return HttpResponse(response_data, content_type='application/json')
 
 
 class LoginView(APIView):

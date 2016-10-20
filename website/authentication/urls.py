@@ -1,5 +1,5 @@
 from rest_framework_nested import routers
-from authentication.views import LoginView, LogoutView, RestrictedView, CharityRestrictedView, RegistrationView
+from authentication.views import LoginView, LogoutView, RestrictedView, CharityRestrictedView, RegistrationView, CharityProfileView
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
@@ -12,4 +12,5 @@ urlpatterns = patterns(
     url(r'^api/authenticated/$', RestrictedView.as_view(), name='test_token'),
     # For testing purpose only
     url(r'^api/authenticated_charity/$', CharityRestrictedView.as_view(), name='test_authorisation_token'),
+    url(r'^api/charity_profile/$', CharityProfileView.as_view(), name='charity_profile'),
 )

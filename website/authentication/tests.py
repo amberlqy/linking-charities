@@ -79,3 +79,25 @@ class AuthenticationViewTestCase(TestCase):
         self.assertEqual(charity_profile.goal, "To save lonely kittens.")
         self.assertEqual(charity_profile.description, None)
 
+    def test_charity_profile_update(self):
+        response = self.client.post("/auth/api/login/", {"username": "Charity1", "password": "Woozles123"})
+        self.assertEqual(response.status_code, 200, "The token should be successfully returned.")
+
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        charity = User.objects.get(username="Charity1")
+        charity_profile = charity.charity_profile
+        self.assertEqual(charity_profile.phone_number, None)
+
+        response = self.client.post("/auth/api/charity_profile/", {"charity_name": "Mister Charity",
+                                                                   "location": "Budapest",
+                                                                   "goal": "To improve the city.",
+                                                                   "address": "Budapest 1 2 3",
+                                                                   "phone_number": "0123456789"}, HTTP_AUTHORIZATION='JWT {}'.format(token))
+        json.loads(response.content.decode('utf-8'))
+
+        charity = User.objects.get(username="Charity1")
+        charity_profile = charity.charity_profile
+        self.assertEqual(charity_profile.phone_number, "0123456789")
+

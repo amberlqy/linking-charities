@@ -23,6 +23,7 @@ class IndexView(APIView):
 
         return HttpResponse(template.render())
 
+
 class CharityTagsView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication,)
