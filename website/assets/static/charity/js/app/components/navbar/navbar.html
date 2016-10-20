@@ -7,10 +7,14 @@
         </div>
 
         <div id="not-google-plus-nav">
-
             <ul>
                 <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/home')}"><a href="home">Home</a></li>
                 <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/dashboard')}"><a href="dashboard">Dashboard</a></li>
+            </ul>
+
+            <ul class="search-form">
+                <input class="search_textbox" type="text" value="" ng-model="searchKeyWord" placeholder="Search..." />
+                <button class="search_submit" type="button" ng-click="searchClick()">&nbsp;</button>
             </ul>
 
             <ul class="pull-right">

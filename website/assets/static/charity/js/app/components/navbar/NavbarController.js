@@ -6,9 +6,9 @@
         .module('charity.navbar.controllers')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', 'Authentication', '$location'];
+    NavbarController.$inject = ['$scope', 'Authentication', '$location', 'Search'];
 
-    function NavbarController($scope, Authentication, $location) {
+    function NavbarController($scope, Authentication, $location, Search) {
         var vm = this;
 
         vm.user = Authentication.getAuthenticatedAccount();
@@ -23,5 +23,10 @@
         function isActive(viewLocation) {
             return viewLocation === $location.path();
         }
+
+        $scope.searchClick = function() {
+            Search.setSearchKey($scope.searchKeyWord);
+            $location.path('/search');
+        };
     }
 })();

@@ -179,3 +179,57 @@ h2{
 .angular-google-map-container {
     height: 300px;
 }
+
+/*Search*/
+.search-form {
+    padding-top: 6px;
+}
+
+.search_textbox {
+    width: 250px;
+    height: 30px;
+    padding-left: 15px;
+    border-radius: 6px;
+    border: none;
+    color: #0F0D0D;;
+    font-weight: 500;
+    background-color: #E2EFF7;;
+    -webkit-box-shadow:
+        0 -2px 2px 0 rgba(199, 199, 199, 0.55),
+        0 1px 1px 0 #fff,
+        0 2px 2px 1px #fafafa,
+        0 2px 4px 0 #b2b2b2 inset,
+        0 -1px 1px 0 #f2f2f2 inset,
+        0 15px 15px 0 rgba(41, 41, 41, 0.09) inset;
+    -moz-box-shadow:
+        0 -2px 2px 0 rgba(199, 199, 199, 0.55),
+        0 1px 1px 0 #fff,
+        0 2px 2px 1px #fafafa,
+        0 2px 4px 0 #b2b2b2 inset,
+        0 -1px 1px 0 #f2f2f2 inset,
+        0 15px 15px 0 rgba(41, 41, 41, 0.09) inset;
+    box-shadow:
+        0 -2px 2px 0 rgba(199, 199, 199, 0.55),
+        0 1px 1px 0 #fff,
+        0 2px 2px 1px #fafafa,
+        0 2px 4px 0 #b2b2b2 inset,
+        0 -1px 1px 0 #f2f2f2 inset,
+        0 15px 15px 0 rgba(41, 41, 41, 0.09) inset;
+}
+.search_textbox:focus {
+    outline:0;
+}
+
+.search_submit {
+    width: 35px;
+    height: 30px;
+    /*background-image:url(img/search-btn.png);*/
+    background-image: url("/static/charity/images/search-icon.png");
+    background-repeat: no-repeat;
+    background-position: 5px 6px;
+    background-color: transparent;
+    -webkit-background-size: 20px 20px;
+    background-size: 20px 20px;
+    border: none;
+    cursor: pointer;
+}

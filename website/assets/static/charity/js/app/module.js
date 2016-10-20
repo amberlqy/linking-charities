@@ -13,7 +13,9 @@ angular
             'charity.home',
             'charity.snackbar',
             'charity.profiles',
-            'charity.dashboard'
+            'charity.dashboard',
+            'charity.search',
+            'charity.charityprofile'
         ]);
 
     angular
