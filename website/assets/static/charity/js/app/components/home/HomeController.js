@@ -21,7 +21,7 @@
             // Redirect if not logged in
             if (!authenticatedAccount) {
                 $location.url('/login');
-                Snackbar.error('You are not authorized to view this page.');
+                //Snackbar.error('You are not authorized to view this page.');
             }
         }
     }

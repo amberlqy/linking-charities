@@ -24,7 +24,7 @@
             // Redirect if not logged in
             if (!authenticatedAccount) {
                 $location.url('/');
-                Snackbar.error('You are not authorized to view this page.');
+                //Snackbar.error('You are not authorized to view this page.');
             }
 
             Profile.get(authenticatedAccount).then(profileSuccessFn, profileErrorFn);

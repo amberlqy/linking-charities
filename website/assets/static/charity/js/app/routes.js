@@ -38,7 +38,7 @@
             controller: 'DashboardController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/dashboard/dashboard.html'
-        }).when('/search', {
+        }).when('/search/:searchKeyWord', {
             controller: 'SearchController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/search/search.html'

@@ -26,7 +26,7 @@
 
         $scope.searchClick = function() {
             Search.setSearchKey($scope.searchKeyWord);
-            $location.path('/search');
+            $location.path('/search/#=' + $scope.searchKeyWord);
         };
     }
 })();
