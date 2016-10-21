@@ -17,15 +17,15 @@
         };
 
         function destroy(profile) {
-            return $http.delete('/auth/api/accounts/' + profile.id + '/');
+            return $http.delete('/api/auth/accounts/' + profile.id + '/');
         }
 
         function get(username) {
-            return $http.get('/auth/api/accounts/' + username + '/');
+            return $http.get('/api/auth/accounts/' + username + '/');
         }
 
         function update(profile) {
-            return $http.post('/auth/api/charity_profile/' + profile + '/' + $cookies.get('token') + '/');
+            return $http.post('/api/auth/charity_profile/' + profile + '/' + $cookies.get('token') + '/');
             //return $http.put('/auth/api/accounts/' + profile.username + '/', profile);
         }
     }

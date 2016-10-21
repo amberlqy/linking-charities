@@ -23,7 +23,7 @@
         return Authentication;
 
         function register(password, username, userrole) {
-            return $http.post('/auth/api/register/', {
+            return $http.post('/api/auth/register/', {
                 username: username,
                 password: password,
                 // TODO: pass this as an argument somehow
@@ -42,7 +42,7 @@
         }
 
         function login(username, password) {
-            return $http.post('/auth/api/login/', {
+            return $http.post('/api/auth/login/', {
                 username: username,
                 password: password
             }).then(loginSuccessFn, loginErrorFn);
