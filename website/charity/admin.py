@@ -1,4 +1,9 @@
 from django.contrib import admin
+from charity.models.charity_profile import CharityProfile
+from charity.models.user_profile import UserProfile
+from charity.models.user_role import UserRole
 
 # Register your models here.
-# For example, admin.site.register(journey.Journey)
+admin.site.register(UserRole)
+admin.site.register(CharityProfile)
+admin.site.register(UserProfile)

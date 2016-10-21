@@ -10,9 +10,11 @@ import json
 from django.http import QueryDict
 
 from django.contrib.auth.models import User
-from authentication.serializers import AccountSerializer
-from authentication.roles import roles
-from authentication.models import UserRole, CharityProfile, UserProfile
+from charity.serializers.account_serializer import AccountSerializer
+from charity.roles import roles
+from charity.models.charity_profile import CharityProfile
+from charity.models.user_profile import UserProfile
+from charity.models.user_role import UserRole
 
 
 class RegistrationView(APIView):

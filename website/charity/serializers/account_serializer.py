@@ -2,8 +2,6 @@ from django.contrib.auth import update_session_auth_hash
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from authentication.models import CharityProfile
-
 
 class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
@@ -31,10 +29,3 @@ class AccountSerializer(serializers.ModelSerializer):
         update_session_auth_hash(self.context.get('request'), instance)
 
         return instance
-
-
-class CharityProfileSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = CharityProfile
-        fields = ('id', 'charity_name', 'location', 'goal', 'address', 'phone_number', 'description',)

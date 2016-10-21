@@ -7,11 +7,11 @@ from django.http.response import HttpResponse
 from django.template import loader
 import json
 
-from authentication.models import CharityProfile
-from authentication.roles import roles
+from charity.models.charity_profile import CharityProfile
+from charity.roles import roles
 from tagging.models import Tag, TaggedItem
 
-from authentication.serializers import CharityProfileSerializer
+from charity.serializers.charity_profile_serializer import CharityProfileSerializer
 
 
 # Returns the default home page

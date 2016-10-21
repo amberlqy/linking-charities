@@ -81,7 +81,6 @@ INSTALLED_APPS = (
     'rest_framework',
     'django.contrib.humanize',
     'charity',
-    'authentication',
     'silk',
     'tagging'
 )

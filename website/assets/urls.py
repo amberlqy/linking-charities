@@ -6,8 +6,7 @@ from charity.views.charity_management import IndexView
 
 urlpatterns = patterns(
     '',
-    url(r'^auth/', include('authentication.urls')),
-    url(r'^charity/', include('charity.urls')),
+    url(r'^api/', include('charity.urls')),
     url(r'^admin/', include(admin.site.urls)),
     # url(r'/', custom_404),
     url(r'^silk/', include('silk.urls', namespace='silk')),
