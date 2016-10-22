@@ -94,7 +94,6 @@ class AuthenticationViewTestCase(TestCase):
                                                                    "goal": "To improve the city.",
                                                                    "address": "Budapest 1 2 3",
                                                                    "phone_number": "0123456789"}, HTTP_AUTHORIZATION='JWT {}'.format(token))
-        json.loads(response.content.decode('utf-8'))
 
         charity = User.objects.get(username="Charity1")
         charity_profile = charity.charity_profile

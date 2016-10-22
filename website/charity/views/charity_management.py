@@ -48,8 +48,19 @@ class CharityTagsView(APIView):
 class CharitySearchView(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    # Search for charities based on tags
+    # Search for charities based on an ID or tags
     def get(self, request, format=None):
+
+        # Read basic GET parameters
+        charity_id = request.GET.get('id', None)
+        if charity_id:
+            charity_profile = CharityProfile.objects.get(id=charity_id)
+
+            charity_profile_serializer = CharityProfileSerializer(charity_profile)
+            return_dictionary = {"charity_profile": charity_profile_serializer.data}
+            json_charity_profiles = JSONRenderer().render(return_dictionary)
+
+            return HttpResponse(json_charity_profiles, content_type='application/json')
 
         # Read basic GET parameters
         tags = request.GET.get('tags', None)

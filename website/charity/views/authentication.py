@@ -4,12 +4,12 @@ from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.settings import api_settings
 
+import json
 from django.contrib.auth import logout
 from django.http.response import HttpResponse
-import json
 from django.http import QueryDict
-
 from django.contrib.auth.models import User
+
 from charity.serializers.account_serializer import AccountSerializer
 from charity.roles import roles
 from charity.models.charity_profile import CharityProfile
@@ -86,7 +86,7 @@ class CharityProfileView(APIView):
 
         user = request.user
         if user.role == roles.charity:
-            # If the user can access this view, that means the user is autharised as a charity
+            # If the user can access this view, that means the user is authorised as a charity
 
             data = request.data
             charity_name = data.get('charity_name', None)
