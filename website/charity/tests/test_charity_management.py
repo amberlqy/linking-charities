@@ -17,7 +17,8 @@ class CharityManagementViewTestCase(TestCase):
                                                                          "password": "Woozles123",
                                                                          "user_type": "charity",
                                                                          "location": "Monaco",
-                                                                         "goal": "To save lonely kittens."})
+                                                                         "goal": "To save lonely kittens.",
+                                                                         "charity_name": "Save the kittens, quick"})
 
     # Tests if we can successfully associate tags with a charity
     def test_upload_tags(self):
@@ -103,6 +104,13 @@ class CharityManagementViewTestCase(TestCase):
         self.assertEqual(get_charity_response_obj["charity_profile"]["location"], "Monaco")
         self.assertEqual(get_charity_response_obj["charity_profile"]["goal"], "To save lonely kittens.")
         self.assertEqual(get_charity_response_obj["charity_profile"]["description"], None)
+
+    # Tests if anyone can get the list of charity-profile names
+    def test_get_all_charity_names(self):
+        get_charity_response = self.client.get("/api/charity/charity_search/", {"name": "all"})
+        get_charity_response_names = json.loads(get_charity_response.content.decode('utf-8'))
+        self.assertEqual(len(get_charity_response_names["charity_names"]), 1)
+        self.assertEqual(get_charity_response_names["charity_names"][0], "Save the kittens, quick")
 
     # Tests if a user profile can like a charity profile
     def test_liking_a_charity(self):
