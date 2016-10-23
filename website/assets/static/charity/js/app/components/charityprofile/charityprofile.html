@@ -1,53 +1,150 @@
+
 <div class="DNavigation"></div>
+
+<!--buttons-->
+<div class="button">
+
+</div>
 
 
 <!--main body of profile-->
-<div class="DMainProfile">
-  <label class="LCharName">{{profileJson.name}}</label>
-  <label class="LCharLabel">{{profileJson.label}}</label>
+<div class="Content">
+  <div class="Description">
+
+    <!--carousel slide-->
+      <div class="row">
+            <div class="box">
+                <div class="col-lg-12 text-center">
+                    <div id="carousel-example-generic" class="carousel slide">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators hidden-xs">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img class="img-responsive img-full" src="img/slide-1.jpg" alt="">
+                            </div>
+                            <div class="item">
+                                <img class="img-responsive img-full" src="img/slide-2.jpg" alt="">
+                            </div>
+                            <div class="item">
+                                <img class="img-responsive img-full" src="img/slide-3.jpg" alt="">
+                            </div>
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                            <span class="icon-prev"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                            <span class="icon-next"></span>
+                        </a>
+                    </div>
+                    <h2 class="brand-before">
+                        <small>Welcome to</small>
+                    </h2>
+                    <h1 class="brand-name">{{profileJson.name}}</h1>
+                    <hr class="tagline-divider">
+                    <h2>
+                        <small>charity no.
+                            <strong>{{profileJson.name}}</strong>
+                        </small>
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+      <!--aims-->
+      <div class="row">
+            <div class="box">
+                <div class="col-lg-12">
+                    <hr>
+                    <h2 class="intro-text text-center">Our
+                        <strong>Aims</strong>
+                    </h2>
+                    <hr>
+                    <hr class="visible-xs">
+                    <p>{{ ouraims }}</p>
+                    <p>ouraimsouraimsouraimsouraimsouraimsouraimsouraimsouraimsouraimsouraimsouraimsouraims</p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <!--option buttons-->
-  <div>
+  <!--<div class="DList">
     <table class="Table">
+      <tr><td class="TableTitle"><label>About Us</label>
+      </td></tr>
       <tr><td>
-        <button class="Button">Brief Description</button>
+        <button class="button" ng-click="Info=profileJson.description">Brief Description</button>
       </td></tr>
 
       <tr><td>
-        <button class="Button">Members</button>
+        <button class="button" ng-click="Info=profileJson.members">Members</button>
       </td></tr>
 
       <tr><td>
-        <button class="Button">Regulation</button>
+        <button class="button" ng-click="Info=profileJson.regulation">Regulation</button>
       </td></tr>
 
       <tr><td>
-        <button class="Button">Financial Statements</button>
+        <button class="button" ng-click="Info=profileJson.finanstatement">Financial Statements</button>
       </td></tr>
 
       <tr><td>
-        <button class="Button">Activities</button>
+        <button class="button" ng-click="Info=profileJson.activities">Activities</button>
       </td></tr>
 
       <tr><td>
-        <button class="Button">Contact Us</button>
+        <button class="button" ng-click="Info=profileJson.contact">Contact Us</button>
+      </td></tr>
+
+      <tr><td class="TableTitle">
       </td></tr>
 
       <tr><td>
-        <button class="Button">Donate</button>
+        <button class="button">Donate</button>
       </td></tr>
 
-      <tr><td>
-        <button class="Button">Rank</button>
-      </td></tr>
     </table>
 
   </div>
   <!--main information-->
-  <div>
-    <p class="DInfo">{{Info}}</p>
+  <!--<div class="DShow">
+    <label class="LCharName">{{profileJson.name}}</label>
+    <label class="LCharLabel">{{profileJson.label}}</label>
+    <hr class="HR" />
+    <p class="Info">{{Info}}</p>
+    <textarea></textarea>
   </div>
+  -->
 
 </div>
-
-<!--several links to social media-->
-<div class="DMediaLink"></div>

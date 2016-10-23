@@ -1,0 +1,26 @@
+
+.button {
+    position: absolute;
+    left: 0px;
+    width: 16%;
+}
+.Content {
+    position: absolute;
+    left: 220px;
+    width: 84%;
+}
+
+.Description {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+
+}
+
+.slide {
+    position: absolute;
+    left: 0px;
+    width: 1100px;
+    height: 300px;
+    overflow: hidden;
+}
