@@ -18,5 +18,13 @@
                 }
             );
         }
+
+        $scope.urlLink = function getImageSrc(){
+            $http.get('').success(
+                function (response) {
+                    $scope.urlLink = response;
+                }
+            );
+        }
     }
 })();

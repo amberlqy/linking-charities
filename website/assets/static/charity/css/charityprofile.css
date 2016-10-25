@@ -40,6 +40,9 @@
     overflow: hidden;
 }
 
+.rowinside {
+    width: 400px;
+}
 .button {
     width: 100%;
     color: white;
