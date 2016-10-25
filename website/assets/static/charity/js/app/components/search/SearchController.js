@@ -1,4 +1,3 @@
-
 (function () {
     'use strict';
 
@@ -16,16 +15,19 @@
             $http.get('/static/charity/resources/dataExample.json').success(
                 function (response) {
                     $scope.searchResults = response;
-                    $scope.searchResults.splice($scope.myData.indexOf(row),1);
-                }
-            );
+                    $scope.searchResults.splice($scope.myData.indexOf(row), 1);
+
+
+                });
         }
 
-        // function for direct to profile page
-        $scope.profilePage = function(id) {
-            if (id == 'CharityOne'){
+
+// function for direct to profile page
+        $scope.profilePage = function (id) {
+            if (id == 'CharityOne') {
                 $location.path('/charityprofile/' + id);
             }
         };
     }
-})();
+})
+();
