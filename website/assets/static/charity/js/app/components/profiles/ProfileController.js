@@ -10,7 +10,8 @@
 
     function ProfileController($scope, $location, $routeParams, Profile, Snackbar) {
         var vm = this;
-        vm.profile = undefined;
+        vm.user = undefined;
+        vm.profile = {};
 
         activate();
 
@@ -21,7 +22,7 @@
             Profile.get(username).then(profileSuccessFn, profileErrorFn);
 
             function profileSuccessFn(data, status, headers, config) {
-                vm.profile = data.data;
+                vm.user = data.data;
             }
 
             function profileErrorFn(data, status, headers, config) {
@@ -30,13 +31,14 @@
             }
         }
 
+        // Called when the user clicks on Update profile
         vm.update = function(){
             var profile = {
-                "charity_name": $scope.profile.name,
-                "location": "",
-                "goal": $scope.profile.description,
-                "address": $scope.profile.address,
-                "phone_number": $scope.profile.phonenumber
+                "charity_name": vm.profile.name,
+                "location": vm.profile.address,
+                "goal": vm.profile.description,
+                "address": vm.profile.address,
+                "phone_number": vm.profile.phone_number
             };
             Profile.update(profile);
         }

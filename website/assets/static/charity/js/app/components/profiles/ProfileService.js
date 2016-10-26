@@ -24,42 +24,21 @@
             return $http.get('/api/auth/accounts/' + username + '/');
         }
 
+        // Updates the charity's profile
         function update(profile) {
-            //return $http.post('/api/auth/charity_profile/' + profile + '/');// + $cookies.get('token') + '/');
-            //return $http.put('/auth/api/accounts/' + profile.username + '/', profile);
-            var parameter = JSON.stringify(
-                {
-                    "charity_name": "Test",
-                    "location": "London",
-                    "goal": "Cure",
-                    "address": "14 London",
-                    "phone_number": "0789456"
-                }
-            );
+            console.log(profile);
 
-            /*
-            var res = $http.post('/auth/api/charity_profile/', parameter);
-		    res.success(function(data, status, headers, config) {
-			    alert("Success: " + JSON.stringify({data: data}));
+            var data = JSON.stringify(profile);
 
-                //$scope.message = data;
-		    });
-		    res.error(function(data, status, headers, config) {
-			    alert( "failure message: " + JSON.stringify({data: data}));
-		    });*/
+            return $http.post('/api/auth/charity_profile/', profile).then(updateSuccessFn, updateErrorFn);
 
+            function updateSuccessFn(data, status, headers, config) {
+                console.log('Update successful!');
+            }
 
-            return $http({
-                method: 'POST',
-                url: '/api/auth/charity_profile/',
-                //url: '/auth/api/charity_profile/',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                // Change profile to parameter if it doesn't work
-                data: profile//parameter//profile
-            })
+            function updateErrorFn(data, status, headers, config) {
+                console.error('Update failed!' + status);
+            }
         }
     }
 })();

@@ -13,7 +13,7 @@
         var vm = this;
         vm.register = register;
 
-        $scope.userroles = ["Charity", "User"];
+        vm.userroles = ["Charity", "User"];
 
         activate();
 
@@ -26,6 +26,7 @@
         }
 
         function register() {
+            console.log(vm.userrole.toLowerCase());
             Authentication.register(vm.password, vm.username, vm.userrole.toLowerCase());
         }
     }
