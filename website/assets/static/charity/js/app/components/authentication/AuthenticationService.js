@@ -32,7 +32,7 @@
 
             function registerSuccessFn(data, status, headers, config) {
                 var response = data.data;
-                Authentication.setAuthenticatedAccount(response.token, response.username);
+                Authentication.setAuthenticatedAccount(response.token, response.username, response.user_role);
                 window.location = 'home';
             }
 
@@ -49,7 +49,7 @@
 
             function loginSuccessFn(data, status, headers, config) {
                 var response = data.data;
-                Authentication.setAuthenticatedAccount(response.token, response.username);
+                Authentication.setAuthenticatedAccount(response.token, response.username, response.user_role);
                 window.location = 'home';
             }
 
@@ -68,7 +68,8 @@
                 return null;
             }
 
-            return $cookies.get('username');
+            return {username: $cookies.get('username'),
+                    userRole: $cookies.get('user_role')};
         }
 
         function isAuthenticated() {
@@ -76,7 +77,7 @@
         }
 
 
-        function setAuthenticatedAccount(token, username) {
+        function setAuthenticatedAccount(token, username, user_role) {
 
             // Set the expiration to 6 months
             var now = new Date();
@@ -90,10 +91,15 @@
             // Set the token as a header
             $http.defaults.headers.common['Authorization'] = 'JWT ' + token;
 
-            console.log(token);
-
             // Store the username
             $cookies.put('username', username,{
+              expires: expiry
+            });
+
+            console.log(user_role);
+
+            // Store the user-role
+            $cookies.put('user_role', user_role,{
               expires: expiry
             });
         }

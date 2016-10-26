@@ -27,6 +27,7 @@
                 //Snackbar.error('You are not authorized to view this page.');
             }
 
+            // TODO: outdated
             Profile.get(authenticatedAccount).then(profileSuccessFn, profileErrorFn);
 
             function profileSuccessFn(data, status, headers, config) {
@@ -39,6 +40,7 @@
             }
         }
 
+        // TODO: outdated
         function destroy() {
             Profile.destroy(vm.profile).then(profileSuccessFn, profileErrorFn);
 
@@ -56,6 +58,7 @@
             }
         }
 
+        // TODO: outdated
         function update() {
 
             if (vm.profile.password === "" ){

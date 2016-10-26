@@ -1,4 +1,5 @@
 from rest_framework import status, permissions
+from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -11,6 +12,7 @@ from django.http import QueryDict
 from django.contrib.auth.models import User
 
 from charity.serializers.account_serializer import AccountSerializer
+from charity.serializers.charity_profile_serializer import CharityProfileSerializer
 from charity.roles import roles
 from charity.models.charity_profile import CharityProfile
 from charity.models.user_profile import UserProfile
@@ -67,7 +69,8 @@ class RegistrationView(APIView):
 
             response_dictionary = {
                 'token': token,
-                'username': user.username
+                'username': user.username,
+                'user_role': user.role.name
             }
 
             return Response(response_dictionary, status=status.HTTP_201_CREATED)
@@ -111,6 +114,23 @@ class CharityProfileView(APIView):
             response_data = json.dumps({"authenticated": False})
             return HttpResponse(response_data, content_type='application/json')
 
+    # Returns the profile of the logged in user
+    def get(self, request):
+
+        user = request.user
+        if user.role == roles.charity:
+            charity_profile = user.charity_profile
+
+            charity_profile_serializer = CharityProfileSerializer(charity_profile)
+            return_dictionary = {"charity_profile": charity_profile_serializer.data}
+            json_charity_profile = JSONRenderer().render(return_dictionary)
+
+            return HttpResponse(json_charity_profile, content_type='application/json')
+        else:
+            # TODO: return user profile
+            response_data = json.dumps({"authenticated": False})
+            return HttpResponse(response_data, content_type='application/json')
+
 
 class LoginView(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -132,9 +152,12 @@ class LoginView(APIView):
                     payload = jwt_payload_handler(user)
                     token = jwt_encode_handler(payload)
 
+                    user_role = user.role
+
                     return Response({
                         'token': token,
-                        'username': user.username
+                        'username': user.username,
+                        'user_role': user_role.name
                     })
                 else:
                     return Response({

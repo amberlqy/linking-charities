@@ -10,8 +10,11 @@
 
     function NavbarController($scope, Authentication, $location, Search) {
         var vm = this;
-
-        vm.user = Authentication.getAuthenticatedAccount();
+        var userDetails = Authentication.getAuthenticatedAccount();
+        if (userDetails != undefined){
+            vm.user = userDetails.username;
+            vm.userRole = userDetails.userRole;
+        }
         vm.isAuthenticated = Authentication.isAuthenticated();
         vm.logout = logout;
         vm.isActive = isActive;
