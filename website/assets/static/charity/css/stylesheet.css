@@ -4,7 +4,7 @@ body{
 }
 
 .main-content{
-    padding: 20px;
+    padding: 46px 20px 20px 20px;
 }
 
 a{
@@ -68,7 +68,10 @@ h2{
 /* Navigation bar */
 
 .custom-navbar{
+    position: fixed;
+    z-index: 1000;
     background: #4d90fe;
+    width: 100%;
     height: 46px;
     min-height: 46px;
     padding: 0;
