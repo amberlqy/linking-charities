@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.http.response import HttpResponse
 from django.template import loader
+from django.db import models
 import json
 
 from charity.models.charity_profile import CharityProfile
@@ -104,3 +105,19 @@ class CharityLikeView(APIView):
         charity_profile.likes.add(user.user_profile)
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+
+# Responsible for returning data related to the popularity of charities
+class CharityPopularityView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    # Get the 5 most popular charities
+    def get(self, request):
+
+        top_charity_profiles = CharityProfile.objects.annotate(likes_count=models.Count('likes')).order_by('-likes_count')[:5]
+
+        charity_profile_serializer = CharityProfileSerializer(top_charity_profiles, many=True)
+        return_dictionary = {"charity_profiles": charity_profile_serializer.data}
+        json_charity_profiles = JSONRenderer().render(return_dictionary)
+
+        return HttpResponse(json_charity_profiles, content_type='application/json')

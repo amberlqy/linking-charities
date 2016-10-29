@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.test import Client
 import json
 
+from charity.models.charity_profile import CharityProfile
+
 
 class CharityManagementViewTestCase(TestCase):
 
@@ -159,3 +161,40 @@ class CharityManagementViewTestCase(TestCase):
 
         # We expect the charity to have 2 likes now
         self.assertEqual(len(existing_charity_profile.likes.all()), 2)
+
+    # Tests if we can read the 5 most popular charities
+    def test_5_most_popular_charities(self):
+        for i in range(0,6):
+            self.register_charity("PopularCharity" + str(i))
+
+        random_charity = User.objects.get(username="PopularCharity4")
+        random_charity_profile = random_charity.charity_profile
+        random_charity_profile_id = random_charity_profile.id
+
+        # Log in as a user
+        response = self.client.post("/api/auth/login/", {"username": "Heffalumps", "password": "Woozles"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        # Like this random charity
+        self.client.post("/api/charity/charity_like/", {"id": random_charity_profile_id},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        # Get 5 most popular charities
+        response = self.client.get("/api/charity/popular_charities/")
+        response_content = json.loads(response.content.decode('utf-8'))
+        charity_profiles = response_content["charity_profiles"]
+
+        self.assertEqual(len(charity_profiles), 5)
+
+        most_popular_charity_profile = charity_profiles[0]
+        self.assertEqual(most_popular_charity_profile["charity_name"], "PopularCharity4")
+
+    # Helper method to register charities
+    def register_charity(self, name):
+        self.client.post("/api/auth/register/", {"username": name,
+                                                 "password": "Woozles123",
+                                                 "charity_name": name,
+                                                 "user_type": "charity",
+                                                 "location": "Monaco",
+                                                 "goal": "To save lonely kittens."})
