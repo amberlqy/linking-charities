@@ -41,6 +41,10 @@ td {
     width:41.66666667%;
 
 }
+.acontent {
+    padding-left: 30px;
+    padding-right: 30px;
+}
 .button {
   color: #666;
   background-color: #8dcae8;
