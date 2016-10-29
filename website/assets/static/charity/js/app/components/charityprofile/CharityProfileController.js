@@ -44,6 +44,12 @@
                 $location.path('/charityprofile/activities/' + name);
             }
         };
+        <!--get data about activities details-->
+         $http.get('/static/charity/resources/charityprofileactivities.json').success(
+                function (response) {
+                    $scope.activityJson = response;
+                }
+            );
 
 
     }

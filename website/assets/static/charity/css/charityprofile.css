@@ -1,8 +1,26 @@
+body {
+    font-family: 'Glyphicons Halflings';
+    padding-top: 70px;
+    background: url(/assets/static/charity/images/charityback.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+footer {
+    margin: 50px 0;
+}
 
 .Content {
     position: absolute;
     left: 220px;
     width: 84%;
+    background: url(/assets/static/charity/images/charityback.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
 }
 
 .Description {
@@ -37,63 +55,73 @@ td {
 }
 
 .activitycontent {
-    float:left;
-    width:41.66666667%;
+    float: left;
+    width: 41.66666667%;
 
 }
+
 .acontent {
     padding-left: 30px;
     padding-right: 30px;
 }
+
 .button {
-  color: #666;
-  background-color: #8dcae8;
-  border-color: #EEE;
-  font-weight: 300;
-  font-size: 16px;
-  font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  text-decoration: none;
-  text-align: center;
-  line-height: 40px;
-  height: 40px;
-  padding: 0 40px;
-  margin: 0;
-  display: inline-block;
-  appearance: none;
-  cursor: pointer;
-  border: none;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-transition-property: all;
-          transition-property: all;
-  -webkit-transition-duration: .3s;
-          transition-duration: .3s;
-  /*
-  * Disabled State
-  *
-  * The disabled state uses the class .disabled, is-disabled,
-  * and the form attribute disabled="disabled".
-  * The use of !important is only added because this is a state
-  * that must be applied to all buttons when in a disabled state.
-  */ }
-  .button:visited {
-    color: #666; }
-  .button:hover, .button:focus {
+    color: #666;
+    background-color: #8dcae8;
+    border-color: #EEE;
+    font-weight: 300;
+    font-size: 16px;
+    font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    text-decoration: none;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 40px;
+    margin: 0;
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    border: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    /*
+    * Disabled State
+    *
+    * The disabled state uses the class .disabled, is-disabled,
+    * and the form attribute disabled="disabled".
+    * The use of !important is only added because this is a state
+    * that must be applied to all buttons when in a disabled state.
+    */
+}
+
+.button:visited {
+    color: #666;
+}
+
+.button:hover, .button:focus {
     background-color: #f6f6f6;
     text-decoration: none;
-    outline: none; }
-  .button:active, .button.active, .button.is-active {
+    outline: none;
+}
+
+.button:active, .button.active, .button.is-active {
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
     text-decoration: none;
     background-color: #eeeeee;
     border-color: #cfcfcf;
     color: #d4d4d4;
     -webkit-transition-duration: 0s;
-            transition-duration: 0s;
+    transition-duration: 0s;
     -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); }
-  .button.disabled, .button.is-disabled, .button:disabled {
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.button.disabled, .button.is-disabled, .button:disabled {
     top: 0 !important;
     background: #EEE !important;
     border: 1px solid #DDD !important;
@@ -102,7 +130,14 @@ td {
     cursor: default !important;
     appearance: none !important;
     -webkit-box-shadow: none !important;
-            box-shadow: none !important;
-    opacity: .8 !important; }
+    box-shadow: none !important;
+    opacity: .8 !important;
+}
+.mainbutton {
+    position: fixed;
+    top: 600px;
+    left: 1260px;
+
+}
 
 
