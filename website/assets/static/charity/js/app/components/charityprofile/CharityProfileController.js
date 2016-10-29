@@ -16,7 +16,7 @@
                     $scope.profileJson = response;
                 }
             );
-
+           <!--tags-->
             $scope.gotoDescription = function () {
                 $location.hash('description');
                 $anchorScroll();
@@ -38,14 +38,12 @@
 
 
         }
-
-        $scope.urlLink = function getImageSrc() {
-            $http.get('').success(
-                function (response) {
-                    $scope.urlLink = response;
-                }
-            );
-        }
+      <!--link to activities-->
+        $scope.activityPage = function (name) {
+            if (name == 'CharityOne') {
+                $location.path('/charityprofile/activities/' + name);
+            }
+        };
 
 
     }
