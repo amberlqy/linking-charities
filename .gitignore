@@ -2,6 +2,8 @@
 *.log
 *.pot
 *.pyc
+*.zip
+*.csv
 website/htmlcov/
 website/.coverage
 website/assets/static/dependencies/*

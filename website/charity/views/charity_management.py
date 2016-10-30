@@ -1,3 +1,5 @@
+import os
+
 from rest_framework import status, permissions
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
@@ -8,9 +10,12 @@ from django.template import loader
 from django.db import models
 import json
 
+from assets import settings
 from charity.models.charity_profile import CharityProfile
 from charity.roles import roles
 from tagging.models import Tag, TaggedItem
+
+from charity.utilities.zip_to_csv_converter import import_zip
 
 from charity.serializers.charity_profile_serializer import CharityProfileSerializer
 
@@ -121,3 +126,19 @@ class CharityPopularityView(APIView):
         json_charity_profiles = JSONRenderer().render(return_dictionary)
 
         return HttpResponse(json_charity_profiles, content_type='application/json')
+
+
+# Responsible for saving and processing charity related data
+class CharityDataProcessorView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    # Get the 5 most popular charities
+    def get(self, request):
+
+        zip_file = os.path.join(settings.MEDIA_ROOT, 'charity\\data\\zip\\RegPlusExtract_September_2016.zip')
+        new_path = os.path.join(settings.MEDIA_ROOT, 'charity\\data\\csv')
+
+        import_zip(zip_file=zip_file, output_folder_name=new_path)
+
+
+        return Response({'success': True}, status=status.HTTP_201_CREATED)
