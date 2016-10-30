@@ -1,3 +1,4 @@
+import csv
 import os
 
 from rest_framework import status, permissions
@@ -11,6 +12,7 @@ from django.db import models
 import json
 
 from assets import settings
+from charity.models.charity_data import CharityData
 from charity.models.charity_profile import CharityProfile
 from charity.roles import roles
 from tagging.models import Tag, TaggedItem
@@ -140,5 +142,17 @@ class CharityDataProcessorView(APIView):
 
         import_zip(zip_file=zip_file, output_folder_name=new_path)
 
+        file_path = os.path.join(settings.MEDIA_ROOT, 'charity\\data\\csv\\extract_main_charity.csv')
+        reader = csv.DictReader(open(file_path))
+
+        # Bulk create all charity data objects
+        charity_data_objects = []
+        for row in reader:
+            regno = row['regno']
+            email = row['email']
+            new_charity_data = CharityData(regno=regno, email=email)
+            charity_data_objects.append(new_charity_data)
+
+        CharityData.objects.bulk_create(charity_data_objects)
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
