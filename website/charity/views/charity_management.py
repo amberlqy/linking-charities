@@ -12,10 +12,12 @@ from django.db import models
 import json
 
 from assets import settings
+from charity.models.charity_activity import CharityActivity
 from charity.models.charity_data import CharityData
 from charity.models.charity_profile import CharityProfile
 from charity.roles import roles
 from tagging.models import Tag, TaggedItem
+from django.core.files.storage import FileSystemStorage
 
 from charity.utilities.zip_to_csv_converter import import_zip
 
@@ -90,6 +92,36 @@ class CharitySearchView(APIView):
         json_charity_profiles = JSONRenderer().render(return_dictionary)
 
         return HttpResponse(json_charity_profiles, content_type='application/json')
+
+
+# Manages the activities of charities
+class CharityActivityView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    # Creates a new activity
+    def post(self, request, format=None):
+
+        user = request.user
+        if user.role == roles.user:
+            response_data = json.dumps({"error": "You are not authorised to like a charity. "})
+            return HttpResponse(response_data, content_type='application/json')
+
+        # Read required parameters
+        data = request.data
+        name = data.get('name', None)
+        description = data.get('description', None)
+        start_time = data.get('start_time', None)
+        end_time = data.get('end_time', None)
+        files = request.FILES
+        if files:
+            image = files['image']
+        else:
+            image = None
+
+        CharityActivity.objects.create(charity_profile=user.charity_profile, name=name, description=description, start_time=start_time, end_time=end_time, image=image)
+
+        return Response({'success': True}, status=status.HTTP_201_CREATED)
 
 
 class CharityLikeView(APIView):

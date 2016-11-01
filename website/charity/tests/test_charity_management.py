@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.test import Client
 import json
 
+from charity.models.charity_activity import CharityActivity
 from charity.models.charity_profile import CharityProfile
 
 
@@ -189,6 +190,22 @@ class CharityManagementViewTestCase(TestCase):
 
         most_popular_charity_profile = charity_profiles[0]
         self.assertEqual(most_popular_charity_profile["charity_name"], "PopularCharity4")
+
+    # Tests if we can upload an activity as a charity
+    def test_upload_activity_as_a_charity(self):
+
+        # Log in as a charity
+        response = self.client.post("/api/auth/login/", {"username": "Charity1", "password": "Woozles123"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        # Like this random charity
+        self.client.post("/api/charity/activity/", {"name": "Awesome event"},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        # Check if the activity exists
+        charity_activities = CharityActivity.objects.all()
+        self.assertEqual(len(charity_activities), 1)
 
     # Helper method to register charities
     def register_charity(self, name):
