@@ -1,3 +1,7 @@
+<head>
+    <link href="/static/charity/css/searchcss/search.css" rel="stylesheet">
+</head>
+
 <div class="search">
     <div class="row">
         <h3>&nbsp&nbsp&nbspSearch Results</h3>
@@ -6,14 +10,14 @@
             <div class="pull-left">
                 <label>
                     Show
-                    <select class="selectDesign" ng-init="pageSize=entries[0]" ng-model="pageSize" ng-options="x for x in entries"></select>
+                    <select id="selectCharities" class="selectDesign" ng-init="pageSize=charities[0]" ng-model="pageSize" ng-options="x for x in charities"></select>
                     charities
                 </label>
             </div>
             <div class="pull-right">
                 <label>
                     <!--Sort by-->
-                    <!--<select class="selectDesign" ng-init="sortCondition=sortConditions[0]" ng-model="sortCondition" ng-options="y for y in sortConditions"></select>-->
+                    <!--<select id="sortCharities" class="selectDesign" ng-init="sortCondition=sortConditions[0]" ng-model="sortCondition" ng-options="y for y in sortConditions"></select>-->
                     <button class="btn clickDesign" style="font-weight:900" onclick="this.blur()" ng-click="sortClick('Name')">Sort By Name</button>
                 </label>
             </div>
@@ -23,19 +27,19 @@
         <div class="col-md-8 col-md-offset-2">
             <table class="table">
                 <tbody>
-                <tr ng-repeat="data in filtered = (searchResults | filter : searchKeyWord) | orderBy:sortKey:reverse | limitTo:pageSize:currentPage*pageSize">
+                <tr ng-repeat="data in filtered = (searchResults | filter : searchKeyWord) | orderBy:sortKey:reverse | limitTo:pageSize:(currentPage-1)*pageSize">
                     <td class="showPicture">
-                            <img class="picStyle" src="/static/charity/images/no-user-image.gif">
+                            <img class="picStyle" src="/static/charity/images/redcross.jpg">
                     </td>
                     <td class="showContent">
                         <h4 class="nameLinkStyle">
                             <a href="javascript:void(0);"   ng-click="profilePage(data.Name)"><font color="#1E90FF">{{data.Name}}</font></a>
                         </h4>
+                        <!--including spaces restrict max 365 letters in description-->
                         {{data.Number}}
                     </td>
                 </tr>
                 </tbody>
-
             </table>
         </div>
     </div>
@@ -50,20 +54,14 @@
             <div class="pull-right">
                 <nav ng-if="numberOfPages()>=2">
                     <ul class="paginationStyle">
-                        <li><a ng-click="selectPage(0)" onclick="this.blur()">&laquo;</a></li>
-                        <li><a ng-click="selectPage(currentPage-1)" onclick="this.blur()">Previous</a></li>
-                        <li class="disabled"><a><input id="inputPage" class="selectInput" type="text" value="{{currentPage+1}}" ng-keyup="$event.keyCode == 13 && selectPageInput()"> of {{numberOfPages()}}</a></li>
-                        <li><a ng-click="selectPage(currentPage + 1)" onclick="this.blur()">Next</a></li>
-                        <li><a ng-click="selectPage(numberOfPages()-1)" onclick="this.blur()">&raquo;</a></li>
+                        <li><a href="#" ng-click="selectPage(1)" onclick="this.blur()">&laquo;</a></li>
+                        <li><a href="#" ng-click="selectPage(currentPage-1)" onclick="this.blur()">Previous</a></li>
+                        <li class="disabled"><a><input id="inputPage" class="selectInput" type="text" value="{{currentPage}}" ng-keyup="$event.keyCode == 13 && selectPageInput()"> of {{numberOfPages()}}</a></li>
+                        <li><a href="#" ng-click="selectPage(currentPage+1)" onclick="this.blur()">Next</a></li>
+                        <li><a href="#" ng-click="selectPage(numberOfPages())" onclick="this.blur()">&raquo;</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
 </div>
-
-<!--<label>-->
-    <!--<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button>-->
-    <!--<nobr>{{currentPage+1}}/{{numberOfPages()}}</nobr>-->
-    <!--<button ng-disabled="(currentPage+1) == numberOfPages()" ng-click="currentPage=currentPage+1">Next</button>-->
-<!--</label>-->
