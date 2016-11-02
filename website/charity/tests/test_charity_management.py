@@ -104,7 +104,7 @@ class CharityManagementViewTestCase(TestCase):
         self.assertEqual(len(get_charity_response_obj["charity_profiles"]), 1)
 
     # Tests if anyone can get the profile of a charity based on the ID of the charity
-    def test_get_charity_profile(self):
+    def test_get_all_charity_profiles(self):
         charity = User.objects.get(username="Charity1")
         charity_profile = charity.charity_profile
         charity_profile_id = charity_profile.id
