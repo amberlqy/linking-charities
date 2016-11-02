@@ -10,6 +10,8 @@ from django.http.response import HttpResponse
 from django.template import loader
 from django.db import models
 import json
+import dateutil.parser
+from django.utils import timezone
 
 from assets import settings
 from charity.models.charity_activity import CharityActivity
@@ -17,8 +19,8 @@ from charity.models.charity_data import CharityData
 from charity.models.charity_profile import CharityProfile
 from charity.roles import roles
 from tagging.models import Tag, TaggedItem
-from django.core.files.storage import FileSystemStorage
 
+from charity.serializers.charity_activity_serializer import CharityActivitySerializer
 from charity.utilities.zip_to_csv_converter import import_zip
 
 from charity.serializers.charity_profile_serializer import CharityProfileSerializer
@@ -112,7 +114,11 @@ class CharityActivityView(APIView):
         name = data.get('name', None)
         description = data.get('description', None)
         start_time = data.get('start_time', None)
+        if start_time:
+            start_time = timezone.make_aware(dateutil.parser.parse(start_time), timezone.get_current_timezone())
         end_time = data.get('end_time', None)
+        if end_time:
+            end_time = timezone.make_aware(dateutil.parser.parse(end_time), timezone.get_current_timezone())
         files = request.FILES
         if files:
             image = files['image']
@@ -122,6 +128,24 @@ class CharityActivityView(APIView):
         CharityActivity.objects.create(charity_profile=user.charity_profile, name=name, description=description, start_time=start_time, end_time=end_time, image=image)
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+
+# Returns the activities of charities
+class CharityActivitySearchView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    # Returns specific charity activities
+    def get(self, request):
+
+        charity_profile_id = request.GET.get('id', None)
+        charity_profile = CharityProfile.objects.get(id=charity_profile_id)
+        charity_activities = charity_profile.activities
+
+        charity_activity_serializer = CharityActivitySerializer(charity_activities, many=True)
+        return_dictionary = {"charity_activities": charity_activity_serializer.data}
+        json_charity_activities = JSONRenderer().render(return_dictionary)
+
+        return HttpResponse(json_charity_activities, content_type='application/json')
 
 
 class CharityLikeView(APIView):

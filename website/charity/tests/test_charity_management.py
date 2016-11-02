@@ -207,6 +207,18 @@ class CharityManagementViewTestCase(TestCase):
         charity_activities = CharityActivity.objects.all()
         self.assertEqual(len(charity_activities), 1)
 
+        charity_user = User.objects.get(username="Charity1")
+        charity_profile = charity_user.charity_profile
+        charity_profile_id = charity_profile.id
+
+        # Get activities of charity as a regular visitor
+        response = self.client.get("/api/charity/get_activity/", {"id": charity_profile_id})
+        response_content = json.loads(response.content.decode('utf-8'))
+        charity_activities = response_content["charity_activities"]
+
+        self.assertEqual(len(charity_activities), 1)
+
+
     # Helper method to register charities
     def register_charity(self, name):
         self.client.post("/api/auth/register/", {"username": name,

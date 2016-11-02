@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from charity.views.charity_management import CharityTagsView, CharitySearchView, CharityLikeView, CharityPopularityView, \
-    CharityDataProcessorView, CharityActivityView
+    CharityDataProcessorView, CharityActivityView, CharityActivitySearchView
 from charity.views.authentication import LoginView, LogoutView, RestrictedView, CharityRestrictedView, RegistrationView, CharityProfileView
 
 
@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^charity/charity_like/$', CharityLikeView.as_view(), name='charity_like'),
     url(r'^charity/popular_charities/$', CharityPopularityView.as_view(), name='popular_charity_profiles'),
     url(r'^charity/activity/$', CharityActivityView.as_view(), name='charity_activity_update'),
+    url(r'^charity/get_activity/$', CharityActivitySearchView.as_view(), name='charity_activity_search'),
 
     # Authentication
     url(r'^auth/register/$', RegistrationView.as_view(), name='register'),
