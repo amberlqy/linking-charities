@@ -87,7 +87,8 @@ class CharitySearchView(APIView):
         return_all = request.GET.get('all', None)
         if return_all:
             charity_profiles = CharityProfile.objects.all()
-            return_dictionary = {"charity_profiles": charity_profiles}
+            charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
+            return_dictionary = {"charity_profiles": charity_profile_serializer.data}
             json_charity_profiles = JSONRenderer().render(return_dictionary)
 
             return HttpResponse(json_charity_profiles, content_type='application/json')
