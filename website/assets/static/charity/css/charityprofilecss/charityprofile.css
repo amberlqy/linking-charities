@@ -1,0 +1,231 @@
+html {
+    font-size: 10px;
+}
+
+body {
+    width: 1330px;
+    overflow: scroll;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+    padding-top: 20px;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+}
+
+@font-face {
+    font-family: "Glyphicons Halflings";
+    src: url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.eot);
+    src: url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'), url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.woff2) format('woff2'), url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.woff) format('woff'), url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.ttf) format('truetype'), url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
+}
+
+@media (min-width: 768px) {
+    #wrapper {
+        padding-left: 220px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 220px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next, .carousel-control .icon-prev {
+        width: 30px;
+        height: 30px;
+        margin-top: -10px;
+        font-size: 30px
+    }
+
+    .carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+        margin-left: -10px
+    }
+
+    .carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+        margin-right: -10px
+    }
+
+    .carousel-caption {
+        right: 20%;
+        left: 20%;
+        padding-bottom: 30px
+    }
+
+    .carousel-indicators {
+        bottom: 20px
+    }
+}
+
+.Content {
+    position: absolute;
+    left: 220px;
+    width: 84%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.Description {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+
+}
+
+.slide {
+    position: absolute;
+    left: 0px;
+    width: 1040px;
+    height: 300px;
+    overflow: hidden;
+
+}
+
+td {
+    width: 10%;
+}
+
+.contact {
+    text-align: left;
+    width: 40%;
+    font-size: medium;
+}
+
+.activitypicture {
+    height: 300px;
+    width: 700px;
+    float: right;
+}
+
+.activitycontent {
+    float: left;
+    width: 41.66666667%;
+
+}
+
+.acontent {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.dcontent {
+    position: relative;
+    left: 100px;
+    font-size: 20px;
+}
+
+.button {
+    color: #666;
+    background-color: #8dcae8;
+    border-color: #EEE;
+    font-weight: 300;
+    font-size: 16px;
+    font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    text-decoration: none;
+    text-align: center;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 40px;
+    margin: 0;
+    display: inline-block;
+    appearance: none;
+    cursor: pointer;
+    border: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    /*
+    * Disabled State
+    *
+    * The disabled state uses the class .disabled, is-disabled,
+    * and the form attribute disabled="disabled".
+    * The use of !important is only added because this is a state
+    * that must be applied to all buttons when in a disabled state.
+    */
+}
+
+.button:visited {
+    color: #666;
+}
+
+.button:hover, .button:focus {
+    background-color: #f6f6f6;
+    text-decoration: none;
+    outline: none;
+}
+
+.button:active, .button.active, .button.is-active {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    background-color: #eeeeee;
+    border-color: #cfcfcf;
+    color: #d4d4d4;
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.button.disabled, .button.is-disabled, .button:disabled {
+    top: 0 !important;
+    background: #EEE !important;
+    border: 1px solid #DDD !important;
+    text-shadow: 0 1px 1px white !important;
+    color: #CCC !important;
+    cursor: default !important;
+    appearance: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    opacity: .8 !important;
+}
+
+.dcontent a {
+    color: #000000;
+    cursor: pointer;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+.mainbutton {
+    position: fixed;
+    top: 600px;
+    left: 1260px;
+
+}
+
+#description, #financials, #activities, #documents, body {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+}
+
+

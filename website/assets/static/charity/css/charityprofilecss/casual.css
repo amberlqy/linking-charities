@@ -4,14 +4,6 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
-body {
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    background: url('../img/bg.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-}
 
 h1,
 h2,
@@ -77,7 +69,7 @@ hr {
     border-color: #999999;
 }
 
-.box {
+.CharBox {
     margin-bottom: 20px;
     padding: 30px 15px;
     background: #fff;
@@ -89,6 +81,7 @@ hr {
     font-size: 1.25em;
     font-weight: 400;
     letter-spacing: 1px;
+    text-align: center;
 }
 
 .img-border {
@@ -184,7 +177,7 @@ footer p {
 }
 
 @media screen and (min-width:1200px) {
-    .box:after {
+    .CharBox:after {
         content: '';
         display: table;
         clear: both;

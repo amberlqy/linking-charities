@@ -19,7 +19,8 @@
            <!--tags-->
             $scope.gotoDescription = function () {
                 $location.hash('description');
-                $anchorScroll();
+                $anchorScroll(shouldAnimate,true);
+
             };
             $scope.gotoFinancials = function () {
                 $location.hash('financials');
@@ -48,6 +49,12 @@
          $http.get('/static/charity/resources/charityprofileactivities.json').success(
                 function (response) {
                     $scope.activityJson = response;
+                }
+            );
+               <!--get data about document details-->
+         $http.get('/static/charity/resources/charityprofiledocument.json').success(
+                function (response) {
+                    $scope.documentJson = response;
                 }
             );
 
