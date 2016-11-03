@@ -33,7 +33,7 @@
 							<img class="picStyle" src="/static/charity/images/no-user-image.gif">
 						</div>
 						<div ng-if="$index != 0">
-							<img class="picStyle" src="/static/charity/images/redcross.jpg">
+							<img class="picStyle" src="/static/charity/images/no-user-image.gif">
 						</div>
 					</td>
 					<td class="showContent">
@@ -41,7 +41,7 @@
 							<a href="javascript:void(0);" ng-click="profilePage(data.id)"><font color="#1E90FF">{{data.charity_name}}</font></a>
 						</h4>
 						<!--numbers different in different browsers: including spaces restrict max 365 letters in description-->
-						{{data.desciption}}
+						{{data.description}}
 					</td>
 				</tr>
 				</tbody>

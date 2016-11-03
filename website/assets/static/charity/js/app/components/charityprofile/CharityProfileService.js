@@ -9,15 +9,14 @@
     CharityProfile.$inject = ['$http'];
 
     function CharityProfile($http) {
-        /*
-        var _searchKey = "";
+        var _charityId = "";
         return {
-            getSearchKey: function () {
-                return _searchKey;
+            getCharityId: function () {
+                return _charityId;
             },
-            setSearchKey: function(value) {
-                _searchKey = value;
+            setCharityId: function(value) {
+                _charityId = value;
             }
-        };*/
+        };
     }
 })();

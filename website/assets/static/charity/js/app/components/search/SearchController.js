@@ -5,9 +5,9 @@
         .module('charity.search.controllers')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll'];
+    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', 'CharityProfile'];
 
-    function SearchController($scope, $http, Search, $location, $anchorScroll) {
+    function SearchController($scope, $http, Search, $location, $anchorScroll, CharityProfile) {
 
         //search function
         $scope.searchKeyWord = Search.getSearchKey();
@@ -17,6 +17,7 @@
 
             function getSuccessFn(data, status, headers, config) {
                 var search = data.data["charity_profiles"];
+                console.log(search);
                 $scope.searchResults = search;
             }
 
@@ -95,6 +96,7 @@
 
         //function for direct to profile page
         $scope.profilePage = function (id) {
+            CharityProfile.setCharityId(id);
             $location.path('/charityprofile/' + id);
         };
     }

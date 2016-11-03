@@ -5,20 +5,18 @@
         .module('charity.charityprofile.controllers')
         .controller('CharityProfileController', CharityProfileController);
 
-    CharityProfileController.$inject = ['$scope', '$http', '$location', '$anchorScroll'];
+    CharityProfileController.$inject = ['$scope', '$http', '$location', '$anchorScroll', 'CharityProfile'];
 
-    function CharityProfileController($scope, $http, $location, $anchorScroll) {
+    function CharityProfileController($scope, $http, $location, $anchorScroll, CharityProfile) {
         charityProfile();
 
         function charityProfile() {
-            $http.get('/api/charity/charity_search/', {params:{"id": 1}}).then(getSuccessFn, getErrorFn);
+            $http.get('/api/charity/charity_search/', {params:{"id": CharityProfile.getCharityId()}}).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
                 var charityProfile = data.data["charity_profile"];
                 console.log(charityProfile);
                 $scope.profile = charityProfile;
-                $scope.profile11 = "111";
-                // alert(charityProfile.address);
             }
 
             function getErrorFn(data, status, headers, config) {
