@@ -10,17 +10,12 @@
 </head>
 <body>
     <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-   <navbar> </navbar>
+    <navbar></navbar>
+    <div class="ng-view"></div>
 
-    <div class="container-fluid main-content">
-        <div class="row">
-            <div class="col-xs-12 ng-view"></div>
-        </div>
-    </div>
-
-{% include 'charity/javascripts.html' %}
+    {% include 'charity/javascripts.html' %}
 </body>
 </html>
