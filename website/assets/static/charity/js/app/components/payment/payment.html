@@ -1,0 +1,22 @@
+
+<br>
+<label for="amount">Amount</label>
+<input name="amount" type="number" ng-model="vm.donation_amount">
+<br>
+<label for="currency">Currency</label>
+<label ng-repeat="choice in vm.donation_currency_options.choices">
+  <input name="currency" ng-model="vm.donation_currency_options.selected" type="radio" value="{{choice}}" />{{choice}}
+</label>
+
+<br>
+
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_donations"> 
+    <input type="hidden" name="business" value="donations@kcparkfriends.org">
+    <input type="hidden" name="item_name" value="Friends of the Park">
+    <input type="hidden" name="item_number" value="Fall Cleanup Campaign">
+    <input type="hidden" name="amount" ng-value="vm.donation_amount"> 
+    <input type="hidden" name="currency_code" ng-value="vm.donation_currency_options.selected"> 
+    <input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" alt="PayPal - The safer, easier way to pay online">
+</form>

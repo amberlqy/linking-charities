@@ -52,6 +52,10 @@
             controller: 'CharityProfileController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/charityprofile/charityprofile.html'
+        }).when('/payment', {
+            controller: 'PaymentController',
+            controllerAs: 'vm',
+            templateUrl: '/static/charity/js/app/components/payment/payment.html'
         }).otherwise({
             redirectTo: '/home'
         });
