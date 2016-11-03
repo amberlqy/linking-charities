@@ -9,8 +9,8 @@
     <link rel="stylesheet" type="text/css" href="/static/charity/css/charityprofilecss/sidebar.css"/>
 </head>
 
-<body>
 
+<body>
 <!-- Sidebar -->
 <div class="sidebar-wrapper">
     <ul class="sidebar-nav">
@@ -197,9 +197,9 @@
                 <hr class="visible-xs">
                 <table class="dcontent">
                     <tr ng-repeat="x in documentJson">
-                        <td>
+                        <td  class="doc">
                             <img src="/static/charity/images/document.png">
-                            <a>{{ x.dname }}</a>
+                            <label>{{ x.dname }}</label>
                         </td>
                     </tr>
                 </table>

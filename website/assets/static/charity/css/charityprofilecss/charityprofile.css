@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    width: 1330px;
+    width: 94%;
     overflow: scroll;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
@@ -204,14 +204,6 @@ td {
     opacity: .8 !important;
 }
 
-.dcontent a {
-    color: #000000;
-    cursor: pointer;
-    -webkit-transition-property: all;
-    transition-property: all;
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-}
 
 .mainbutton {
     position: fixed;
@@ -219,13 +211,18 @@ td {
     left: 1260px;
 
 }
-
-#description, #financials, #activities, #documents, body {
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-
+.doc {
+    position: relative;
+    color: #000000;
+    cursor: pointer;
+    display: inline;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+.doc:hover {
+    left: 10px;
 }
 
 

@@ -68,9 +68,12 @@ h2{
 /* Navigation bar */
 
 .custom-navbar{
+    z-index: 1000;
+    position: fixed;
     background: #4d90fe;
     height: 46px;
     min-height: 46px;
+    width: 100%;
     padding: 0;
     top: 0;
     left: 0;

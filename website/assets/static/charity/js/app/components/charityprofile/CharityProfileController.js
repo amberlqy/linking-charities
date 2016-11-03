@@ -49,8 +49,8 @@
 
         <!--link to activities-->
         $scope.activityPage = function (name) {
-            if (name == 'CharityOne') {
-                $location.path('/charityprofile/activities/' + name);
+            if (name == 'charitytest') {
+                $location.path('/charityprofile/activities/' + charitytest);
             }
         };
         <!--get data about activities details-->
