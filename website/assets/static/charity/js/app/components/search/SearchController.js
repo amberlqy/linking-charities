@@ -18,6 +18,17 @@
                     $scope.searchResults = response;
                     $scope.searchResults.splice($scope.myData.indexOf(row), 1);
                 });
+
+            // $http.get('/api/charity/charity_search/', {"tag": null}).then(getSuccessFn, getErrorFn);
+            //
+            // function getSuccessFn(data, status, headers, config) {
+            //     var search = data.data["charity_activity"];
+            //     $scope.searchResults = search;
+            // }
+            //
+            // function getErrorFn(data, status, headers, config) {
+            //     console.error('Getting Search failed! ' + status);
+            // }
         }
 
         //Pagination Function

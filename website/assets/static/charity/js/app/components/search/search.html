@@ -1,67 +1,72 @@
 <head>
-    <link href="/static/charity/css/searchcss/search.css" rel="stylesheet">
+	<link href="/static/charity/css/searchcss/search.css" rel="stylesheet">
 </head>
 
 <div class="search">
-    <div class="row">
-        <h3>&nbsp&nbsp&nbspSearch Results</h3>
-        <br/>
-        <div class="col-md-8 col-md-offset-2">
-            <div class="pull-left">
-                <label>
-                    Show
-                    <select id="selectCharities" class="selectDesign" ng-init="pageSize=charities[0]" ng-model="pageSize" ng-options="x for x in charities"></select>
-                    charities
-                </label>
-            </div>
-            <div class="pull-right">
-                <label>
-                    <!--Sort by-->
-                    <!--<select id="sortCharities" class="selectDesign" ng-init="sortCondition=sortConditions[0]" ng-model="sortCondition" ng-options="y for y in sortConditions"></select>-->
-                    <button class="btn clickDesign" style="font-weight:900" onclick="this.blur()" ng-click="sortClick('Name')">Sort By Name</button>
-                </label>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <table class="table">
-                <tbody>
-                <tr ng-repeat="data in filtered = (searchResults | filter : searchKeyWord) | orderBy:sortKey:reverse | limitTo:pageSize:(currentPage-1)*pageSize">
-                    <td class="showPicture">
-                            <img class="picStyle" src="/static/charity/images/redcross.jpg">
-                    </td>
-                    <td class="showContent">
-                        <h4 class="nameLinkStyle">
-                            <a href="javascript:void(0);"   ng-click="profilePage(data.Name)"><font color="#1E90FF">{{data.Name}}</font></a>
-                        </h4>
-                        <!--including spaces restrict max 365 letters in description-->
-                        {{data.Number}}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="pull-left">
-                Showing {{firstInfo()}}
-                to {{secondInfo()}}
-                of {{filtered.length}}
-                charities
-            </div>
-            <div class="pull-right">
-                <nav ng-if="numberOfPages()>=2">
-                    <ul class="paginationStyle">
-                        <li><a href="#" ng-click="selectPage(1)" onclick="this.blur()">&laquo;</a></li>
-                        <li><a href="#" ng-click="selectPage(currentPage-1)" onclick="this.blur()">Previous</a></li>
-                        <li class="disabled"><a><input id="inputPage" class="selectInput" type="text" value="{{currentPage}}" ng-keyup="$event.keyCode == 13 && selectPageInput()"> of {{numberOfPages()}}</a></li>
-                        <li><a href="#" ng-click="selectPage(currentPage+1)" onclick="this.blur()">Next</a></li>
-                        <li><a href="#" ng-click="selectPage(numberOfPages())" onclick="this.blur()">&raquo;</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<h3>&nbsp&nbsp&nbspSearch Results</h3>
+		<br/>
+		<div class="col-md-8 col-md-offset-2">
+			<div class="pull-left">
+				<label>
+					Show
+					<select id="selectCharities" class="selectDesign" ng-init="pageSize=charities[0]" ng-model="pageSize" ng-options="x for x in charities"></select>
+					charities
+				</label>
+			</div>
+			<div class="pull-right">
+				<label>
+					<!--Sort by-->
+					<!--<select id="sortCharities" class="selectDesign" ng-init="sortCondition=sortConditions[0]" ng-model="sortCondition" ng-options="y for y in sortConditions"></select>-->
+					<button class="btn clickDesign" style="font-weight:900" onclick="this.blur()" ng-click="sortClick('Name')">Sort By Name</button>
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<table class="table">
+				<tbody>
+				<tr ng-repeat="data in filtered = (searchResults | filter : searchKeyWord) | orderBy:sortKey:reverse | limitTo:pageSize:(currentPage-1)*pageSize">
+					<td class="showPicture">
+						<div ng-if="$index == 0">
+							<img class="picStyle" src="/static/charity/images/no-user-image.gif">
+						</div>
+						<div ng-if="$index != 0">
+							<img class="picStyle" src="/static/charity/images/redcross.jpg">
+						</div>
+					</td>
+					<td class="showContent">
+						<h4 class="nameLinkStyle">
+							<a href="javascript:void(0);" ng-click="profilePage(data.Name)"><font color="#1E90FF">{{data.Name}}</font></a>
+						</h4>
+						<!--including spaces restrict max 365 letters in description-->
+						{{data.Number}}
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="pull-left">
+				Showing {{firstInfo()}}
+				to {{secondInfo()}}
+				of {{filtered.length}}
+				charities
+			</div>
+			<div class="pull-right">
+				<nav ng-if="numberOfPages()>=2">
+					<ul class="paginationStyle">
+						<li><a href="#" ng-click="selectPage(1)" onclick="this.blur()">&laquo;</a></li>
+						<li><a href="#" ng-click="selectPage(currentPage-1)" onclick="this.blur()">Previous</a></li>
+						<li class="disabled"><a><input id="inputPage" class="selectInput" type="text" value="{{currentPage}}" ng-keyup="$event.keyCode == 13 && selectPageInput()"> of {{numberOfPages()}}</a></li>
+						<li><a href="#" ng-click="selectPage(currentPage+1)" onclick="this.blur()">Next</a></li>
+						<li><a href="#" ng-click="selectPage(numberOfPages())" onclick="this.blur()">&raquo;</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
 </div>

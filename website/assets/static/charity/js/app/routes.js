@@ -24,16 +24,22 @@
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/home/home.html',
             activeTab: 'home'
-        }).when('/user/+:username', {
+        }).when('/+:username/profile', {
             controller: 'ProfileController',
             controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/profiles/profile.html',
-            activeTab: 'profile'
-        }).when('/settings', {
+            templateUrl: '/static/charity/js/app/components/profiles/profile_edit.html'
+        }).when('/+:username/new_activity', {
+            controller: 'ProfileNewActivityController',
+            controllerAs: 'vm',
+            templateUrl: '/static/charity/js/app/components/profiles/profile_new_activity.html'
+        }).when('/+:username/activities', {
+            controller: 'ProfileActivityController',
+            controllerAs: 'vm',
+            templateUrl: '/static/charity/js/app/components/profiles/profile_activity.html'
+        }).when('/+:username/setting', {
             controller: 'ProfileSettingsController',
             controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/profiles/settings.html',
-            activeTab: 'settings'
+            templateUrl: '/static/charity/js/app/components/profiles/profile_setting.html'
         }).when('/dashboard', {
             controller: 'DashboardController',
             controllerAs: 'vm',
@@ -46,10 +52,6 @@
             controller: 'CharityProfileController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/charityprofile/charityprofile.html'
-        }).when('/charityprofile/activities/:id', {
-            controller: 'CharityProfileController',
-            controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/charityprofile/charityprofileactivities.html'
         }).otherwise({
             redirectTo: '/home'
         });

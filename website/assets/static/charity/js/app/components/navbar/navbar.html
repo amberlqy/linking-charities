@@ -20,7 +20,7 @@
             </ul>
 
             <ul class="pull-right">
-                <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/user/'+vm.user)}"><a href="user/{{ vm.user }}">{{ vm.user }}</a></li>
+                <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/' + vm.user + '/profile')}"><a href="{{ vm.user }}/profile">{{ vm.user }}</a></li>
                 <!--
                 <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/settings')}"><a href="settings">Settings</a></li>
                 -->

@@ -9,7 +9,7 @@
         ]);
 
     angular
-        .module('charity.profiles.controllers', []);
+        .module('charity.profiles.controllers', ['ngSanitize']);
 
     angular
         .module('charity.profiles.services', []);

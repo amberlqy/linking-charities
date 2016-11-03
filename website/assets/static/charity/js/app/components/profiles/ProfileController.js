@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$scope', '$location', '$routeParams', 'Profile', 'Snackbar'];
+    ProfileController.$inject = ['$location', 'Authentication', 'Profile'];
 
-    function ProfileController($scope, $location, $routeParams, Profile) {
+    function ProfileController($location, Authentication, Profile) {
         var vm = this;
         vm.isCharity = true;
         vm.profile = {};
@@ -16,6 +16,17 @@
         activate();
 
         function activate() {
+            // TODO Check if login and correct user login
+            vm.isAuthenticated = Authentication.isAuthenticated();
+            var authenticatedAccount = Authentication.getAuthenticatedAccount();
+            if (!authenticatedAccount) {
+                $location.url('/login');
+                //Snackbar.error('You are not authorized to view this page.');
+            } else {
+                if (authenticatedAccount != undefined){
+                    vm.user = authenticatedAccount.username;
+                }
+            }
 
             var user_role = Profile.getAuthenticatedAccount().userRole;
             console.log("User role: " + user_role);
