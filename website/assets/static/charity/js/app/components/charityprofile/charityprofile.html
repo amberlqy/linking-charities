@@ -16,7 +16,7 @@
     <ul class="sidebar-nav">
         <li class="sidebar-brand">
             <a>
-                {{ profileJson.name }}
+                {{ profile.charity_name }}
             </a>
         </li>
         <li>
@@ -77,7 +77,7 @@
                 <h2 class="brand-before">
                     <small>Welcome to</small>
                 </h2>
-                <h1 class="brand-name">{{ profileJson.name }}</h1>
+                <h1 class="brand-name">{{ profile.charity_name }}</h1>
                 <hr class="tagline-divider">
                 <h2>
                     <small>charity for
@@ -124,13 +124,13 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td class="contact">Tel:{{ profileJson.phonenumber }}</td>
+                        <td class="contact">Tel:{{ profile.phone_number }}</td>
                         <td></td>
                         <td class="contact">Postcode:{{ profileJson.postcode }}</td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td width="90%" class="contact">Address:{{ profileJson.address }}</td>
+                        <td width="90%" class="contact">Address:{{ profile.address }}</td>
                     </tr>
                 </table>
             </div>

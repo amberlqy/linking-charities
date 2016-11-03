@@ -11,12 +11,21 @@
         charityProfile();
 
         function charityProfile() {
-            $http.get('/static/charity/resources/profile.json').success(
-                function (response) {
-                    $scope.profileJson = response;
-                }
-            );
-           <!--tags-->
+            $http.get('/api/charity/charity_search/', {params:{"id": 1}}).then(getSuccessFn, getErrorFn);
+
+            function getSuccessFn(data, status, headers, config) {
+                var charityProfile = data.data["charity_profile"];
+                console.log(charityProfile);
+                $scope.profile = charityProfile;
+                $scope.profile11 = "111";
+                // alert(charityProfile.address);
+            }
+
+            function getErrorFn(data, status, headers, config) {
+                console.error('Getting Charity Profile failed! ' + status);
+            }
+
+            <!--tags-->
             $scope.gotoDescription = function () {
                 $location.hash('description');
                 $anchorScroll(shouldAnimate,true);
@@ -36,10 +45,9 @@
                 $location.hash('documents');
                 $anchorScroll();
             };
-
-
         }
-      <!--link to activities-->
+
+        <!--link to activities-->
         $scope.activityPage = function (name) {
             if (name == 'CharityOne') {
                 $location.path('/charityprofile/activities/' + name);

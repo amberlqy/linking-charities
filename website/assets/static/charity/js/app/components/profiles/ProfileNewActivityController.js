@@ -35,12 +35,13 @@
         // Called when the user clicks on Update profile
         // TODO After save success direct to activities page
         vm.update = function(){
+            console.log(vm.activity.picture);
             var activity = {
                 "name": vm.activity.name,
                 "description": vm.activity.detail,
                 "start_time": vm.activity.date,
                 "end_time": null,
-                "image": null
+                "image": vm.activity.picture
             };
 
             return $http.post('/api/charity/activity/', activity).then(updateSuccessFn, updateErrorFn);

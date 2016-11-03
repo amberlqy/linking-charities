@@ -36,14 +36,24 @@
             }
 
             var user_role = Profile.getAuthenticatedAccount().userRole;
-            console.log("User role: " + user_role);
             vm.isCharity = user_role == "charity";
 
-            $http.get('/static/charity/resources/profileActivity.json').success(
-                function (response) {
-                    vm.activityResults = response;
-                    // vm.searchResults.splice(vm.myData.indexOf(row), 1);
-                });
+            // $http.get('/static/charity/resources/profileActivity.json').success(
+            //     function (response) {
+            //         vm.activityResults = response;
+            //     });
+
+            $http.get('/api/charity/get_activity/', {params:{"id": 1}}).then(getSuccessFn, getErrorFn);
+
+            function getSuccessFn(data, status, headers, config) {
+                var charityActivity = data.data["charity_activities"];
+                console.log(charityActivity);
+                vm.activityResults = charityActivity;
+            }
+
+            function getErrorFn(data, status, headers, config) {
+                console.error('Getting Charity Profile failed! ' + status);
+            }
 
 
             // Get current charity profile data

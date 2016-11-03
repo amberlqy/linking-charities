@@ -13,29 +13,27 @@
         $scope.searchKeyWord = Search.getSearchKey();
         search();
         function search(row) {
-            $http.get('/static/charity/resources/dataExample10000.json').success(
-                function (response) {
-                    $scope.searchResults = response;
-                    $scope.searchResults.splice($scope.myData.indexOf(row), 1);
-                });
+            $http.get('/api/charity/charity_search/', {params:{"all": true}}).then(getSuccessFn, getErrorFn);
 
-            // $http.get('/api/charity/charity_search/', {"tag": null}).then(getSuccessFn, getErrorFn);
-            //
-            // function getSuccessFn(data, status, headers, config) {
-            //     var search = data.data["charity_activity"];
-            //     $scope.searchResults = search;
-            // }
-            //
-            // function getErrorFn(data, status, headers, config) {
-            //     console.error('Getting Search failed! ' + status);
-            // }
+            function getSuccessFn(data, status, headers, config) {
+                var search = data.data["charity_profiles"];
+                $scope.searchResults = search;
+            }
+
+            function getErrorFn(data, status, headers, config) {
+                console.error('Getting Search failed! ' + status);
+            }
         }
 
         //Pagination Function
         $scope.currentPage = 1;
         $scope.pageSize = 10;
         $scope.numberOfPages = function () {
-            return Math.ceil($scope.filtered.length / $scope.pageSize);
+            if ($scope.filtered != null) {
+                return Math.ceil($scope.filtered.length / $scope.pageSize);
+            } else {
+                return 1;
+            }
         };
         $scope.selectPage = function(page){
             if(page>0 && page<=$scope.numberOfPages()){
@@ -56,22 +54,27 @@
 
         //info about numbers of listed charities
         $scope.firstInfo = function () {
-            if ($scope.filtered.length != 0) {
-                return (($scope.currentPage-1) * $scope.pageSize + 1);
-            }
-            else {
-                return 0;
+            if ($scope.filtered != null) {
+                if ($scope.filtered.length != 0) {
+                    return (($scope.currentPage - 1) * $scope.pageSize + 1);
+                }
+                else {
+                    return 0;
+                }
             }
         };
+
         $scope.secondInfo = function () {
-            if ($scope.filtered.length == 0) {
-                return 0;
-            }
-            else if (($scope.currentPage * $scope.pageSize) > $scope.filtered.length) {
-                return ($scope.filtered.length);
-            }
-            else {
-                return ($scope.currentPage * $scope.pageSize);
+            if ($scope.filtered != null) {
+                if ($scope.filtered.length == 0) {
+                    return 0;
+                }
+                else if (($scope.currentPage * $scope.pageSize) > $scope.filtered.length) {
+                    return ($scope.filtered.length);
+                }
+                else {
+                    return ($scope.currentPage * $scope.pageSize);
+                }
             }
         };
 
@@ -92,9 +95,7 @@
 
         //function for direct to profile page
         $scope.profilePage = function (id) {
-            if (id == 'CharityOne') {
-                $location.path('/charityprofile/' + id);
-            }
+            $location.path('/charityprofile/' + id);
         };
     }
 })
