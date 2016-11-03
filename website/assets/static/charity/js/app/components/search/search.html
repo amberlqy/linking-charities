@@ -3,7 +3,7 @@
 </head>
 
 <div class="search">
-	<div class="row">
+	<div>
 		<h3>&nbsp&nbsp&nbspSearch Results</h3>
 		<br/>
 		<div class="col-md-8 col-md-offset-2">
@@ -23,7 +23,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
+	<div>
 		<div class="col-md-8 col-md-offset-2">
 			<table class="table">
 				<tbody>
@@ -40,7 +40,7 @@
 						<h4 class="nameLinkStyle">
 							<a href="javascript:void(0);" ng-click="profilePage(data.id)"><font color="#1E90FF">{{data.charity_name}}</font></a>
 						</h4>
-						<!--including spaces restrict max 365 letters in description-->
+						<!--numbers different in different browsers: including spaces restrict max 365 letters in description-->
 						{{data.desciption}}
 					</td>
 				</tr>
@@ -48,7 +48,7 @@
 			</table>
 		</div>
 	</div>
-	<div class="row">
+	<div>
 		<div class="col-md-8 col-md-offset-2">
 			<div class="pull-left">
 				Showing {{firstInfo()}}
