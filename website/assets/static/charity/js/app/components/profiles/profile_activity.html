@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/static/charity/css/profilecss/style.css" rel="stylesheet">
+    <link href="/static/charity/css/profilecss/verticleTimeline.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- container section start -->
+<section class="profile-container">
+    <!-- aside menubar -->
+    <div id="sidebar">
+        <ul class="sidebar-menu">
+            <li>
+                <a class="" href="{{vm.user}}/profile">
+                    <i></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i></i>
+                    <span>Activity</span>
+                    <!-- Create class later, just a draft -->
+                    <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" href="{{vm.user}}/new_activity">New Activity</a></li>
+                    <li class="active"><a class="" href="{{vm.user}}/activities">Past Activity</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="" href="{{vm.user}}/setting">
+                    <i></i>
+                    <span>Setting</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-file-text-o"></i> Activities</h3>
+				</div>
+			</div>
+
+            <section id="cd-timeline" class="cd-container">
+                <!--<h1 ng-repeat="x in vm.activityResults">1111</h1>-->
+                <div class="showDiffTags" ng-repeat="ex in vm.activityResults">
+                    <div ng-bind-html="vm.timelineHtmlPart1+ex.Name+vm.timelineHtmlPart2+vm.timelineHtmlPart1+ex.Name+vm.timelineHtmlPart2"></div>
+                    <br><br><br>
+                </div>
+            </section>
+            <!-- page end-->
+        </section>
+    </section>
+</section>
+
+<script src="/static/charity/css/profilecss/scripts.js"></script>
+<script src="/static/charity/css/profilecss/modernizr.js"></script>
+</body>
+</html>

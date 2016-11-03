@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="/static/charity/css/profilecss/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- container section start -->
+<section class="profile-container">
+    <!-- aside menubar -->
+    <div id="sidebar">
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a class="" href="{{vm.user}}/profile">
+                    <i></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:;" class="">
+                    <i></i>
+                    <span>Activity</span>
+                    <!-- Create class later, just a draft -->
+                    <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
+                </a>
+                <ul class="sub">
+                    <li><a class="" href="{{vm.user}}/new_activity">New Activity</a></li>
+                    <li><a class="" href="{{vm.user}}/activities">Past Activity</a></li>
+                </ul>
+            </li>
+            <li>
+                <a class="" href="{{vm.user}}/setting">
+                    <i></i>
+                    <span>Setting</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div class="row">
+				<div class="col-lg-12">
+					<h3 class="page-header"><i class="fa fa-file-text-o"></i> Profile</h3>
+				</div>
+			</div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            Edit
+                        </header>
+                        <div class="panel-body" ng-show="vm.isCharity">
+                            <form class="form-horizontal" ng-submit="vm.update()">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="text" ng-model="vm.profile.name" placeholder="Ex. Imperial Charity Soc."><!--disabled-->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Profile Picture</label>
+                                    <input style="padding-left: 15px;" type="file" id="profilePicture">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Description</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" ng-model="vm.profile.description" placeholder="Ex. Imperial Charity Soc was found in ...">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Address</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" ng-model="vm.profile.address" placeholder="Ex. Queens Gate">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Phone Number</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" ng-model="vm.profile.phone_number" placeholder="Ex. 078999487965">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <!-- page end-->
+        </section>
+    </section>
+</section>
+
+<script src="/static/charity/css/profilecss/scripts.js"></script>
+</body>
+</html>
