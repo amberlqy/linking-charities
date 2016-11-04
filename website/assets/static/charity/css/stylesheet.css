@@ -39,32 +39,6 @@ h2{
     text-align:center;
 }
 
-.value-label{
-    display: inline-block;
-    width: 65%;
-}
-
-.big-value{
-    font-size: 20px;
-}
-
-.content-section{
-    padding: 5px 25px 25px 25px;
-}
-
-.mini-section{
-    display: inline-block;
-    vertical-align: top;
-    width: 20%;
-    min-height: 310px;
-    padding: 0 15px 15px 15px;
-    background-color: #f3f3f3;
-}
-
-.chart-canvas{
-    margin: 15px;
-}
-
 /* Navigation bar */
 
 .custom-navbar{
@@ -114,70 +88,6 @@ h2{
 
 .form-control{
     padding: 3px 12px !important;
-}
-
-.form-buttons-div{
-    text-align: right;
-}
-
-.no-posts-here {
-  text-align: center;
-}
-
-.post {}
-
-.post .post__meta {
-  font-weight: bold;
-  text-align: right;
-  padding-bottom: 19px;
-}
-
-.post .post__meta a:hover {
-  text-decoration: none;
-}
-
-.btn-add-new-post {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-/* Home page */
-
-.home-header{
-    height: 20%;
-    max-height: 400px;
-}
-
-.home-header-left{
-    border-left: 1px solid rgb(224,224,224);
-    border-top: 1px solid rgb(224,224,224);
-    border-bottom: 1px solid rgb(224,224,224);
-    vertical-align: top;
-    display: inline-block;
-    width: 25%;
-    padding: 20px;
-}
-
-.home-header-right{
-    vertical-align: top;
-    display: inline-block;
-    width: 70%;
-}
-
-#header-timeline-bar{
-    height: 20%;
-}
-
-.home-content{
-    height: 70%;
-    background-color: #e7e7e7;
-}
-
-/*Dashboard*/
-
-.angular-google-map-container {
-    height: 300px;
 }
 
 /*Search*/
