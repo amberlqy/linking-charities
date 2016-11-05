@@ -6,14 +6,12 @@
         .module('charity.authentication.controllers')
         .controller('RegisterController', RegisterController);
 
-    RegisterController.$inject = ['$location', '$scope', 'Authentication'];
+    RegisterController.$inject = ['$location', 'Authentication'];
 
-    function RegisterController($location, $scope, Authentication) {
+    function RegisterController($location, Authentication) {
 
         var vm = this;
         vm.register = register;
-
-        vm.userroles = ["Charity", "User"];
 
         activate();
 
@@ -25,9 +23,8 @@
             }
         }
 
-        function register() {
-            console.log(vm.userrole.toLowerCase());
-            Authentication.register(vm.password, vm.username, vm.userrole.toLowerCase());
+        function register(role) {
+            Authentication.register(vm.password, vm.username, role);
         }
     }
 })();

@@ -26,7 +26,6 @@
             return $http.post('/api/auth/register/', {
                 username: username,
                 password: password,
-                // TODO: pass this as an argument somehow
                 user_type: userrole
             }).then(registerSuccessFn, registerErrorFn);
 
