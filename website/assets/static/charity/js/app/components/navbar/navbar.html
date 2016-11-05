@@ -2,34 +2,33 @@
 <nav class="custom-navbar" role="navigation">
     <div class="container-fluid">
 
-        <div>
+        <div class=".col-sm-4 col-md-4">
             <a class="navbar-brand" href="home">Linking Charities</a>
-        </div>
-
-        <div id="not-google-plus-nav">
             <ul>
                 <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/home')}"><a href="home">Home</a></li>
-                <!--
-                <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/dashboard')}"><a href="dashboard">Dashboard</a></li>
-                -->
             </ul>
+        </div>
 
-            <ul class="search-form">
-                <input class="search_textbox" type="text" value="" ng-model="searchKeyWord" placeholder="Search..." />
-                <button class="search_submit" type="button" ng-click="searchClick()">&nbsp;</button>
-            </ul>
+        <div class=".col-sm-4 col-md-4 search-pad">
+            <form class="form-horizontal" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control search-input" placeholder="Search..." name="srch-term" id="srch-term">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="searchClick()"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
+        <div class=".col-sm-4 col-md-4">
             <ul class="pull-right">
                 <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/' + vm.user + '/profile')}"><a href="{{ vm.user }}/profile">{{ vm.user }}</a></li>
-                <!--
-                <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/settings')}"><a href="settings">Settings</a></li>
-                -->
                 <li ng-show="vm.isAuthenticated" ><a href="javascript:void(0)" ng-click="vm.logout()">Logout</a></li>
                 <li ng-hide="vm.isAuthenticated" ng-class="{ active: vm.isActive('/login')}"><a href="login">Login</a></li>
                 <li ng-hide="vm.isAuthenticated" ng-class="{ active: vm.isActive('/register')}"><a href="register">Register</a></li>
             </ul>
+        </div>
 
-        </div> <!-- /.collapse.navbar-collapse -->
+    </div>
 
-    </div> <!-- /.container-fluid -->
 </nav>
