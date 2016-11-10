@@ -238,7 +238,7 @@ class PaymentConfirmationView(APIView):
 
         post_data = [('tx', transaction_id), ("at", identity_token), ("cmd", "_notify-synch"),]
         post_data_bytes = urlencode(post_data).encode("utf-8")
-        result = urlopen('https://www.paypal.com/cgi-bin/webscr', post_data_bytes).read().decode('UTF-8')
+        result = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes).read().decode('UTF-8')
 
         json_reponse = JSONRenderer().render({"success": result})
 
