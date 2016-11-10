@@ -6,9 +6,9 @@
         .module('charity.payment.controllers')
         .controller('PaymentController', PaymentController);
 
-    PaymentController.$inject = ['$location', 'Authentication', 'Snackbar', 'Home'];
+    PaymentController.$inject = ['$location', 'Payment', 'Snackbar', 'Home'];
 
-    function PaymentController($location, Authentication, Snackbar, Home) {
+    function PaymentController($location, Payment, Snackbar, Home) {
         var vm = this;
 
         activate();
@@ -21,6 +21,18 @@
             vm.donation_currency_options = {
               choices: ["USD", "GBP", "JPY"],
               selected: "USD"
+            };
+
+            // Check if we have any GET parameters
+            var queryParameters = $location.search();
+            if (typeof queryParameters.tx !== "undefined" && typeof queryParameters.sig !== "undefined"){
+                Payment.getPaymentVerification(queryParameters.tx, queryParameters.sig);
+            }
+
+            vm.verifyPayment = function(){
+                console.log("Verify Clicked");
+                Payment.getPaymentVerification();
+
             }
         }
     }

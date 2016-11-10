@@ -10,8 +10,10 @@ from django.http.response import HttpResponse
 from django.template import loader
 from django.db import models
 import json
+from urllib.request import urlopen
 import dateutil.parser
 from django.utils import timezone
+from django.utils.http import urlencode
 
 from assets import settings
 from charity.models.charity_activity import CharityActivity
@@ -222,3 +224,22 @@ class CharityDataProcessorView(APIView):
         CharityData.objects.bulk_create(charity_data_objects)
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+
+# Responsible for confirming the payments previously made by the user
+class PaymentConfirmationView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+
+        data = request.data
+        transaction_id = data.get('transaction_id', "8C641029PY664850G")
+        identity_token = data.get('identity_token', "net1NjmYwfzb2%2bmzaO5BC8jcei1NKXYbGptrF2ZV0px5RrXXDcUpN34zDFDdHiHAyJ7zqZskgNTViYLgVn8Qky6fxhP%2fx%2bRjS7RBFEKmCOWos%2becbOmQCFKELntlxvjoQim%2faEXgTdwc8E686EH8LM0%2fTLvflqNHo7nY%2bBsR090%3d4")
+
+        post_data = [('tx', transaction_id), ("at", identity_token), ("cmd", "_notify-synch"),]
+        post_data_bytes = urlencode(post_data).encode("utf-8")
+        result = urlopen('https://www.paypal.com/cgi-bin/webscr', post_data_bytes).read().decode('UTF-8')
+
+        json_reponse = JSONRenderer().render({"success": result})
+
+        return HttpResponse(json_reponse, content_type='application/json')
