@@ -19,7 +19,6 @@ class CharityManagementViewTestCase(TestCase):
         self.response_charity = self.client.post("/api/auth/register/", {"username": "Charity1",
                                                                          "password": "Woozles123",
                                                                          "user_type": "charity",
-                                                                         "location": "Monaco",
                                                                          "goal": "To save lonely kittens.",
                                                                          "charity_name": "Save the kittens, quick"})
 
@@ -45,7 +44,6 @@ class CharityManagementViewTestCase(TestCase):
         response_cat_charity = self.client.post("/api/auth/register/", {"username": "CatCharity",
                                                     "password": "Woozles123",
                                                     "user_type": "charity",
-                                                    "location": "Monaco",
                                                     "goal": "To save lonely kittens."})
 
         cat_response_content = json.loads(response_cat_charity.content.decode('utf-8'))
@@ -58,7 +56,6 @@ class CharityManagementViewTestCase(TestCase):
         response_dog_charity = self.client.post("/api/auth/register/", {"username": "DogCharity",
                                                      "password": "Woozles123",
                                                      "user_type": "charity",
-                                                     "location": "Monaco",
                                                      "goal": "To save lonely doggies."})
 
         dog_response_content = json.loads(response_dog_charity.content.decode('utf-8'))
@@ -82,7 +79,6 @@ class CharityManagementViewTestCase(TestCase):
         response_dog_charity = self.client.post("/api/auth/register/", {"username": "Dog2Charity",
                                                                         "password": "Woozles123",
                                                                         "user_type": "charity",
-                                                                        "location": "Monaco",
                                                                         "goal": "To save lonely doggies."})
 
         dog_response_content = json.loads(response_dog_charity.content.decode('utf-8'))
@@ -111,7 +107,6 @@ class CharityManagementViewTestCase(TestCase):
         get_charity_response = self.client.get("/api/charity/charity_search/", {"id": charity_profile_id})
 
         get_charity_response_obj = json.loads(get_charity_response.content.decode('utf-8'))
-        self.assertEqual(get_charity_response_obj["charity_profile"]["location"], "Monaco")
         self.assertEqual(get_charity_response_obj["charity_profile"]["goal"], "To save lonely kittens.")
         self.assertEqual(get_charity_response_obj["charity_profile"]["description"], None)
 
@@ -232,5 +227,4 @@ class CharityManagementViewTestCase(TestCase):
                                                  "password": "Woozles123",
                                                  "charity_name": name,
                                                  "user_type": "charity",
-                                                 "location": "Monaco",
                                                  "goal": "To save lonely kittens."})

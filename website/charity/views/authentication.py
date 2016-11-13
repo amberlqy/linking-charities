@@ -43,16 +43,22 @@ class RegistrationView(APIView):
             if user_type == 'charity':
                 # Read charity specific parameters
                 charity_name = data.get('charity_name', None)
-                location = data.get('location', None)
                 goal = data.get('goal', None)
                 description = data.get('description', None)
                 address = data.get('address', None)
+                city = data.get('city', None)
+                country = data.get('country', None)
+                postcode = data.get('postcode', None)
+                email = data.get('email', None)
                 phone_number = data.get('phone_number', None)
                 CharityProfile.objects.create(charity_name=charity_name,
-                                              location=location,
                                               goal=goal,
                                               description=description,
                                               address=address,
+                                              city=city,
+                                              country=country,
+                                              postcode=postcode,
+                                              email=email,
                                               phone_number=phone_number,
                                               user=user)
 
@@ -93,17 +99,23 @@ class CharityProfileView(APIView):
 
             data = request.data
             charity_name = data.get('charity_name', None)
-            location = data.get('location', None)
             goal = data.get('goal', None)
             description = data.get('description', None)
             address = data.get('address', None)
+            city = data.get('city', None)
+            country = data.get('country', None)
+            postcode = data.get('postcode', None)
+            email = data.get('email', None)
             phone_number = data.get('phone_number', None)
 
             charity_profile = user.charity_profile
             charity_profile.charity_name = charity_name
-            charity_profile.location = location
             charity_profile.goal = goal
             charity_profile.address = address
+            charity_profile.city = city
+            charity_profile.country = country
+            charity_profile.postcode = postcode
+            charity_profile.email = email
             charity_profile.phone_number = phone_number
             charity_profile.description = description
             charity_profile.save()
