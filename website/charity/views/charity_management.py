@@ -235,7 +235,7 @@ class PaymentConfirmationView(APIView):
         data = request.data
         transaction_id = data.get('transaction_id', "8C641029PY664850G")
         # identity_token = data.get('identity_token', "net1NjmYwfzb2%2bmzaO5BC8jcei1NKXYbGptrF2ZV0px5RrXXDcUpN34zDFDdHiHAyJ7zqZskgNTViYLgVn8Qky6fxhP%2fx%2bRjS7RBFEKmCOWos%2becbOmQCFKELntlxvjoQim%2faEXgTdwc8E686EH8LM0%2fTLvflqNHo7nY%2bBsR090%3d4")
-        identity_token = "T0hTSFMJq_7jc_El8QNPTDRCLOmq7f4WswXwlQin6RNClH8bJAaBQbkEFa"
+        identity_token = "-T0hTSFMJq_7jc_El8QNPTDRCLOmq7f4WswXwlQin6RNClH8bJAaBQbkEFa"
 
         post_data = [('tx', transaction_id), ("at", identity_token), ("cmd", "_notify-synch"),]
         post_data_bytes = urlencode(post_data).encode("utf-8")

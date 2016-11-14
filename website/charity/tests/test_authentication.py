@@ -73,7 +73,7 @@ class AuthenticationViewTestCase(TestCase):
     def test_charity_profile_exists(self):
         charity = User.objects.get(username="Charity1")
         charity_profile = charity.charity_profile
-        
+
         self.assertEqual(charity_profile.goal, "To save lonely kittens.")
         self.assertEqual(charity_profile.description, None)
 
