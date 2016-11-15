@@ -6,9 +6,9 @@
         .module('charity.navbar.controllers')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$http', 'Authentication', '$location', 'Search'];
+    NavbarController.$inject = ['$scope', '$http', 'Authentication', '$location', 'Search', '$modal'];
 
-    function NavbarController($scope, $http, Authentication, $location, Search) {
+    function NavbarController($scope, $http, Authentication, $location, Search, $modal) {
         var vm = this;
         var userDetails = Authentication.getAuthenticatedAccount();
         if (userDetails != undefined){
@@ -43,13 +43,29 @@
         }
 
         $scope.searchClick = function() {
-            Search.setSearchKey($scope.searchKeyWord);
+            var searchKey = [{charityname: $scope.searchKeyWord,
+                              charitytarget: null,
+                              charitylocation: null,
+                              charityranking: null
+                            }];
+            Search.setSearchKey(searchKey);
             $location.path('/search/#=' + $scope.searchKeyWord);
         };
 
         $scope.inputSelected = function (selected) {
             $scope.searchKeyWord = selected;
             updateSuggestion(selected);
+        };
+
+        $scope.afterSelected = function (selected) {
+            $scope.searchKeyWord = selected;
+        }
+
+        $scope.advancedSearchClick = function () {
+            var modalInstance = $modal.open({
+                templateUrl: '/static/charity/js/app/components/navbar/advanced-search-modal.html',
+                controller: 'AdvancedSearchController'
+            });
         };
     }
 })();

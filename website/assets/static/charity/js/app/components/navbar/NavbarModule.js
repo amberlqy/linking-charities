@@ -9,7 +9,7 @@
         ]);
 
     angular
-        .module('charity.navbar.controllers', ['angucomplete-alt']);
+        .module('charity.navbar.controllers', ['angucomplete-alt', 'ui.bootstrap']);
 
     angular
         .module('charity.navbar.directives', []);

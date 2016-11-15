@@ -3,10 +3,6 @@ body{
     min-width: 1200px;
 }
 
-.main-content{
-    padding: 20px;
-}
-
 a{
     color: white !important;
 }
@@ -82,10 +78,6 @@ h2{
 }
 
 /* Modals */
-.form-row{
-    margin-bottom: 12px;
-}
-
 .form-control{
     padding: 3px 12px !important;
 }

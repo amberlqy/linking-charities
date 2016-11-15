@@ -39,9 +39,12 @@
                 console.log(data);
                 var charity_profile = data.data["charity_profile"];
                 vm.profile.name = charity_profile["charity_name"];
-                vm.profile.location = charity_profile["location"];
+                vm.profile.goal = charity_profile["goal"];
                 vm.profile.description = charity_profile["description"];
                 vm.profile.address = charity_profile["address"];
+                vm.profile.city = charity_profile["city"];
+                vm.profile.country = charity_profile["country"];
+                vm.profile.postcode = charity_profile["postcode"];
                 vm.profile.phone_number = charity_profile["phone_number"];
             }
 
@@ -54,9 +57,13 @@
         vm.update = function(){
             var profile = {
                 "charity_name": vm.profile.name,
-                "location": vm.profile.location,
+                "goal": null,
                 "description": vm.profile.description,
                 "address": vm.profile.address,
+                "city": vm.profile.city,
+                "country": vm.profile.country,
+                "postcode": vm.profile.postcode,
+                "email": null,
                 "phone_number": vm.profile.phone_number
             };
             Profile.update(profile);

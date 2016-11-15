@@ -11,11 +11,14 @@
         <div class=".col-sm-4 col-md-4 search-pad">
             <form class="form-horizontal" role="search">
                 <div class="input-group">
-                    <div angucomplete-alt pause="3000" input-changed="inputSelected" selected-object="null"
+                    <div angucomplete-alt pause="1500" input-changed="inputSelected" selected-object="afterSelected"
                         local-data="Charities" search-fields="charity_name" title-field="charity_name" minlength="1" input-class="form-control search-input">
                     </div>
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="button" ng-click="searchClick()"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                    <div>
+                        <a style="text-decoration: underline" href ng-click="advancedSearchClick()">Advanced Search</a>
                     </div>
                 </div>
             </form>
@@ -29,9 +32,7 @@
                 <li ng-hide="vm.isAuthenticated" ng-class="{ active: vm.isActive('/register')}"><a href="register">Register</a></li>
             </ul>
         </div>
-
     </div>
-
 </nav>
 
 <link rel="stylesheet" type="text/css" href="/static/charity/js/app/components/navbar/angucomplete-alt.css"/>
