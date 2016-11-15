@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Authentication', 'Profile'];
+    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal'];
 
-    function ProfileController($location, Authentication, Profile) {
+    function ProfileController($location, Authentication, Profile, $modal) {
         var vm = this;
         vm.isCharity = true;
         vm.profile = {};
@@ -51,6 +51,16 @@
             function getErrorFn(data, status, headers, config) {
                 console.error('Getting current profile failed! ' + status);
             }
+        }
+
+        vm.preview = function(){
+            var modalInstance = $modal.open({
+                templateUrl: '/static/charity/js/app/components/preview/previewprofile.html',
+                 controller: 'PreviewProfileController',
+                // scope: $scope,
+                size:'lg'
+                // resolve: {} // empty storage
+            });
         }
 
         // Called when the user clicks on Update profile
