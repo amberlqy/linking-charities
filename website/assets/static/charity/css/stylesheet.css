@@ -3,10 +3,9 @@ body{
     min-width: 1200px;
 }
 
-a{
-    /*color: white !important;*/
-    color: white;
-}
+/*a{*/
+    /*color: whsite !important;*/
+/*}*/
 
 a:focus{
     text-decoration: none;
