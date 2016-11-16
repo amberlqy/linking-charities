@@ -1,72 +1,106 @@
 <head>
-	<link href="/static/charity/css/searchcss/search.css" rel="stylesheet">
+    <link href="/static/charity/css/searchcss/search.css" rel="stylesheet">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 </head>
 
 <div class="search">
-	<div>
-		<h3>&nbsp&nbsp&nbspSearch Results</h3>
-		<br/>
-		<div class="col-md-8 col-md-offset-2">
-			<div class="pull-left">
-				<label>
-					Show
-					<select id="selectCharities" class="selectDesign" ng-init="pageSize=charities[0]" ng-model="pageSize" ng-options="x for x in charities"></select>
-					charities
-				</label>
-			</div>
-			<div class="pull-right">
-				<label>
-					<!--Sort by-->
-					<!--<select id="sortCharities" class="selectDesign" ng-init="sortCondition=sortConditions[0]" ng-model="sortCondition" ng-options="y for y in sortConditions"></select>-->
-					<button class="btn clickDesign" style="font-weight:900" onclick="this.blur()" ng-click="sortClick('Name')">Sort By Name</button>
-				</label>
-			</div>
-		</div>
-	</div>
-	<div>
-		<div class="col-md-8 col-md-offset-2">
-			<table class="table">
-				<tbody>
-				<tr ng-repeat="data in filtered = (searchResults | filter : searchKeyWord) | orderBy:sortKey:reverse | limitTo:pageSize:(currentPage-1)*pageSize">
-					<td class="showPicture">
-						<div ng-if="$index == 0">
-							<img class="picStyle" src="/static/charity/images/no-user-image.gif">
-						</div>
-						<div ng-if="$index != 0">
-							<img class="picStyle" src="/static/charity/images/no-user-image.gif">
-						</div>
-					</td>
-					<td class="showContent">
-						<h4 class="nameLinkStyle">
-							<a href="javascript:void(0);" ng-click="profilePage(data.id)"><font color="#1E90FF">{{data.charity_name}}</font></a>
-						</h4>
-						<!--numbers different in different browsers: including spaces restrict max 365 letters in description-->
-						{{data.description}}
-					</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	<div>
-		<div class="col-md-8 col-md-offset-2">
-			<div class="pull-left">
-				Showing {{firstInfo()}}
-				to {{secondInfo()}}
-				of {{filtered.length}}
-				charities
-			</div>
-			<div class="pull-right">
-				<nav ng-if="numberOfPages()>=2">
-					<ul class="paginationStyle">
-						<li><a href="#" ng-click="selectPage(1)" onclick="this.blur()">&laquo;</a></li>
-						<li><a href="#" ng-click="selectPage(currentPage-1)" onclick="this.blur()">Previous</a></li>
-						<li class="disabled"><a><input id="inputPage" class="selectInput" type="text" value="{{currentPage}}" ng-keyup="$event.keyCode == 13 && selectPageInput()"> of {{numberOfPages()}}</a></li>
-						<li><a href="#" ng-click="selectPage(currentPage+1)" onclick="this.blur()">Next</a></li>
-						<li><a href="#" ng-click="selectPage(numberOfPages())" onclick="this.blur()">&raquo;</a></li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</div>
+    <div class="searchTop">
+        <div class="col-md-8 col-md-offset-2">
+            <p class="pull-left">Search Results</p>
+            <ul class="switchStyle pull-right">
+                <li><a href="#" ng-click="isList(1)" onclick="this.blur()">List <span class="glyphicon glyphicon-list"
+                                                                                      aria-hidden="true"></span></a>
+                </li>
+                <li><a href="#" ng-click="isList(0)" onclick="this.blur()">Map <span
+                        class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="searchMap" ng-if="isMap == 1">
+        <div class="col-md-8 col-md-offset-2">
+            <div id="map" style="width:100%;height:470px">
+            {{mapFunction()}}
+            {{pushLocations()}}
+            </div>
+        </div>
+    </div>
+    <div class="searchList" ng-if="isMap == 0">
+        <div class="searchHead">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="pull-left">
+                    <label>
+                        Show
+                        <select class="selectDesign" ng-model="pageProperties.size" ng-init="pageProperties.size='10'"
+                                ng-change="selectPage(1)">
+                            <option value=5>5</option>
+                            <option value=10>10</option>
+                            <option value=20>20</option>
+                            <option value=30>30</option>
+                        </select>
+                        charities
+                    </label>
+                </div>
+                <div class="pull-right">
+                    <label>
+                        <button class="btn clickDesign" style="font-weight:900" onclick="this.blur()"
+                                ng-click="sortClick('Name')">Sort By Name
+                        </button>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="searchContent">
+            <div class="col-md-8 col-md-offset-2">
+                <table class="table">
+                    <tbody>
+                    <tr ng-repeat="data in searchResults | filter : searchKeyWord | orderBy:sortKey:reverse | limitTo:pageProperties.size:(pageProperties.current-1)*pageProperties.size">
+                        <td class="showPicture">
+                            <div ng-if="$index == 0">
+                                <img class="picStyle" src="/static/charity/images/no-user-image.gif">
+                            </div>
+                            <div ng-if="$index != 0">
+                                <img class="picStyle" src="/static/charity/images/no-user-image.gif">
+                            </div>
+                        </td>
+                        <td class="showContent">
+                            <h4 class="nameLinkStyle">
+                                <a href="javascript:void(0);" ng-click="profilePage(data.id)">{{data.charity_name}}</a>
+                            </h4>
+                            {{data.description}}
+                            </br>
+                            {{data.address}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="searchFoot">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="pull-left infoStyle">
+                    Showing {{firstInfo()}}
+                    to {{secondInfo()}}
+                    of {{filteredItems.length}}
+                    charities
+                </div>
+                <div class="pull-right">
+                    <nav ng-if="numberOfPages()>=2">
+                        <ul class="paginationStyle">
+                            <li><a href="#" ng-click="selectPage(1)" onclick="this.blur()">&laquo;</a></li>
+                            <li><a href="#" ng-click="selectPage(pageProperties.current-1)" onclick="this.blur()">Previous</a>
+                            </li>
+                            <li class="disabled"><a><input id="inputPage" class="selectInput" type="text"
+                                                           value="{{pageProperties.current}}"
+                                                           ng-keyup="$event.keyCode == 13 && selectPageInput()"> of
+                                {{numberOfPages()}}</a></li>
+                            <li><a href="#" ng-click="selectPage(pageProperties.current+1)"
+                                   onclick="this.blur()">Next</a></li>
+                            <li><a href="#" ng-click="selectPage(numberOfPages())" onclick="this.blur()">&raquo;</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

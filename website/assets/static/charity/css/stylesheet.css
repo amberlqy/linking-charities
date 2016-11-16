@@ -4,7 +4,8 @@ body{
 }
 
 a{
-    color: white !important;
+    /*color: white !important;*/
+    color: white;
 }
 
 a:focus{

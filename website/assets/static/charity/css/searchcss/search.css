@@ -1,9 +1,92 @@
-.search {
-    font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #333;
+/*body*/
+html, body {
     background-color: #fff;
+}
+
+/*search*/
+.search {
+}
+
+/*searchTop*/
+.searchTop {
+    padding-top: 30px;
+    padding-bottom: 100px;
+    font-size: 50px;
+    color: #1E90FF;
+}
+
+.switchStyle {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.switchStyle > li {
+    display: inline;
+}
+
+.switchStyle > li > a,
+.switchStyle > li > span {
+    position: relative;
+    float: left;
+    padding: 5px 6px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #1E90FF;
+    font-size: 13px;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #9d9d9d;
+}
+
+.switchStyle > li > a:hover,
+.switchStyle > li > span:hover,
+.switchStyle > li > a:focus,
+.switchStyle > li > span:focus {
+    /*z-index: 2;*/
+    color: #fff;
+    background-color: #1E90FF;
+    border-color: #9d9d9d;
+}
+
+/*searchMap*/
+.searchMap {
+}
+
+.infoTable {
+    background-color: #fff;
+    width: 300px;
+    max-width: 100%;
+    margin-bottom: -10px;
+    margin-left: -10px;
+    margin-top: -5px;
+}
+
+.infoTable > tbody > tr > td, .infoTable > tbody > tr > th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+}
+
+.infoShowContent {
+    color: #333;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.infoShowContent > a {
+    color: #1E90FF;
+    font-style: normal;
+    font-size: 18px;
+}
+
+/*searchList*/
+.searchList {
+}
+
+/*searchHead*/
+.searchHead {
 }
 
 .selectDesign {
@@ -16,9 +99,20 @@
 }
 
 .clickDesign {
+    color: #1E90FF;
+    background-color: #fff;
+    border-color: #9d9d9d;
+}
+
+.clickDesign:hover,
+.clickDesign:focus {
     color: #fff;
     background-color: #1E90FF;
-    border-color: transparent;
+    border-color: #9d9d9d;
+}
+
+/*searchContent*/
+.searchContent {
 }
 
 .showPicture {
@@ -37,19 +131,31 @@
 }
 
 .nameLinkStyle {
+    color: #1E90FF;
     font-style: normal;
     font-size: 18px;
     padding-top: -50px;
     padding-bottom: -50px;
 }
 
+/*searchFoot*/
+.searchFoot {
+}
+
+.infoStyle {
+    display: inline-block;
+    padding-left: 0;
+    margin: 30px 0;
+}
+
 .selectInput {
     width: 40px;
     height: 20px;
-    color: #fff;
+    color: #1E90FF;
     text-decoration: none;
-    background-color: #1E90FF;
+    background-color: #fff;
     border: 1px solid #ddd;
+    text-align: center;
 }
 
 .paginationStyle {
@@ -70,10 +176,11 @@
     padding: 6px 12px;
     margin-left: -1px;
     line-height: 1.42857143;
-    color: #fff;
+    color: #1E90FF;
+    font-size: medium;
     text-decoration: none;
-    background-color: #1E90FF;
-    border: 1px solid #ddd;
+    background-color: #fff;
+    border: 1px solid #9d9d9d;
 }
 
 .paginationStyle > li:first-child > a,
@@ -94,9 +201,9 @@
 .paginationStyle > li > a:focus,
 .paginationStyle > li > span:focus {
     z-index: 2;
-    color: #eee;
-    background-color: #337ab7;
-    border-color: #ddd;
+    color: #fff;
+    background-color: #1E90FF;
+    border-color: #9d9d9d;
 }
 
 .paginationStyle > .active > a,
@@ -108,8 +215,8 @@
     z-index: 3;
     color: #fff;
     cursor: default;
-    background-color: #337ab7;
-    border-color: #337ab7
+    background-color: #1E90FF;
+    border-color: #9d9d9d;
 }
 
 .paginationStyle > .disabled > a,
@@ -118,6 +225,7 @@
 .paginationStyle > .disabled > span,
 .paginationStyle > .disabled > span:focus,
 .paginationStyle > .disabled > span:hover {
-    background-color: #1E90FF;
-    border-color: #ddd
+    color: #1E90FF;
+    background-color: #fff;
+    border-color: #9d9d9d
 }
