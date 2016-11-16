@@ -1,12 +1,11 @@
 .sidebar-wrapper {
-    z-index: 1000;
-    position: fixed;
+    position: absolute;
     top: 46px;
-    left: 190px;
-    width: 190px;
+    left: 0%;
+    width: 14%;
     height: 100%;
-    margin-left: -190px;
     overflow-y: auto;
+    overflow-x: hidden;
     background: #9dc3ff;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -19,7 +18,7 @@
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 190px;
+    width: 100%;
     margin: 0;
     padding: 0;
     list-style: none;
