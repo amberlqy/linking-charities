@@ -9,9 +9,9 @@
 
 
     function SearchController($scope, $http, Search, $location, $anchorScroll, CharityProfile) {
-
         //search function
-        $scope.searchKeyWord = Search.getSearchKey();
+        var searchKey = Search.getSearchKey();
+        $scope.searchKeyWord = searchKey.charityname;
         search();
         function search(row) {
             $http.get('/api/charity/charity_search/', {params: {"all": true}}).then(getSuccessFn, getErrorFn);

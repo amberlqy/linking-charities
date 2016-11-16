@@ -43,11 +43,11 @@
         }
 
         $scope.searchClick = function() {
-            var searchKey = [{charityname: $scope.searchKeyWord,
+            var searchKey = {charityname: $scope.searchKeyWord,
                               charitytarget: null,
                               charitylocation: null,
                               charityranking: null
-                            }];
+                            };
             Search.setSearchKey(searchKey);
             $location.path('/search/#=' + $scope.searchKeyWord);
         };
@@ -58,7 +58,7 @@
         };
 
         $scope.afterSelected = function (selected) {
-            $scope.searchKeyWord = selected;
+            $scope.searchKeyWord = selected.title;
         }
 
         $scope.advancedSearchClick = function () {

@@ -14,11 +14,11 @@
         };
 
         $scope.advancedSearch = function () {
-            var searchKey = [{charityname: $scope.name,
+            var searchKey = {charityname: $scope.name,
                               charitytarget: $scope.target,
                               charitylocation: $scope.location,
                               charityranking: $scope.ranking
-                            }];
+                            };
             Search.setSearchKey(searchKey);
             $modalInstance.close();
             $location.path('/search/#=' + $scope.name);
