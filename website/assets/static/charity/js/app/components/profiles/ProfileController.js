@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal'];
+    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal','$scope'];
 
-    function ProfileController($location, Authentication, Profile, $modal) {
+    function ProfileController($location, Authentication, Profile, $modal,$scope) {
         var vm = this;
         vm.isCharity = true;
         vm.profile = {};
@@ -57,9 +57,9 @@
             var modalInstance = $modal.open({
                 templateUrl: '/static/charity/js/app/components/preview/previewprofile.html',
                  controller: 'PreviewProfileController',
-                // scope: $scope,
-                size:'lg'
-                // resolve: {} // empty storage
+                scope: $scope,
+                size:'lg',
+                resolve: {} // empty storage
             });
         }
 

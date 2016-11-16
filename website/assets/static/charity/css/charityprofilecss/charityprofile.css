@@ -1,24 +1,16 @@
-html {
-    font-size: 10px;
-}
-
 body {
-    width: 94%;
-    overflow: scroll;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;
-    background-color: #fff;
-    padding-top: 20px;
     -webkit-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
-}
-
-@font-face {
-    font-family: "Glyphicons Halflings";
-    src: url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.eot);
-    src: url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'), url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.woff2) format('woff2'), url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.woff) format('woff'), url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.ttf) format('truetype'), url(/assets/static/dependencies/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
 }
 
 @media (min-width: 768px) {
@@ -78,34 +70,27 @@ body {
 
 .Content {
     position: absolute;
-    left: 220px;
-    width: 84%;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
+    left: 14%;
+    top: 46px;
+    width: 86%;
+    height: 100%;
+    overflow: scroll;
 }
 
-.Description {
-    position: absolute;
-    left: 0px;
-    width: 100%;
-
-}
 
 .slide {
-    position: absolute;
-    left: 0px;
-    width: 1040px;
-    height: 300px;
+    position: relative;
+    left: 0;
+    width: 100%;
+    height: 340px;
     overflow: hidden;
 
 }
-
-td {
-    width: 10%;
+.charityname {
+    font-family: Calibri;
+    color: white;
+    font-size: x-large;
 }
-
 .contact {
     text-align: left;
     width: 40%;
@@ -204,13 +189,13 @@ td {
     opacity: .8 !important;
 }
 
-
 .mainbutton {
     position: fixed;
     top: 600px;
     left: 1260px;
 
 }
+
 .doc {
     position: relative;
     color: #000000;
@@ -221,6 +206,7 @@ td {
     -webkit-transition-duration: 0.5s;
     transition-duration: 0.5s;
 }
+
 .doc:hover {
     left: 10px;
 }

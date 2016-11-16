@@ -9,7 +9,7 @@
         ]);
 
     angular
-        .module('charity.charityprofile.controllers', []);
+        .module('charity.charityprofile.controllers', ['ui.bootstrap.carousel']);
 
     angular
         .module('charity.charityprofile.services', []);
