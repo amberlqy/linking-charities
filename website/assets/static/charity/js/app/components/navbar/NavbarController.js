@@ -43,13 +43,14 @@
         }
 
         $scope.searchClick = function() {
-            var searchKey = {charityname: $scope.searchKeyWord,
-                              charitytarget: null,
-                              charitylocation: null,
-                              charityranking: null
+            var searchKey = {name: $scope.searchKeyWord,
+                              target: null,
+                              country: null,
+                              city: null,
+                              ranking: null
                             };
             Search.setSearchKey(searchKey);
-            $location.path('/search/#=' + $scope.searchKeyWord);
+            $location.path('/search/#=' + Math.random().toString(36).substring(7));
         };
 
         $scope.inputSelected = function (selected) {

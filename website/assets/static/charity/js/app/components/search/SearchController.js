@@ -11,11 +11,11 @@
     function SearchController($scope, $http, Search, $location, $anchorScroll, CharityProfile) {
         //search function
         var searchKey = Search.getSearchKey();
-        $scope.searchKeyWord = searchKey.charityname;
+        $scope.searchKeyWord = searchKey.name;
         search();
         function search(row) {
-            $http.get('/api/charity/charity_search/', {params: {"name": searchKey.charityname,
-                                                                "target": null,"country": searchKey.charitylocation, "city": null, "ranking": null}}).then(getSuccessFn, getErrorFn);
+            $http.get('/api/charity/charity_search/', {params: {"name": searchKey.name,
+                                                                "target": null,"country": searchKey.country, "city": searchKey.city, "ranking": null}}).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
                 var search = data.data["charity_profiles"];
