@@ -27,13 +27,14 @@
             <a href="#" onclick="$('#description').animatescroll({element:'.Content'});"> Description</a>
         </li>
         <li>
-            <a href="#" onclick="$('#financials').animatescroll({element:'.Content',padding:-220});"> Financials </a>
+            <a href="#" onclick="$('#financials').animatescroll({element:'.Content',padding:-360});"> Financials </a>
         </li>
         <li>
-            <a href="#" onclick="$('#activities').animatescroll({element:'.Content',padding:-238});"> Latest Activity </a>
+            <a href="#" onclick="$('#activities').animatescroll({element:'.Content',padding:-400});"> Latest
+                Activity </a>
         </li>
         <li>
-            <a href="#" onclick="$('#documents').animatescroll({element:'.Content',padding:-500});"> Documents </a>
+            <a href="#" onclick="$('#documents').animatescroll({element:'.Content',padding:-800});"> Documents </a>
         </li>
         <li>
             <a ng-click="">Donate to us</a>
@@ -181,7 +182,8 @@
                             <small>{{ activityJson.atime }}</small>
                             <small>{{ activityJson.aplace }}</small>
                         </h2>
-                        <img class="img-responsive img-border img-full" src="http://placehold.it/700x300" alt="">
+                        <img class="img-responsive img-border img-full" src="/static/charity/images/charityback.jpg"
+                             alt="">
                         <p>{{ activityJson.aintroduction }}</p>
                         <button class="button" ng-click="activityPage(profileJson.name)">More Activities</button>
 
