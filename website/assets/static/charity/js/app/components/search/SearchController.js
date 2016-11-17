@@ -118,13 +118,16 @@
         $scope.pushLocations = function () {
             if ($scope.locations.length == 0) {
                 for (var j = 0; j < $scope.filteredItems.length; j++) {
-                    if ($scope.filteredItems[j].address != null) {
-                        $scope.locations.push($scope.filteredItems[j].address);
+                    if ($scope.filteredItems[j].country != null && $scope.filteredItems[j].city != null && $scope.filteredItems[j].postcode != null) {
+                        $scope.locations.push($scope.filteredItems[j].country +"&nbsp"+ $scope.filteredItems[j].city +"&nbsp"+ $scope.filteredItems[j].postcode);
                         $scope.locationsID.push($scope.filteredItems[j].id);
                         $scope.locationsName.push($scope.filteredItems[j].charity_name);
                     }
                 }
             }
+            // for( var h = 0; h < $scope.locations.length; h ++){
+            //     alert($scope.locations[h]);
+            // }
         };
         $scope.mapFunction = function () {
             var mapCanvas = document.getElementById("map");

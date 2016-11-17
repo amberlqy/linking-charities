@@ -1,6 +1,6 @@
 <head>
     <link href="/static/charity/css/searchcss/search.css" rel="stylesheet">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwYtBup_b7knHtvd_PmFMxkaWnAK60d4c"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwYtBup_b7knHtvd_PmFMxkaWnAK60d4c&libraries=geometry"></script>
 </head>
 
 <div class="search">
@@ -68,7 +68,7 @@
                             </h4>
                             {{data.description}}
                             </br>
-                            {{data.address}}
+                            {{data.country +"&nbsp"+ data.city +"&nbsp"+ data.postcode}}
                         </td>
                     </tr>
                     </tbody>
