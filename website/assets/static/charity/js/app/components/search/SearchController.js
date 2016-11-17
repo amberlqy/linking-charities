@@ -125,9 +125,6 @@
                     }
                 }
             }
-            // for( var h = 0; h < $scope.locations.length; h ++){
-            //     alert($scope.locations[h]);
-            // }
         };
         $scope.mapFunction = function () {
             var mapCanvas = document.getElementById("map");
