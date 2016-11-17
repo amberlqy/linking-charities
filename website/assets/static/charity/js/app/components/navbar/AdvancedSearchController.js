@@ -14,14 +14,15 @@
         };
 
         $scope.advancedSearch = function () {
-            var searchKey = {charityname: $scope.name,
-                              charitytarget: $scope.target,
-                              charitylocation: $scope.location,
-                              charityranking: $scope.ranking
+            var searchKey = {name: $scope.name,
+                              target: $scope.target,
+                              country: $scope.country,
+                              city: $scope.city,
+                              ranking: $scope.ranking
                             };
             Search.setSearchKey(searchKey);
             $modalInstance.close();
-            $location.path('/search/#=' + $scope.name);
+            $location.path('/search/#=' + Math.random().toString(36).substring(7));
         };
     }
 })();
