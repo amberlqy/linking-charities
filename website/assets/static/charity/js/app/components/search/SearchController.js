@@ -14,7 +14,8 @@
         $scope.searchKeyWord = searchKey.charityname;
         search();
         function search(row) {
-            $http.get('/api/charity/charity_search/', {params: {"all": true}}).then(getSuccessFn, getErrorFn);
+            $http.get('/api/charity/charity_search/', {params: {"name": searchKey.charityname,
+                                                                "target": null,"country": searchKey.charitylocation, "city": null, "ranking": null}}).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
                 var search = data.data["charity_profiles"];
