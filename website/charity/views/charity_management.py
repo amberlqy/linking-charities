@@ -14,6 +14,7 @@ from urllib.request import urlopen
 import dateutil.parser
 from django.utils import timezone
 from django.utils.http import urlencode
+from django.db.models import Q
 
 from assets import settings
 from charity.models.charity_activity import CharityActivity
@@ -97,9 +98,31 @@ class CharitySearchView(APIView):
 
         # If the request contains a set of tags (separated  by whitespace), return all charity profiles with a match.
         tags = request.GET.get('tags', None)
+        if tags:
+            # Search for all relevant charities
+            charity_profiles = list(TaggedItem.objects.get_union_by_model(CharityProfile, tags))
 
-        # Search for all relevant charities
-        charity_profiles = list(TaggedItem.objects.get_union_by_model(CharityProfile, tags))
+            charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
+            return_dictionary = {"charity_profiles": charity_profile_serializer.data}
+            json_charity_profiles = JSONRenderer().render(return_dictionary)
+
+            return HttpResponse(json_charity_profiles, content_type='application/json')
+
+        charity_name = request.GET.get('name', "")
+        goal = request.GET.get('target', "")
+        country = request.GET.get('country', "")
+        city = request.GET.get('city', "")
+        ranking = request.GET.get('ranking', "")
+
+        charity_profiles = CharityProfile.objects.all()
+        if charity_name:
+            charity_profiles = charity_profiles.filter(Q(charity_name__contains=charity_name))
+        if goal:
+            charity_profiles = charity_profiles.filter(Q(goal__contains=goal))
+        if country:
+            charity_profiles = charity_profiles.filter(Q(country__contains=country))
+        if city:
+            charity_profiles = charity_profiles.filter(Q(city__contains=city))
 
         charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
         return_dictionary = {"charity_profiles": charity_profile_serializer.data}

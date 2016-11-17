@@ -92,6 +92,27 @@ class CharityManagementViewTestCase(TestCase):
         search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
         self.assertEqual(len(search_result_response_content["charity_profiles"]), 2)
 
+    # Search for charities using various fields
+    def test_search_for_charity_with_fields(self):
+        # Cat charity
+        self.client.post("/api/auth/register/", {"username": "CatCharity",
+                                                                        "password": "Woozles123",
+                                                                        "user_type": "charity",
+                                                                        "goal": "To save lonely kittens.",
+                                                                        "country": "Hungary",
+                                                                        "city": "Budapest"})
+
+        # Dog charity
+        self.client.post("/api/auth/register/", {"username": "DogCharity",
+                                                                        "password": "Woozles123",
+                                                                        "user_type": "charity",
+                                                                        "goal": "To save lonely doggies."})
+
+        search_result_response = self.client.get("/api/charity/charity_search/", {"country": "Hun"})
+        search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
+        self.assertEqual(len(search_result_response_content["charity_profiles"]), 1)
+
+
     # Tests if anyone can get all charity profiles
     def test_get_all_charity_profiles(self):
         get_charity_response = self.client.get("/api/charity/charity_search/", {"all": True})
