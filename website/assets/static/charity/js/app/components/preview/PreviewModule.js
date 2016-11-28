@@ -5,7 +5,8 @@
     angular
         .module('charity.preview', [
             'charity.preview.controllers',
-            'charity.preview.services'
+            'charity.preview.services',
+            'chart.js'
         ]);
 
     angular

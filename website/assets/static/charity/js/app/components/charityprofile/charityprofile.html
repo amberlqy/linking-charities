@@ -34,9 +34,6 @@
                 Activity </a>
         </li>
         <li>
-            <a href="#" onclick="$('#documents').animatescroll({element:'.Content',padding:-800});"> Documents </a>
-        </li>
-        <li>
             <a ng-click="">Donate to us</a>
         </li>
     </ul>
@@ -147,14 +144,82 @@
                     <h2 class="intro-text">Financials</h2>
                     <hr>
                     <hr class="visible-xs">
-                    <table>
+                    <table class="financialdata">
+                        <tr>
+                            <td width="50%">Income :&pound{{ financialsJson.income_total }}</td>
+                            <td width="12%"></td>
+                            <td width="38%">Spending :&pound{{ financialsJson.spending_total }}</td>
+                        </tr>
                         <tr>
                             <td>
-                                <!--income-->
-
+                                <div class="financialchart">
+                                    <canvas id="pie" class="chart chart-pie"
+                                            chart-data="incomedata" chart-labels="labels" chart-options="options">
+                                    </canvas>
+                                </div>
                             </td>
+                            <td></td>
                             <td>
-                                <!--spending-->
+                                <div class="financialchart">
+                                    <canvas id="pie" class="chart chart-pie"
+                                            chart-data="spendingdata" chart-labels="labels" chart-options="options">
+                                    </canvas>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(151,187,205,1)"></span>Voluntary:
+                                    &pound{{ financialsJson.income_voluntary }}</li>
+                            </td>
+                            <td></td>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(151,187,205,1)"></span>Voluntary:
+                                    &pound{{ financialsJson.spending_voluntary }}</li>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(220,220,220,1)"></span>Trading to raise funds
+                                    :&pound{{ financialsJson.income_trading }}</li>
+                            </td>
+                            <td></td>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(220,220,220,1)"></span>Trading to raise
+                                    funds :&pound{{ financialsJson.spending_trading }}</li>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(247,70,74,1)"></span>Investment
+                                    :&pound{{ financialsJson.income_investment }}</li>
+                            </td>
+                            <td></td>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(247,70,74,1)"></span>Investment
+                                    :&pound{{ financialsJson.spending_investment }}</li>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(70,191,189,1)"></span>Charitable activities
+                                    :&pound{{ financialsJson.income_activities }}</li>
+                            </td>
+                            <td></td>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(70,191,189,1)"></span>Charitable activities
+                                    :&pound{{ financialsJson.spending_activities }}</li>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(253,180,92,1)"></span>Other
+                                    :&pound{{ financialsJson.income_other }}</li>
+                            </td>
+                            <td></td>
+                            <td class="chart-legend">
+                                <li><span style="background-color: rgba(253,180,92,1)"></span>Other
+                                    :&pound{{ financialsJson.spending_other }}</li>
                             </td>
                         </tr>
                     </table>
@@ -192,28 +257,6 @@
             </div>
         </div>
     </div>
-    <!--documents-->
-    <div id="documents">
-        <div class="CharRow">
-            <div class="CharBox">
-                <div class="col-lg-12">
-                    <hr>
-                    <h2 class="intro-text">Documents</h2>
-                    <hr>
-                    <hr class="visible-xs">
-                    <table class="dcontent">
-                        <tr ng-repeat="x in documentJson">
-                            <td class="doc">
-                                <img src="/static/charity/images/document.png">
-                                <label>{{ x.dname }}</label>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 </body>
 

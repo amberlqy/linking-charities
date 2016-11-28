@@ -15,6 +15,7 @@ angular
             'charity.profiles',
             'charity.dashboard',
             'charity.search',
+            'chart.js',
             'charity.charityprofile',
             'charity.payment',
             'charity.preview'

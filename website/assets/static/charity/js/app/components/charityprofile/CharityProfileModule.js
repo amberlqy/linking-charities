@@ -5,7 +5,8 @@
     angular
         .module('charity.charityprofile', [
             'charity.charityprofile.controllers',
-            'charity.charityprofile.services'
+            'charity.charityprofile.services',
+            'chart.js'
         ]);
 
     angular
