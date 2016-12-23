@@ -6,4 +6,4 @@ class CharityProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CharityProfile
-        fields = ('id', 'charity_name', 'goal', 'address', 'phone_number', 'country', 'city', 'postcode', 'email', 'description',)
+        fields = ('id', 'charity_name', 'goal', 'address', 'phone_number', 'country', 'city', 'postcode', 'email', 'description', 'verified')

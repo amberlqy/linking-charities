@@ -3,16 +3,16 @@
 
     angular
         .module('charity.charityprofile.controllers')
-        .controller('CharityProfileController', CharityProfileController)
+        .controller('CharityProfileController', CharityProfileController);
 
 
-    CharityProfileController.$inject = ['$scope', '$http', '$location', '$anchorScroll', 'CharityProfile'];
+    CharityProfileController.$inject = ['$scope', '$http', '$location', '$anchorScroll', 'CharityProfile', '$routeParams'];
 
-    function CharityProfileController($scope, $http, $location, $anchorScroll, CharityProfile) {
+    function CharityProfileController($scope, $http, $location, $anchorScroll, CharityProfile, $routeParams) {
         charityProfile();
 
         function charityProfile() {
-            $http.get('/api/charity/charity_search/', {params: {"id": CharityProfile.getCharityId()}}).then(getSuccessFn, getErrorFn);
+            $http.get('/api/charity/charity_search/', {params: {"id": $routeParams.id}}).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
                 var charityProfile = data.data["charity_profile"];
