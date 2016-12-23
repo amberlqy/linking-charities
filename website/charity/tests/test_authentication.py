@@ -11,9 +11,11 @@ class AuthenticationViewTestCase(TestCase):
 
     def setUp(self):
         self.response = self.client.post("/api/auth/register/", {"username": "Heffalumps",
+                                                                 "email": "heffalumps@woozles.com",
                                                                  "password": "Woozles",
                                                                  "user_type": "user"})
         self.response_charity = self.client.post("/api/auth/register/", {"username": "Charity1",
+                                                                         "email": "charity1@woozles.com",
                                                                          "password": "Woozles123",
                                                                          "user_type": "charity",
                                                                          "location": "Monaco",

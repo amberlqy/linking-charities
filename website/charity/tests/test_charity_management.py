@@ -14,9 +14,11 @@ class CharityManagementViewTestCase(TestCase):
 
     def setUp(self):
         self.response = self.client.post("/api/auth/register/", {"username": "Heffalumps",
+                                                                 "email": "heffalumps@woozles.com",
                                                                  "password": "Woozles",
                                                                  "user_type": "user"})
         self.response_charity = self.client.post("/api/auth/register/", {"username": "Charity1",
+                                                                         "email": "heffalumps2@woozles2.com",
                                                                          "password": "Woozles123",
                                                                          "user_type": "charity",
                                                                          "goal": "To save lonely kittens.",
@@ -41,7 +43,9 @@ class CharityManagementViewTestCase(TestCase):
     def test_search_for_charity_with_tags(self):
 
         # Cat charity
-        response_cat_charity = self.client.post("/api/auth/register/", {"username": "CatCharity",
+        response_cat_charity = self.client.post("/api/auth/register/", {
+                                                    "username": "CatCharity",
+                                                    "email": "cat@woozles.com",
                                                     "password": "Woozles123",
                                                     "user_type": "charity",
                                                     "goal": "To save lonely kittens."})
@@ -53,7 +57,9 @@ class CharityManagementViewTestCase(TestCase):
                                         HTTP_AUTHORIZATION='JWT {}'.format(cat_token))
 
         # Dog charity
-        response_dog_charity = self.client.post("/api/auth/register/", {"username": "DogCharity",
+        response_dog_charity = self.client.post("/api/auth/register/", {
+                                                     "username": "DogCharity",
+                                                     "email": "dog@woozles.com",
                                                      "password": "Woozles123",
                                                      "user_type": "charity",
                                                      "goal": "To save lonely doggies."})
@@ -77,6 +83,7 @@ class CharityManagementViewTestCase(TestCase):
 
         # Dog 2 charity
         response_dog_charity = self.client.post("/api/auth/register/", {"username": "Dog2Charity",
+                                                                        "email": "dog2@woozles.com",
                                                                         "password": "Woozles123",
                                                                         "user_type": "charity",
                                                                         "goal": "To save lonely doggies."})
@@ -96,17 +103,19 @@ class CharityManagementViewTestCase(TestCase):
     def test_search_for_charity_with_fields(self):
         # Cat charity
         self.client.post("/api/auth/register/", {"username": "CatCharity",
-                                                                        "password": "Woozles123",
-                                                                        "user_type": "charity",
-                                                                        "goal": "To save lonely kittens.",
-                                                                        "country": "Hungary",
-                                                                        "city": "Budapest"})
+                                                 "email": "cat2@woozles.com",
+                                                 "password": "Woozles123",
+                                                 "user_type": "charity",
+                                                 "goal": "To save lonely kittens.",
+                                                 "country": "Hungary",
+                                                 "city": "Budapest"})
 
         # Dog charity
         self.client.post("/api/auth/register/", {"username": "DogCharity",
-                                                                        "password": "Woozles123",
-                                                                        "user_type": "charity",
-                                                                        "goal": "To save lonely doggies."})
+                                                 "email": "dog2@woozles.com",
+                                                 "password": "Woozles123",
+                                                 "user_type": "charity",
+                                                 "goal": "To save lonely doggies."})
 
         search_result_response = self.client.get("/api/charity/charity_search/", {"country": "Hun"})
         search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
@@ -173,9 +182,11 @@ class CharityManagementViewTestCase(TestCase):
         self.assertEqual(len(existing_charity_profile.likes.all()), 1)
 
         # Register a second user and like the same charity
-        user_registration_response = self.client.post("/api/auth/register/", {"username": "SecondUser",
-                                                                 "password": "1234",
-                                                                 "user_type": "user"})
+        user_registration_response = self.client.post("/api/auth/register/", {
+                                                     "username": "SecondUser",
+                                                    "email": "second_user@woozles.com",
+                                                     "password": "1234",
+                                                     "user_type": "user"})
 
         user_registration_response_content = json.loads(user_registration_response.content.decode('utf-8'))
         token = user_registration_response_content["token"]
@@ -189,7 +200,7 @@ class CharityManagementViewTestCase(TestCase):
     # Tests if we can read the 5 most popular charities
     def test_5_most_popular_charities(self):
         for i in range(0,6):
-            self.register_charity("PopularCharity" + str(i))
+            self.register_charity("PopularCharity" + str(i), "popular_charity_" + str(i) + "@gmail.com")
 
         random_charity = User.objects.get(username="PopularCharity4")
         random_charity_profile = random_charity.charity_profile
@@ -243,8 +254,9 @@ class CharityManagementViewTestCase(TestCase):
 
 
     # Helper method to register charities
-    def register_charity(self, name):
+    def register_charity(self, name, email):
         self.client.post("/api/auth/register/", {"username": name,
+                                                 "email": email,
                                                  "password": "Woozles123",
                                                  "charity_name": name,
                                                  "user_type": "charity",

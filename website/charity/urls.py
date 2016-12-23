@@ -1,8 +1,9 @@
 from django.conf.urls import patterns, url
+
+from charity.views.authentication import LoginView, LogoutView, RestrictedView, CharityRestrictedView, RegistrationView, \
+    CharityProfileView, CharityVerificationView
 from charity.views.charity_management import CharityTagsView, CharitySearchView, CharityLikeView, CharityPopularityView, \
     CharityDataProcessorView, CharityActivityView, CharityActivitySearchView, PaymentConfirmationView
-from charity.views.authentication import LoginView, LogoutView, RestrictedView, CharityRestrictedView, RegistrationView, CharityProfileView
-
 
 urlpatterns = patterns(
     '',
@@ -20,6 +21,7 @@ urlpatterns = patterns(
     url(r'^auth/get_token/$', 'rest_framework_jwt.views.obtain_jwt_token'),
     url(r'^auth/authenticated/$', RestrictedView.as_view(), name='test_token'),
     url(r'^auth/charity_profile/$', CharityProfileView.as_view(), name='charity_profile'),
+    url(r'^auth/charity_verification/$', CharityVerificationView.as_view(), name='charity_verification'),
 
     # Payment
     url(r'^charity/payment_confirmation/$', PaymentConfirmationView.as_view(), name='payment_confirmation'),

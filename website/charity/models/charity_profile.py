@@ -17,6 +17,7 @@ class CharityProfile(models.Model):
     phone_number = models.CharField(max_length=255, null=True)
     email = models.CharField(max_length=255, null=True)
     description = models.TextField(max_length=1000, null=True)
+    verified = models.BooleanField(default=False)
 
 # Register the charity profile for tagging purpose
 register(CharityProfile)
