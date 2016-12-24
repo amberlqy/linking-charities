@@ -5,10 +5,10 @@
         .module('charity.search.controllers')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', 'CharityProfile'];
+    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll'];
 
 
-    function SearchController($scope, $http, Search, $location, $anchorScroll, CharityProfile) {
+    function SearchController($scope, $http, Search, $location, $anchorScroll) {
         //search function
         var searchKey = Search.getSearchKey();
         $scope.searchKeyWord = searchKey.name;
