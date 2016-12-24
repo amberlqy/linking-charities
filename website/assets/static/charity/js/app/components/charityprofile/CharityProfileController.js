@@ -9,10 +9,10 @@
     CharityProfileController.$inject = ['$scope', '$http', '$location', '$anchorScroll', 'CharityProfile', '$routeParams'];
 
     function CharityProfileController($scope, $http, $location, $anchorScroll, CharityProfile, $routeParams) {
-        charityProfile();
+        loadCharityProfile($routeParams.id);
 
-        function charityProfile() {
-            $http.get('/api/charity/charity_search/', {params: {"id": $routeParams.id}}).then(getSuccessFn, getErrorFn);
+        function loadCharityProfile(profileId) {
+            $http.get('/api/charity/charity_search/', {params: {"id": profileId}}).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
                 var charityProfile = data.data["charity_profile"];
@@ -24,6 +24,8 @@
                 console.error('Getting Charity Profile failed! ' + status);
             }
         }
+
+        // TODO: connect below to back-end
 
         <!--financials-->
         var financialdata = new Object();

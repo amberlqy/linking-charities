@@ -63,9 +63,21 @@
                 <img class="img-responsive img-full" src="/static/charity/images/charity3.jpg" alt="">
             </div>
         </div>
-
-
     </div>
+
+    <!-- Verification -->
+    <div ng-if="profile.verified">
+        <div class="bg-success" style="font-size: 24px; line-height: 1.5em; padding: 5px">
+            <i class="glyphicon glyphicon-ok-sign" aria-hidden="true"></i><span class="sr-only"></span> Verified charity
+        </div>
+    </div>
+    <div ng-if="!profile.verified">
+        <div class="bg-danger" style="font-size: 24px; line-height: 1.5em; padding: 5px">
+            <i class="glyphicon glyphicon-remove-sign" aria-hidden="true"></i><span class="sr-only"></span> Charity not verified
+        </div>
+    </div>
+
+
     <div id="description">
         <div class="CharRow">
             <div class="CharBox">
@@ -79,7 +91,6 @@
                 </div>
             </div>
         </div>
-
 
         <!--aims-->
         <div class="CharRow">

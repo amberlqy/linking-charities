@@ -94,9 +94,8 @@
             $scope.selectPage(1);
         };
 
-        //function for direct to profile page
+        // Directs to the selected profile page
         $scope.profilePage = function (id) {
-            CharityProfile.setCharityId(id);
             $location.path('/charityprofile/' + id);
         };
 
