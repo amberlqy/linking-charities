@@ -8,6 +8,7 @@ angular
         .module('linkingCharitiesWorldwideAppApp', [
             'routes',
             'config',
+            'chart.js',
             'charity.authentication',
             'charity.navbar',
             'charity.home',
@@ -15,10 +16,7 @@ angular
             'charity.profiles',
             'charity.dashboard',
             'charity.search',
-            'chart.js',
-            'charity.charityprofile',
-            'charity.payment',
-            'charity.preview'
+            'charity.payment'
         ]);
 
     angular

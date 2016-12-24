@@ -6,12 +6,18 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal','$scope'];
+    // ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal', '$scope'];//, 'profilePrepService'];
+    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal', '$scope', 'profilePrepService'];
 
-    function ProfileController($location, Authentication, Profile, $modal,$scope) {
+    // function ProfileController($location, Authentication, Profile, $modal, $scope) {//, profilePrepService) {
+    function ProfileController($location, Authentication, Profile, $modal, $scope, profilePrepService) {
         var vm = this;
-        vm.isCharity = true;
+        // vm.isCharity = true;
         vm.profile = {};
+
+        $scope.labels = ["Voluntary £", "Trading to raise funds £", "Investment £"];
+        $scope.incomedata = [1234 , 201, 100];
+        $scope.spendingdata = [265, 1200, 8];
 
         activate();
 
@@ -28,28 +34,25 @@
                 }
             }
 
-            var user_role = Profile.getAuthenticatedAccount().userRole;
-            console.log("User role: " + user_role);
-            vm.isCharity = user_role == "charity";
-
             // Get current charity profile data
-            Profile.getCurrent().then(getSuccessFn, getErrorFn);
+            setProfile();
 
-            function getSuccessFn(data, status, headers, config) {
-                console.log(data);
-                var charity_profile = data.data["charity_profile"];
-                vm.profile.name = charity_profile["charity_name"];
-                vm.profile.goal = charity_profile["goal"];
-                vm.profile.description = charity_profile["description"];
-                vm.profile.address = charity_profile["address"];
-                vm.profile.city = charity_profile["city"];
-                vm.profile.country = charity_profile["country"];
-                vm.profile.postcode = charity_profile["postcode"];
-                vm.profile.phone_number = charity_profile["phone_number"];
-            }
+            var user_role = Profile.getAuthenticatedAccount();
+            vm.isCharity = user_role.userRole == "charity";
+            vm.isMatched = user_role.username == vm.profile.name;
 
-            function getErrorFn(data, status, headers, config) {
-                console.error('Getting current profile failed! ' + status);
+            function setProfile() {
+                var charity_profile = profilePrepService.data.charity_profile;
+                console.log(charity_profile);
+                vm.profile.name = charity_profile.charity_name;
+                vm.profile.goal = charity_profile.goal;
+                vm.profile.description = charity_profile.description;
+                vm.profile.address = charity_profile.address
+                vm.profile.city = charity_profile.city;
+                vm.profile.country = charity_profile.country;
+                vm.profile.postcode = charity_profile.postcode;
+                vm.profile.email = charity_profile.email;
+                vm.profile.phone_number = charity_profile.phone_number;
             }
         }
 
@@ -73,10 +76,14 @@
                 "city": vm.profile.city,
                 "country": vm.profile.country,
                 "postcode": vm.profile.postcode,
-                "email": null,
+                "email": vm.profile.email,
                 "phone_number": vm.profile.phone_number
             };
             Profile.update(profile);
+        }
+
+        vm.logout = function logout() {
+            Authentication.logout();
         }
     }
 })();

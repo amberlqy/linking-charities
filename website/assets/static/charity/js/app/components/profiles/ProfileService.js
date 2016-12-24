@@ -9,7 +9,6 @@
     Profile.$inject = ['$http', '$cookies', 'Authentication'];
 
     function Profile($http, $cookies, Authentication) {
-
         return {
             destroy: destroy,
             get: get,

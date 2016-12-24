@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:resize="http://www.w3.org/1999/xhtml">
 <head>
     <link href="/static/charity/css/profilecss/style.css" rel="stylesheet">
+    <link href="/static/charity/css/profilecss/animate.min.css" rel="stylesheet">
 </head>
 <body>
 
-<!-- container section start -->
-<section class="profile-container">
+<!-- aside menu -->
+<section>
     <!-- aside menubar -->
     <div id="sidebar">
         <ul class="sidebar-menu">
-            <li class="active">
-                <a class="" href="{{vm.user}}/profile">
+            <li>
+                <a id="descriptionLink" href="#">
                     <i></i>
                     <span>Profile</span>
                 </a>
@@ -24,9 +25,28 @@
                     <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
                 </a>
                 <ul class="sub">
+                    <li class="active"><a id="lastActivityLink" href="#">Last Activity</a></li>
+                    <li><a class="" href="{{vm.user}}/activities">Past Activities</a></li>
                     <li><a class="" href="{{vm.user}}/new_activity">New Activity</a></li>
-                    <li><a class="" href="{{vm.user}}/activities">Past Activity</a></li>
                 </ul>
+            </li>
+            <li>
+                <a id="financialLink" href="#">
+                    <i></i>
+                    <span>Financial</span>
+                </a>
+            </li>
+            <li>
+                <a class="" href="">
+                    <i></i>
+                    <span>Donate To Us</span>
+                </a>
+            </li>
+            <li>
+                <a id="contactDetailLink" href="#">
+                    <i></i>
+                    <span>Contact Us</span>
+                </a>
             </li>
             <li>
                 <a class="" href="{{vm.user}}/setting">
@@ -36,88 +56,370 @@
             </li>
         </ul>
     </div>
+</section>
 
-    <!--main content start-->
-    <section id="main-content">
-        <section class="wrapper">
-            <div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-file-text-o"></i> Profile</h3>
-				</div>
-			</div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            Edit
-                        </header>
+<div class="mainSection">
+    <div style="background-color:#00c1c1;opacity:0.9; height: 10px;">
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+    </div>
+
+    <!-- Description -->
+    <section id="description" class="parallax section">
+        <div class="wrapsection">
+            <div class="parallax-overlay" style="background-color:#00c1c1;opacity:0.9;"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 sol-sm-12">
+                        <!-- button console -->
+                        <div style="text-align: right; margin-top: -100px">
+                            <!-- edit -->
+                            <!--<button type="button" id="editButton" class="btn btn-default btn-sm" onclick="editClick();" data-toggle="tooltip" data-placement="bottom" title="Edit">-->
+                            <button type="button" id="editButton" class="btn btn-default btn-sm" onclick="editClick();">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <!-- save -->
+                            <button type="button" id="saveButton" class="btn btn-default btn-sm" ng-click="vm.update()" onclick="saveClick()" disabled="true">
+                                <span class="glyphicon glyphicon-floppy-disk"></span>
+                            </button>
+                            <!-- cancel -->
+                            <button type="button" id="cancelButton" class="btn btn-default btn-sm" onclick="cancelClick()" disabled="true">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div><br/>
+                        <!-- profile picture -->
+                        <div class="maintitle">
+                            <p class="maintitle">
+                                <img width="130" height="130" src="/static/charity/images/no-user-image.gif" />
+                            </p>
+                            <div id="profilePicture">
+                                <!--<input style="display:inline-block;" type="file" ng-model="vm.profile.picture" />-->
+                            </div>
+                            <p style="font-size: 30px">
+                                {{vm.profile.name}}
+                            </p>
+                        </div>
+
+                        <div class="maintitle">
+                            <h3 class="section-title">Our Aim</h3>
+                            <p class="lead wow flipInX">
+                                <!--<textarea id="desTextArea" class="enTextArea" ng-model="vm.profile.description" rows="4" cols="60" maxlength="200" placeholder="Insert description here ..."></textarea>-->
+                                <textarea id="desTextArea" class="disTextArea" ng-model="vm.profile.description" rows="4" cols="60" maxlength="200" readonly="readonly"></textarea>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Last Activity -->
+    <section id="lastActivity" class="parallax section">
+        <div class="wrapsection">
+            <div class="parallax-overlay" style="background-color: #01b0d1;opacity:0.9;"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="maintitle">
+                            <h3 class="section-title"><strong>LAST </strong> ACTIVITY</h3>
+                            <p class="lead">
+                                Briefly detail about this activity
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-box wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                            <!--<img style="width: 200px; height: 100px;" src="" alt="">-->
+                            <h3>Name of activity</h3>
+                            <p>
+
+                            </p>
+                            <button type="button" class="btn btn-info btn-md"><a href="#">More Pictures</a></button>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-box wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                            <span class="glyphicon glyphicon-stats"></span>
+                            <h3>??? Participants</h3>
+                            <p>
+                                Totally ??? people donated/participated <br/>in this activity
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-box wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.4s">
+                            <span class="glyphicon glyphicon-usd"></span>
+                            <h3>??? Donated</h3>
+                            <p>
+                                Totally ??? money donation <br/>in this activity
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="maintitle">
+                            <button type="button" class="btn btn-info btn-md"><a href="#">More Activities</a></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Financial -->
+    <section id="financial" class="parallax section">
+        <div class="wrapsection">
+            <div class="parallax-overlay" style="background-color: #1de9b6;opacity:0.9;"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="maintitle">
+                            <h3 class="section-title">FINANCE</h3>
+                            <p class="lead">
+                                Financial chart
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                            <h3>Income</h3>
+                            <div class="financialchart">
+                                <canvas id="pie" class="chart chart-pie"
+                                        chart-data="incomedata" chart-labels="labels" chart-options="options">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6">
+                        <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                            <h3>Spending</h3>
+                            <div class="financialchart" style="text-align: center;">
+                                <canvas id="pie1" class="chart chart-pie"
+                                        chart-data="spendingdata" chart-labels="labels" chart-options="options">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Detail -->
+    <section id="contactDetail" class="parallax section">
+        <div class="wrapsection">
+            <div class="parallax-overlay" style="background-color: #1cbb9b;opacity:0.95;"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="maintitle">
+                            <h3 class="section-title">Contact Detail</h3>
+                        </div>
+
                         <div class="panel-body" ng-show="vm.isCharity">
-                            <form class="form-horizontal" ng-submit="vm.update()">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Name</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="text" ng-model="vm.profile.name" placeholder="Ex. Imperial Charity Soc."><!--disabled-->
+                            <form class="form-horizontal">
+                                <!-- Address -->
+                                <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
+                                    <label class="col-sm-4 control-label">Address</label>
+                                    <div class="col-sm-4">
+                                        <input id="addressTextbox" type="text" class="form-control" ng-model="vm.profile.address" readonly="readonly">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Profile Picture</label>
-                                    <input style="padding-left: 15px;" type="file" ng-model="vm.profile.picture">
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Description</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" ng-model="vm.profile.description" placeholder="Ex. Imperial Charity Soc was found in ...">
+                                <!-- City -->
+                                <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
+                                    <label class="col-sm-4 control-label">City</label>
+                                    <div class="col-sm-4">
+                                        <input id="cityTextbox" type="text" class="form-control" ng-model="vm.profile.city" readonly="readonly">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Address</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" ng-model="vm.profile.address" placeholder="Ex. Queens Gate">
+                                <!-- Country -->
+                                <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
+                                    <label class="col-sm-4 control-label">Country</label>
+                                    <div class="col-sm-4">
+                                        <input id="countryTextbox" type="text" class="form-control" ng-model="vm.profile.country" readonly="readonly">
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">City</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" ng-model="vm.profile.city" placeholder="Ex. London">
+                                <!-- Postcode -->
+                                <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
+                                    <label class="col-sm-4 control-label">Postcode</label>
+                                    <div class="col-sm-4">
+                                        <input id="postTextbox" type="text" class="form-control" ng-model="vm.profile.postcode" readonly="readonly">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Country</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" ng-model="vm.profile.country" placeholder="Ex. England">
+                                <!-- Email -->
+                                <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
+                                    <label class="col-sm-4 control-label">Email</label>
+                                    <div class="col-sm-4">
+                                        <input id="emailTextbox" type="text" class="form-control" ng-model="vm.profile.email" readonly="readonly">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Postcode</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" ng-model="vm.profile.postcode" placeholder="Ex. SW7">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Phone Number</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" ng-model="vm.profile.phone_number" placeholder="Ex. 078999487965">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label"></label>
-                                    <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button ng-click="vm.preview()" class="btn btn-primary">Preview</button>
+                                <!-- Phone Number -->
+                                <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
+                                    <label class="col-sm-4 control-label">Phone Number</label>
+                                    <div class="col-sm-4">
+                                        <input id="phoneTextbox" type="text" class="form-control" ng-model="vm.profile.phone_number" readonly="readonly">
                                     </div>
                                 </div>
                             </form>
                         </div>
-                    </section>
+                    </div>
                 </div>
             </div>
-            <!-- page end-->
-        </section>
+        </div>
     </section>
-</section>
+</div>
+<script>
+    $(document).ready(function(){
+        var lines = 4;
+        var maxLength = 60;
+        $('#desTextArea').keydown(function(e) {
+            newLines = $(this).val().split("\n");
+            cntNewLines = newLines.length;
+            if (e.keyCode == 13 && cntNewLines >= lines) {
+                return false;
+            }
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+//        var maxLength = 55;
+//        $('#desTextArea').keydown(function(e) {
+//            var text = $(this).val();
+//            var lines = text.split(/(\r\n|\n|\r)/gm);
+//            for (var i = 0; i < lines.length; i++) {
+//                // 13 = enter
+//                if (e.keyCode == 13) {
+//
+//                }
+//                // 8 = backspace, 46 = delete
+//                else if (lines[i].length > maxLength && !(e.keyCode == 8 || e.keyCode == 46)) {
+//                    return false;
+////                    lines[i] = lines[i].substring(0, maxLength);
+//                }
+//            }
+//            $(this).val(lines.join(''));
+//        });
+
+    });
+
+    // init variables
+    var initDescription;
+    var initAddress;
+    var initCity;
+    var initCountry;
+    var initPost;
+    var initEmail;
+    var initPhone;
+    // Description Section
+    var desTextArea = document.getElementById("desTextArea");
+    var pictureProfile = document.getElementById("profilePicture");
+    // Contact Section
+    var address = document.getElementById("addressTextbox");
+    var city = document.getElementById("cityTextbox");
+    var country = document.getElementById("countryTextbox");
+    var post = document.getElementById("postTextbox");
+    var email = document.getElementById("emailTextbox");
+    var phone = document.getElementById("phoneTextbox");
+    // Button
+    var editButton = document.getElementById("editButton");
+    var saveButton = document.getElementById("saveButton");
+    var cancelButton = document.getElementById("cancelButton");
+
+    function editClick() {
+        // Save init value
+        initValue();
+        // Description Section
+        desTextArea.className = "enTextArea";
+        desTextArea.readOnly = false;
+        $("#profilePicture").append( '<input style="display:inline-block;" type="file" ng-model="vm.profile.picture" />' );
+        // Contact Section
+        address.readOnly = false;
+        city.readOnly = false;
+        country.readOnly = false;
+        post.readOnly = false;
+        email.readOnly = false;
+        phone.readOnly = false;
+        // Button
+        disabledButton();
+    }
+
+    function saveClick() {
+        disabledEdit();
+        disabledButton();
+    }
+
+    function cancelClick(){
+        setInit();
+        disabledEdit();
+        disabledButton();
+    }
+
+    function initValue() {
+        initDescription = desTextArea.value;
+        initAddress = address.value;
+        initCity = city.value;
+        initCountry = country.value;
+        initPost = post.value;
+        initEmail = email.value;
+        initPhone = phone.value;
+    }
+
+    function setInit() {
+        desTextArea.value = initDescription;
+        address.value = initAddress;
+        city.value = initCity;
+        country.value = initCountry;
+        post.value = initPost;
+        email.value = initEmail;
+        phone.value = initPhone;
+    }
+
+    function disabledEdit() {
+        // Description Section
+        desTextArea.className = "disTextArea";
+        desTextArea.readOnly = true;
+        $("#profilePicture").empty();
+        // Contact Section
+        address.readOnly = true;
+        city.readOnly = true;
+        country.readOnly = true;
+        post.readOnly = true;
+        email.readOnly = true;
+        phone.readOnly = true;
+    }
+
+    function disabledButton() {
+        editButton.disabled = !editButton.disabled;
+        saveButton.disabled = !saveButton.disabled;
+        cancelButton.disabled = !cancelButton.disabled;
+    }
+
+    function goToByScroll(id){
+        // Remove "Link" from the ID
+        id = id.replace("Link", "");
+        // Scroll
+        $('html,body').animate({ scrollTop: $("#"+id).offset().top - 20}, 'slow');
+    }
+
+    $("#descriptionLink,#lastActivityLink,#financialLink,#contactDetailLink").click(function(e) {
+        // Prevent a page reload when a link is pressed
+        e.preventDefault();
+        // Call the scroll function
+        goToByScroll($(this).attr("id"));
+    });
+
+</script>
 
 <script src="/static/charity/css/profilecss/scripts.js"></script>
+<script src="/static/charity/css/profilecss/common.js"></script>
 </body>
 </html>

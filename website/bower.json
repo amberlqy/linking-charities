@@ -13,22 +13,22 @@
   ],
   "dependencies": {
     "angular": "^1.4.0",
-    "bootstrap": "^3.2.0",
     "angular-animate": "^1.4.0",
     "angular-aria": "^1.4.0",
     "angular-cookies": "^1.4.0",
+    "angular-material": null,
     "angular-messages": "^1.4.0",
     "angular-resource": "^1.4.0",
     "angular-route": "^1.4.0",
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
     "angular-ui-bootstrap-bower": "^0.13.4",
+    "bootstrap": "^3.2.0",
+    "jquery": "^3.1.1",
     "material-design-lite": null,
     "ngDialog": "~0.5.1",
     "snackbarjs": null,
-    "underscore": "~1.7.0",
-    "angular-material": null,
-    "jquery": "^3.1.1"
+    "underscore": "~1.7.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.0"
