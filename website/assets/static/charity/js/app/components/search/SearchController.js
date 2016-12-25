@@ -94,11 +94,6 @@
             $scope.selectPage(1);
         };
 
-        // Directs to the selected profile page
-        $scope.profilePage = function (id) {
-            $location.path('/charityprofile/' + id);
-        };
-
         //Change between list and map
         $scope.isMap = 0;
         $scope.isList = function (list) {

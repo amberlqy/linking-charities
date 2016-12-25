@@ -24,13 +24,23 @@
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/home/home.html',
             activeTab: 'home'
-        }).when('/+:username/profile/', {
+        }).when('/profile', {
             controller: 'ProfileController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/profiles/profile_edit.html'
             ,resolve: {
                 profilePrepService: function(Profile){
                     return Profile.getCurrent();
+                }
+            }
+        }).when('/profile/:name', {
+            controller: 'ProfileController',
+            controllerAs: 'vm',
+            templateUrl: '/static/charity/js/app/components/profiles/profile_edit.html'
+            ,resolve: {
+                profilePrepService: function($route, Profile){
+                    var name = $route.current.params.name;
+                    return Profile.getProfile(name);
                 }
             }
         }).when('/+:username/new_activity', {

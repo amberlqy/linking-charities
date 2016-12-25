@@ -22,28 +22,37 @@
         activate();
 
         function activate() {
-            // TODO Check if login and correct user login
-            vm.isAuthenticated = Authentication.isAuthenticated();
-            var authenticatedAccount = Authentication.getAuthenticatedAccount();
-            if (!authenticatedAccount) {
-                $location.url('/login');
-                //Snackbar.error('You are not authorized to view this page.');
-            } else {
-                if (authenticatedAccount != undefined){
-                    vm.user = authenticatedAccount.username;
-                }
-            }
+            // TODO : Use this path in Setting Controller
+            // vm.isAuthenticated = Authentication.isAuthenticated();
+            // var authenticatedAccount = Authentication.getAuthenticatedAccount();
+            // if (!authenticatedAccount) {
+            //     $location.url('/login');
+            //     //Snackbar.error('You are not authorized to view this page.');
+            // } else {
+            //     if (authenticatedAccount != undefined){
+            //         vm.user = authenticatedAccount.username;
+            //     }
+            // }
 
+            // initial value
+            vm.isMatched = false;
             // Get current charity profile data
             setProfile();
 
             var user_role = Profile.getAuthenticatedAccount();
-            vm.isCharity = user_role.userRole == "charity";
-            vm.isMatched = user_role.username == vm.profile.name;
+            if (user_role != undefined && user_role != null) {
+                vm.isCharity = user_role.userRole == "charity";
+                vm.isMatched = user_role.username == vm.profile.name;
+            }
 
             function setProfile() {
                 var charity_profile = profilePrepService.data.charity_profile;
                 console.log(charity_profile);
+                if (charity_profile == undefined || charity_profile == null) {
+                    alert("Page Not Found. We could not find the page you requested.");
+                    $location.url('/home');
+                    return;
+                }
                 vm.profile.name = charity_profile.charity_name;
                 vm.profile.goal = charity_profile.goal;
                 vm.profile.description = charity_profile.description;
@@ -56,15 +65,15 @@
             }
         }
 
-        vm.preview = function(){
-            var modalInstance = $modal.open({
-                templateUrl: '/static/charity/js/app/components/preview/previewprofile.html',
-                 controller: 'PreviewProfileController',
-                scope: $scope,
-                size:'lg',
-                resolve: {} // empty storage
-            });
-        }
+        // vm.preview = function(){
+        //     var modalInstance = $modal.open({
+        //         templateUrl: '/static/charity/js/app/components/preview/previewprofile.html',
+        //          controller: 'PreviewProfileController',
+        //         scope: $scope,
+        //         size:'lg',
+        //         resolve: {} // empty storage
+        //     });
+        // }
 
         // Called when the user clicks on Update profile
         vm.update = function(){
