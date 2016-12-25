@@ -59,6 +59,32 @@ class CharityTagsView(APIView):
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 
+    # Gets the tags of a specific charity profile, or returns the overall tag usage for all charity profiles
+    def get(self, request):
+        mode = request.GET.get('mode', None)
+
+        if not mode:
+            response_data = json.dumps({"error": "Mode unrecognised!"})
+            return HttpResponse(response_data, content_type='application/json')
+
+        # Get usage counts for tags used by charity profiles
+        if mode == "usage":
+            tags_and_counts = Tag.objects.usage_for_model(CharityProfile, counts=True)
+            response_data = json.dumps({"tags_and_counts": tags_and_counts})
+            return HttpResponse(response_data, content_type='application/json')
+
+        # Get the tags used by a specific charity
+        id = request.GET.get('id', None)
+        charity_profile = CharityProfile.objects.filter(id=id).first()
+        if not charity_profile:
+            response_data = json.dumps({"error": "Charity profile doesn't exist!"})
+            return HttpResponse(response_data, content_type='application/json')
+
+        tags = Tag.objects.get_for_object(charity_profile)
+        charity_tags_strings = [tag.name for tag in tags]
+        response_data = json.dumps({"tags": charity_tags_strings})
+        return HttpResponse(response_data, content_type='application/json')
+
 
 class CharitySearchView(APIView):
     permission_classes = (permissions.AllowAny,)

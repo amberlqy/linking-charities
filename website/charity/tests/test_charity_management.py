@@ -39,6 +39,29 @@ class CharityManagementViewTestCase(TestCase):
         self.assertIn("kitten", charity_tags_strings)
         self.assertIn("cat", charity_tags_strings)
 
+    # Tests if we can successfully get tags associated with a charity profile
+    def test_get_tags(self):
+        response = self.client.post("/api/auth/login/", {"username": "Charity1", "password": "Woozles123"})
+
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        tag_response = self.client.post("/api/charity/charity_tags/", {"tags": "kitten cat soft"},
+                                        HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        charity = User.objects.get(username="Charity1")
+        charity_profile = charity.charity_profile
+        charity_profile_id = charity_profile.id
+
+        tag_response = self.client.get("/api/charity/charity_tags/", {"mode": "specific", "id": charity_profile_id},
+                                        HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        tag_response_content = json.loads(tag_response.content.decode('utf-8'))
+        tags = tag_response_content["tags"]
+        self.assertIn("kitten", tags)
+        self.assertIn("cat", tags)
+        self.assertIn("soft", tags)
+
     # Tests if we can successfully search for charity profiles using tags
     def test_search_for_charity_with_tags(self):
 
