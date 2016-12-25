@@ -69,7 +69,8 @@ class CharitySearchView(APIView):
         # If the request contains a single ID, return only one charity profile.
         charity_id = request.GET.get('id', None)
         if charity_id:
-            charity_profile = CharityProfile.objects.get(id=charity_id)
+            # Search by matching with charity_name instead of id
+            charity_profile = CharityProfile.objects.get(charity_name=charity_id)
 
             charity_profile_serializer = CharityProfileSerializer(charity_profile)
             return_dictionary = {"charity_profile": charity_profile_serializer.data}

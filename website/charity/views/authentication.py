@@ -48,7 +48,7 @@ class RegistrationView(APIView):
 
             if user_type == 'charity':
                 # Read charity specific parameters
-                charity_name = data.get('charity_name', None)
+                #charity_name = data.get('charity_name', None)
                 goal = data.get('goal', None)
                 description = data.get('description', None)
                 address = data.get('address', None)
@@ -57,7 +57,7 @@ class RegistrationView(APIView):
                 postcode = data.get('postcode', None)
                 #email = data.get('email', None)
                 phone_number = data.get('phone_number', None)
-                CharityProfile.objects.create(charity_name=charity_name,
+                CharityProfile.objects.create(charity_name=username,
                                               goal=goal,
                                               description=description,
                                               address=address,

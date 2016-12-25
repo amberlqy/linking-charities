@@ -64,7 +64,6 @@
 
         function getAuthenticatedAccount() {
             if (!$cookies.get('username')) {
-                console.log("User is not authenticated!");
                 return null;
             }
 

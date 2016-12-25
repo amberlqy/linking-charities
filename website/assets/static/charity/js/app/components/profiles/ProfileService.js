@@ -6,14 +6,15 @@
         .module('charity.profiles.services')
         .factory('Profile', Profile);
 
-    Profile.$inject = ['$http', '$cookies', 'Authentication'];
+    Profile.$inject = ['$http', 'Authentication'];
 
-    function Profile($http, $cookies, Authentication) {
+    function Profile($http, Authentication) {
         return {
             destroy: destroy,
             get: get,
             update: update,
             getCurrent: getCurrentCharityProfile,
+            getProfile: getSpecificCharityProfile,
             getAuthenticatedAccount: getAuthenticatedAccount
         };
 
@@ -28,8 +29,13 @@
         }
 
         // Returns the profile information of the currently logged in charity. No parameters are needed.
-        function getCurrentCharityProfile(){
+        function getCurrentCharityProfile() {
             return $http.get('/api/auth/charity_profile/');
+        }
+
+        // Return the specific profile information.
+        function getSpecificCharityProfile(profileName) {
+            return $http.get('/api/charity/charity_search/', {params: {"id": profileName}});
         }
 
         // Returns important details about the authenticated user/charity
