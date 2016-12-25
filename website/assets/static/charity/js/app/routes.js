@@ -24,15 +24,6 @@
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/home/home.html',
             activeTab: 'home'
-        }).when('/profile', {
-            controller: 'ProfileController',
-            controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/profiles/profile_edit.html'
-            ,resolve: {
-                profilePrepService: function(Profile){
-                    return Profile.getCurrent();
-                }
-            }
         }).when('/profile/:name', {
             controller: 'ProfileController',
             controllerAs: 'vm',
@@ -43,11 +34,11 @@
                     return Profile.getProfile(name);
                 }
             }
-        }).when('/+:username/new_activity', {
+        }).when('/profile/:name/new_activity', {
             controller: 'ProfileNewActivityController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/profiles/profile_new_activity.html'
-        }).when('/+:username/activities', {
+        }).when('/profile/:name/activities', {
             controller: 'ProfileActivityController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/profiles/profile_activity.html'
