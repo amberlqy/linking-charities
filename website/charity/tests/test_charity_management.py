@@ -21,8 +21,7 @@ class CharityManagementViewTestCase(TestCase):
                                                                          "email": "heffalumps2@woozles2.com",
                                                                          "password": "Woozles123",
                                                                          "user_type": "charity",
-                                                                         "goal": "To save lonely kittens.",
-                                                                         "charity_name": "Save the kittens, quick"})
+                                                                         "goal": "To save lonely kittens."})
 
     # Tests if we can successfully associate tags with a charity
     def test_upload_tags(self):
@@ -156,8 +155,8 @@ class CharityManagementViewTestCase(TestCase):
     def test_get_charity_profile(self):
         charity = User.objects.get(username="Charity1")
         charity_profile = charity.charity_profile
-        charity_profile_id = charity_profile.id
-        get_charity_response = self.client.get("/api/charity/charity_search/", {"id": charity_profile_id})
+        charity_profile_username = charity_profile.user.username
+        get_charity_response = self.client.get("/api/charity/charity_search/", {"id": charity_profile_username})
 
         get_charity_response_obj = json.loads(get_charity_response.content.decode('utf-8'))
         self.assertEqual(get_charity_response_obj["charity_profile"]["goal"], "To save lonely kittens.")
@@ -168,7 +167,7 @@ class CharityManagementViewTestCase(TestCase):
         get_charity_response = self.client.get("/api/charity/charity_search/", {"name": "all"})
         get_charity_response_names = json.loads(get_charity_response.content.decode('utf-8'))
         self.assertEqual(len(get_charity_response_names["charity_names"]), 1)
-        self.assertEqual(get_charity_response_names["charity_names"][0], "Save the kittens, quick")
+        self.assertEqual(get_charity_response_names["charity_names"][0], "Charity1")
 
     # Tests if a user profile can like a charity profile
     def test_liking_a_charity(self):
