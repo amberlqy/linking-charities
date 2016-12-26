@@ -282,7 +282,7 @@ class CharityDataProcessorView(APIView):
 class PaymentConfirmationView(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def get(self, request, charity_username):
+    def post(self, request, charity_username):
 
         # Read parameter from the URL
         charity_profile = User.objects.filter(username=charity_username).first()
