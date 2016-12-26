@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Activity Picture</label>
-                                    <input style="padding-left: 15px;" type="file" id="activityPicture" ng-model="vm.activity.picture">
+                                    <input style="padding-left: 15px;" type="file" id="activityPicture" files-model="vm.activity.picture" />
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Date</label>
@@ -87,6 +87,41 @@
                 </div>
             </div>
             <!-- page end-->
+
+
+            <!-- playground for image upload -->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form" name="form" ng-submit="uploadImage()">
+                        <label for="inputFile">Select Image:</label>
+                        <input id="inputFile" type="file" files-model="newImage.image">
+                        <br />
+                        <label for="title">Title</label>
+                        <input type="text" id="title" ng-model="newImage.title"><br />
+
+                        <label for="description">Description</label>
+                        <textarea id="description" ng-model="newImage.description"></textarea><br />
+                        <button class="btn btn-primary" type="submit">
+                            Upload
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- display the images -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" ng-repeat="image in images track by image.pk">
+                    <h3>
+                        {{ image.title }}
+                        <button class="btn btn-warning" ng-click="deleteImage(image)">Delete</button>
+                    </h3>
+                    <a href="{{ image.image }}">
+                        <img class="img-responsive" ng-src="{{ image.thumbnail }}">
+                        <p>{{ image.description }}</p>
+                    </a>
+                </div>
+            </div>
+            <!-- End of playground for image upload -->
+
         </section>
     </section>
 </section>

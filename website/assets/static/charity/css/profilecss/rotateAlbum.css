@@ -1,0 +1,48 @@
+@import url(http://fonts.googleapis.com/css?family=Anaheim);
+
+*:before,
+*:after{
+	box-sizing: border-box;
+}
+
+#carousel{
+    width: 280px;
+	transform-style: preserve-3d;
+	animation: rotation 20s infinite linear;
+	animation-play-state: paused;
+}
+#carousel:hover{
+	animation-play-state: running;
+}
+#carousel figure{
+	display: block;
+	position: absolute;
+	width: 90%;
+	height: 50%px;
+	left: 10px;
+	/*top: 10px;*/
+	background: black;
+	overflow: hidden;
+	border: solid 5px black;
+}
+
+#carousel figure:nth-child(1) { transform: rotateY(0deg) translateZ(210px);}
+#carousel figure:nth-child(2) { transform: rotateY(60deg) translateZ(210px);}
+#carousel figure:nth-child(3) { transform: rotateY(120deg) translateZ(210px);}
+#carousel figure:nth-child(4) { transform: rotateY(180deg) translateZ(210px);}
+#carousel figure:nth-child(5) { transform: rotateY(240deg) translateZ(210px);}
+#carousel figure:nth-child(6) { transform: rotateY(300deg) translateZ(210px);}
+
+#carousel img{
+	height: 180px;
+    width: 280px;
+}
+
+@keyframes rotation{
+	from{
+		transform: rotateY(0deg);
+	}
+	to{
+		transform: rotateY(360deg);
+	}
+}

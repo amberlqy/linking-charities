@@ -6,9 +6,9 @@
         .module('charity.profiles.services')
         .factory('Profile', Profile);
 
-    Profile.$inject = ['$http', 'Authentication'];
+    Profile.$inject = ['$http', 'Authentication', '$resource'];
 
-    function Profile($http, Authentication) {
+    function Profile($http, Authentication, $resource) {
         return {
             destroy: destroy,
             get: get,
@@ -16,7 +16,8 @@
             getCurrent: getCurrentCharityProfile,
             getProfile: getSpecificCharityProfile,
             getAuthenticatedAccount: getAuthenticatedAccount,
-            getActivity: getCharityActivity
+            getActivity: getCharityActivity,
+            uploadActivityPicture: uploadActivityPicture
         };
 
         function destroy(profile) {
@@ -61,6 +62,40 @@
         // Return activity information.
         function getCharityActivity(profileName) {
             return $http.get('/api/charity/get_activity/', {params: {"id": profileName}});
+        }
+
+        // Upload activity picture
+        function uploadActivityPicture() {
+            return $resource('/api/images/:pk/', {'pk': '@pk'}, { // Change into our URL
+                'save': {
+                    method: 'POST',
+                    transformRequest: transformImageRequest,
+                    headers: {'Content-Type':undefined}
+                }
+            });
+        }
+
+        // Transform uploaded image
+        function transformImageRequest(data) {
+            if (data === undefined)
+                return data;
+
+            var fd = new FormData();
+            angular.forEach(data, function(value, key) {
+                if (value instanceof FileList) {
+                    if (value.length == 1) {
+                        fd.append(key, value[0]);
+                    } else {
+                        angular.forEach(value, function(file, index) {
+                            fd.append(key + '_' + index, file);
+                        });
+                    }
+                } else {
+                    fd.append(key, value);
+                }
+            });
+
+            return fd;
         }
     }
 })();
