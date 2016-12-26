@@ -17,7 +17,11 @@ class CharityProfile(models.Model):
     phone_number = models.CharField(max_length=255, null=True)
     email = models.CharField(max_length=255, null=True)
     description = models.TextField(max_length=1000, null=True)
+
     verified = models.BooleanField(default=False)
+
+    paypal_email = models.CharField(max_length=255, null=True)
+    paypal_identity_token = models.CharField(max_length=255, null=True)
 
 # Register the charity profile for tagging purpose
 register(CharityProfile)

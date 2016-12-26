@@ -24,7 +24,7 @@ urlpatterns = patterns(
     url(r'^auth/charity_verification/$', CharityVerificationView.as_view(), name='charity_verification'),
 
     # Payment
-    url(r'^charity/payment_confirmation/$', PaymentConfirmationView.as_view(), name='payment_confirmation'),
+    url(r'^charity/payment_confirmation/(?P<charity_username>\d+)/$', PaymentConfirmationView.as_view(), name='payment_confirmation'),
 
     # For testing purpose only
     url(r'^auth/authenticated_charity/$', CharityRestrictedView.as_view(), name='test_authorisation_token'),

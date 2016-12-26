@@ -20,8 +20,10 @@ from assets import settings
 from charity.models.charity_activity import CharityActivity
 from charity.models.charity_data import CharityData
 from charity.models.charity_profile import CharityProfile
+from charity.models.payment import Payment
 from charity.roles import roles
 from tagging.models import Tag, TaggedItem
+from django.contrib.auth.models import User
 
 from charity.serializers.charity_activity_serializer import CharityActivitySerializer
 from charity.utilities.zip_to_csv_converter import import_zip
@@ -276,21 +278,35 @@ class CharityDataProcessorView(APIView):
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 
 
-# Responsible for confirming the payments previously made by the user
+# Responsible for confirming the payments previously made by any user
 class PaymentConfirmationView(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request):
+    def post(self, request, charity_username):
+
+        charity_profile = User.objects.filter(username=charity_username).first()
+        if not charity_profile:
+            response_data = json.dumps({"error": "Charity profile does not exist with the provided username: " + str(charity_username)})
+            return HttpResponse(response_data, content_type='application/json')
 
         data = request.data
-        transaction_id = data.get('transaction_id', "8C641029PY664850G")
-        # identity_token = data.get('identity_token', "net1NjmYwfzb2%2bmzaO5BC8jcei1NKXYbGptrF2ZV0px5RrXXDcUpN34zDFDdHiHAyJ7zqZskgNTViYLgVn8Qky6fxhP%2fx%2bRjS7RBFEKmCOWos%2becbOmQCFKELntlxvjoQim%2faEXgTdwc8E686EH8LM0%2fTLvflqNHo7nY%2bBsR090%3d4")
-        identity_token = "-T0hTSFMJq_7jc_El8QNPTDRCLOmq7f4WswXwlQin6RNClH8bJAaBQbkEFa"
+        transaction_id = data.get('transaction_id', None)
+        if not transaction_id:
+            response_data = json.dumps({"error": "Transaction ID was not provided."})
+            return HttpResponse(response_data, content_type='application/json')
 
-        post_data = [('tx', transaction_id), ("at", identity_token), ("cmd", "_notify-synch"),]
+        # Example: "-T0hTSFMJq_7jc_El8QNPTDRCLOmq7f4WswXwlQin6RNClH8bJAaBQbkEFa"
+        charity_identity_token = charity_profile.paypal_identity_token
+
+        post_data = [('tx', transaction_id), ("at", charity_identity_token), ("cmd", "_notify-synch"), ]
         post_data_bytes = urlencode(post_data).encode("utf-8")
         result = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes).read().decode('UTF-8')
 
-        json_reponse = JSONRenderer().render({"success": result})
+        # Check if the user is logged in
+        user = request.user
+        if user:
+            new_payment = Payment()
+            pass
 
+        json_reponse = JSONRenderer().render({"success": result})
         return HttpResponse(json_reponse, content_type='application/json')
