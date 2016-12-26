@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
     <link href="/static/charity/css/profilecss/style.css" rel="stylesheet">
-    <link href="/static/charity/css/profilecss/verticleTimeline.css" rel="stylesheet">
+    <link href="/static/charity/css/profilecss/rotateAlbum.css" rel="stylesheet">
 </head>
 <body>
 
 <div style="background-color: #eeeeee;">
-
-<!-- container section start -->
-<section>
+    <!-- aside menu -->
+    <section>
     <!-- aside menubar -->
     <div id="sidebar">
         <ul class="sidebar-menu">
             <li>
-                <a class="" href="{{vm.user}}/profile">
+                <a id="descriptionLink" href="profile/{{vm.name}}">
                     <i></i>
                     <span>Profile</span>
                 </a>
@@ -27,9 +26,28 @@
                     <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
                 </a>
                 <ul class="sub">
-                    <li><a class="" href="{{vm.user}}/new_activity">New Activity</a></li>
-                    <li class="active"><a class="" href="{{vm.user}}/activities">Past Activity</a></li>
+                    <li><a id="lastActivityLink" href="profile/{{vm.name}}#lastActivity">Last Activity</a></li>
+                    <li class="active"><a class="" href="#">Past Activities</a></li>
+                    <li><a class="" href="profile/{{vm.name}}/new_activity">New Activity</a></li>
                 </ul>
+            </li>
+            <li>
+                <a id="financialLink" href="profile/{{vm.name}}#financial">
+                    <i></i>
+                    <span>Financial</span>
+                </a>
+            </li>
+            <li>
+                <a class="" href="">
+                    <i></i>
+                    <span>Donate To Us</span>
+                </a>
+            </li>
+            <li>
+                <a id="contactDetailLink" href="profile/{{vm.name}}#contactDetail">
+                    <i></i>
+                    <span>Contact Us</span>
+                </a>
             </li>
             <li>
                 <a class="" href="{{vm.user}}/setting">
@@ -39,110 +57,51 @@
             </li>
         </ul>
     </div>
+</section>
 
-    <!--main content start-->
     <section id="main-content">
         <section class="wrapper">
             <div class="row">
-				<div class="col-lg-12">
-					<h3 class="page-header"><i class="fa fa-file-text-o"></i> Activities</h3>
-				</div>
-			</div>
-
-            <!--<section id="cd-timeline" class="cd-container">-->
-                <!--&lt;!&ndash;<div ng-repeat="ex in vm.activityResults">&ndash;&gt;-->
-                <!--<div ng-repeat="i in [1, 2, 3, 4]">-->
-                    <!--&lt;!&ndash;<div ng-bind-html="vm.timelineHtmlPart1+ex.name+vm.timelineHtmlPart2+vm.timelineHtmlPart1+ex.id+vm.timelineHtmlPart2"></div>&ndash;&gt;-->
-                   <!--<div ng-bind-html="vm.timelineHtmlPart1+vm.timelineHtmlPart2"></div>-->
-                   <!--&lt;!&ndash;<div ng-bind-html="vm.timelineHtmlPart"></div>&ndash;&gt;-->
-                    <!--<br><br><br>-->
-               <!--</div>-->
-           <!--</section>-->
-
-
-           <!--<section id="cd-timeline" class="cd-container">-->
-               <!--&lt;!&ndash;<h1 ng-repeat="x in vm.activityResults">1111</h1>&ndash;&gt;-->
-                <!--<div class="showDiffTags" ng-repeat="ex in vm.activityResults">-->
-                   <!--&lt;!&ndash;<div ng-bind-html="vm.timelineHtmlPart1+ex.name+vm.timelineHtmlPart2+vm.timelineHtmlPart1+ex.id+vm.timelineHtmlPart2"></div>&ndash;&gt;-->
-                   <!--&lt;!&ndash;<div ng-bind-html="vm.timelineHtmlPart1+vm.timelineHtmlPart2"></div>&ndash;&gt;-->
-                   <!--<div ng-bind-html="vm.timelineHtmlPart"></div>-->
-                    <!--<br><br><br>-->
-               <!--</div>-->
-           <!--</section>-->
-
-            <section id="cd-timeline" class="cd-container">
-                <div class="cd-timeline-block">
-                    <div class="cd-timeline-img cd-picture">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
-                    </div>
-
-                    <div class="cd-timeline-content">
-                        <h2>Fifth Activity</h2>
-                        <p>Fifth Activity was organised on 17 July 2016</p>
-                        <a href="#0" class="cd-read-more">Read more</a>
-                        <span class="cd-date">17 July 2016</span>
-                    </div>
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-file-text-o"></i> What We {{vm.name}} Do</h3>
                 </div>
+            </div>
 
-                <div class="cd-timeline-block">
-                    <div class="cd-timeline-img cd-picture">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
-                    </div>
-
-                    <div class="cd-timeline-content">
-                        <h2>Fourth Activity</h2>
-                        <p>Fourth Activity was organised on 30 May 2016</p>
-                        <a href="#0" class="cd-read-more">Read more</a>
-                        <span class="cd-date">30 May 2016</span>
-                    </div>
-                </div>
-
-                <div class="cd-timeline-block">
-                    <div class="cd-timeline-img cd-picture">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
-                    </div>
-
-                    <div class="cd-timeline-content">
-                        <h2>Third Activity</h2>
-                        <p>Third Activity was organised on 16 April 2016</p>
-                        <a href="#0" class="cd-read-more">Read more</a>
-                        <span class="cd-date">16 April 2016</span>
-                    </div>
-                </div>
-
-                <div class="cd-timeline-block">
-                    <div class="cd-timeline-img cd-picture">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
-                    </div>
-
-                    <div class="cd-timeline-content">
-                        <h2>Second Activity</h2>
-                        <p>Second Activity was organised on 3 March 2016</p>
-                        <a href="#0" class="cd-read-more">Read more</a>
-                        <span class="cd-date">3 March 2016</span>
-                    </div>
-                </div>
-
-                <div class="cd-timeline-block">
-                    <div class="cd-timeline-img cd-picture">
-                        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-picture.svg" alt="Picture">
-                    </div>
-
-                    <div class="cd-timeline-content">
-                        <h2>First Activity</h2>
-                        <p>First Activity was organised on 12 Feb 2016</p>
-                        <a href="#0" class="cd-read-more">Read more</a>
-                        <span class="cd-date">12 Feb 2016</span>
-                    </div>
-                </div>
-            </section>
-            <!-- page end-->
+            <div id="activityList">
+                <table>
+                    <tr ng-repeat="activity in vm.activity track by $index">
+                        <td align="center" style="border: 1px #ccc solid; height: 250px; width: 575px; vertical-align: top; text-align: center;">
+                            <div id="carousel" style="margin-left: 140px; margin-top: 30px;">
+                                <figure><img src="http://lorempixel.com/186/116/nature/1" alt=""></figure>
+                                <figure><img src="http://lorempixel.com/186/116/nature/1" alt=""></figure>
+                                <figure><img src="http://lorempixel.com/186/116/nature/3" alt=""></figure>
+                                <figure><img src="/static/charity/images/no-user-image.gif" alt=""></figure>
+                                <figure><img src="http://lorempixel.com/186/116/nature/5" alt=""></figure>
+                                <figure><img src="http://lorempixel.com/186/116/nature/6" alt=""></figure>
+                            </div>
+                            <div style="margin-top: 240px;">
+                                <button type="button" class="btn btn-info btn-md"><a href="#">All Pictures</a></button>
+                            </div>
+                        </td>
+                        <td style="border: 1px #ccc solid;">
+                            <h3>Activity Name : {{activity.name}}</h3>
+                            <h3>Activity Date :</h3>
+                            <h3>Activity Description :</h3>
+                            <p style="font-size:24px; font-weight:200;">
+                                <textarea id="desTextArea" name="desTextArea" class="disTextArea" rows="4" cols="45" maxlength="200" readonly="readonly">{{activity.description}}</textarea>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </section>
     </section>
-</section>
-    </div>
+</div>
+<script>
+
+</script>
 
 <script src="/static/charity/css/profilecss/scripts.js"></script>
-<script src="/static/charity/css/profilecss/modernizr.js"></script>
+
 </body>
 </html>

@@ -159,6 +159,7 @@ ul.sidebar-menu li a:hover i, ul.sidebar-menu li a:focus i {
 ul.sidebar-menu li.active a i {
     color: #fff;
 }
+/* end sidebar*/
 
 /*main content*/
 #main-content {
@@ -208,6 +209,13 @@ ul.sidebar-menu li.active a i {
 div.mainSection {
     padding-left: 180px;
 }
+
+.mainSectionBegin {
+    background-color:#00c1c1;
+    opacity:0.9;
+    height: 10px;
+}
+
 .section {
 
 }
@@ -274,6 +282,24 @@ p.lead {
 	font-size:60px;
 	margin-bottom:20px;
 }
+.descriptionBg {
+    background-color:#00c1c1;
+    opacity:0.9;
+}
+.lastActivityBg {
+    background-color: #01b0d1;
+    opacity:0.9;
+}
+.financialBg {
+    background-color: #1de9b6;
+    opacity:0.9;
+}
+.contactDetailBg {
+    background-color: #1cbb9b;
+    opacity:0.95;
+}
+
+
 #gallery .description {
 	background-color:#fff;
 	display:block;
@@ -338,4 +364,15 @@ p.lead {
 	color:#444;
 	padding:30px;
 	position: relative;
+}
+
+#activityList .enTextArea {
+    resize: none;
+    color: black;
+}
+#activityList .disTextArea {
+    resize: none;
+    /*color: #acb1b8;*/
+    border: none;
+    background: transparent;
 }

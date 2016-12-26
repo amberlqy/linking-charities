@@ -27,8 +27,8 @@
         }).when('/profile/:name', {
             controller: 'ProfileController',
             controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/profiles/profile_edit.html'
-            ,resolve: {
+            templateUrl: '/static/charity/js/app/components/profiles/profile_edit.html',
+            resolve: {
                 profilePrepService: function($route, Profile){
                     var name = $route.current.params.name;
                     return Profile.getProfile(name);
@@ -41,7 +41,14 @@
         }).when('/profile/:name/activities', {
             controller: 'ProfileActivityController',
             controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/profiles/profile_activity.html'
+            templateUrl: '/static/charity/js/app/components/profiles/profile_activity.html',
+            resolve: {
+                activityPrepService: function($route, Profile){
+                    var name = $route.current.params.name;
+                    // return Profile.getActivity(name);
+                    return Profile.getActivity("1");
+                }
+            }
         }).when('/+:username/setting', {
             controller: 'ProfileSettingsController',
             controllerAs: 'vm',

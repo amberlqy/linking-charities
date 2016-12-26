@@ -91,8 +91,8 @@
             Profile.update(profile);
         }
 
-        vm.logout = function logout() {
-            Authentication.logout();
-        }
+        // vm.logout = function logout() {
+        //     Authentication.logout();
+        // }
     }
 })();

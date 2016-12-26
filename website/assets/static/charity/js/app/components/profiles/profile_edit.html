@@ -59,7 +59,7 @@
 </section>
 
 <div class="mainSection">
-    <div style="background-color:#00c1c1;opacity:0.9; height: 10px;">
+    <div class="mainSectionBegin">
         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -73,7 +73,7 @@
     <!-- Description -->
     <section id="description" class="parallax section">
         <div class="wrapsection">
-            <div class="parallax-overlay" style="background-color:#00c1c1;opacity:0.9;"></div>
+            <div class="parallax-overlay descriptionBg"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 sol-sm-12">
@@ -123,7 +123,7 @@
     <!-- Last Activity -->
     <section id="lastActivity" class="parallax section">
         <div class="wrapsection">
-            <div class="parallax-overlay" style="background-color: #01b0d1;opacity:0.9;"></div>
+            <div class="parallax-overlay lastActivityBg"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -177,7 +177,7 @@
     <!-- Financial -->
     <section id="financial" class="parallax section">
         <div class="wrapsection">
-            <div class="parallax-overlay" style="background-color: #1de9b6;opacity:0.9;"></div>
+            <div class="parallax-overlay financialBg"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -218,7 +218,7 @@
     <!-- Contact Detail -->
     <section id="contactDetail" class="parallax section">
         <div class="wrapsection">
-            <div class="parallax-overlay" style="background-color: #1cbb9b;opacity:0.95;"></div>
+            <div class="parallax-overlay contactDetailBg"></div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -291,25 +291,6 @@
         });
 
         $('[data-toggle="tooltip"]').tooltip();
-
-//        var maxLength = 55;
-//        $('#desTextArea').keydown(function(e) {
-//            var text = $(this).val();
-//            var lines = text.split(/(\r\n|\n|\r)/gm);
-//            for (var i = 0; i < lines.length; i++) {
-//                // 13 = enter
-//                if (e.keyCode == 13) {
-//
-//                }
-//                // 8 = backspace, 46 = delete
-//                else if (lines[i].length > maxLength && !(e.keyCode == 8 || e.keyCode == 46)) {
-//                    return false;
-////                    lines[i] = lines[i].substring(0, maxLength);
-//                }
-//            }
-//            $(this).val(lines.join(''));
-//        });
-
     });
 
     // init variables

@@ -15,7 +15,8 @@
             update: update,
             getCurrent: getCurrentCharityProfile,
             getProfile: getSpecificCharityProfile,
-            getAuthenticatedAccount: getAuthenticatedAccount
+            getAuthenticatedAccount: getAuthenticatedAccount,
+            getActivity: getCharityActivity
         };
 
         function destroy(profile) {
@@ -55,6 +56,11 @@
             function updateErrorFn(data, status, headers, config) {
                 console.error('Update failed!' + status);
             }
+        }
+
+        // Return activity information.
+        function getCharityActivity(profileName) {
+            return $http.get('/api/charity/get_activity/', {params: {"id": profileName}});
         }
     }
 })();
