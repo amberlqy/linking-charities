@@ -27,7 +27,7 @@
                 <ul class="sub">
                     <li class="active"><a id="lastActivityLink" href="#">Last Activity</a></li>
                     <li><a class="" href="profile/{{vm.profile.name}}/activities">Past Activities</a></li>
-                    <li><a class="" href="profile/{{vm.profile.name}}/new_activity">New Activity</a></li>
+                    <li ng-show="vm.isMatched"><a class="" href="profile/{{vm.profile.name}}/new_activity">New Activity</a></li>
                 </ul>
             </li>
             <li>
@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li>
-                <a class="" href="">
+                <a class="" href="payment">
                     <i></i>
                     <span>Donate To Us</span>
                 </a>
@@ -48,8 +48,8 @@
                     <span>Contact Us</span>
                 </a>
             </li>
-            <li>
-                <a class="" href="{{vm.user}}/setting">
+            <li ng-show="vm.isMatched">
+                <a class="" href="{{vm.profile.name}}/setting">
                     <i></i>
                     <span>Setting</span>
                 </a>

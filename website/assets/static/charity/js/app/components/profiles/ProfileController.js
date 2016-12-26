@@ -6,10 +6,8 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    // ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal', '$scope'];//, 'profilePrepService'];
     ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal', '$scope', 'profilePrepService'];
 
-    // function ProfileController($location, Authentication, Profile, $modal, $scope) {//, profilePrepService) {
     function ProfileController($location, Authentication, Profile, $modal, $scope, profilePrepService) {
         var vm = this;
         // vm.isCharity = true;
@@ -90,9 +88,5 @@
             };
             Profile.update(profile);
         }
-
-        // vm.logout = function logout() {
-        //     Authentication.logout();
-        // }
     }
 })();

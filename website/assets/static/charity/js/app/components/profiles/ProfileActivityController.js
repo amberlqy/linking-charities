@@ -24,7 +24,7 @@
             var user_role = Profile.getAuthenticatedAccount();
             if (user_role != undefined && user_role != null) {
                 vm.isCharity = user_role.userRole == "charity";
-                vm.isMatched = user_role.username == vm.profile.name;
+                vm.isMatched = user_role.username == vm.name;
             }
 
             function setActivity() {
