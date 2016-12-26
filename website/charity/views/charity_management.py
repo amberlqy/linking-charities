@@ -282,8 +282,9 @@ class CharityDataProcessorView(APIView):
 class PaymentConfirmationView(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    def post(self, request, charity_username):
+    def get(self, request, charity_username):
 
+        # Read parameter from the URL
         charity_profile = User.objects.filter(username=charity_username).first()
         if not charity_profile:
             response_data = json.dumps({"error": "Charity profile does not exist with the provided username: " + str(charity_username)})
