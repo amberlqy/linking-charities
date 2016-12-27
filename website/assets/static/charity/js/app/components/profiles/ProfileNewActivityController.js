@@ -56,48 +56,46 @@
             }
         }
 
-        // Playground for upload image
-        var imageService = Profile.uploadActivityPicture();
-        // It will be because we don't have any stored picture.
-        // TO DO : Check if there is no stored picture
-        $scope.images = imageService.query();
-        $scope.newImage = {};
 
-        // Upload an Image on Button Press
-        $scope.uploadImage = function() {
-            console.log('start upload');
-            // call REST API endpoint
-            imageService.save($scope.newImage).$promise.then(
-                function(response) {
-                    // the response is a valid image, put it at the front of the images array
-                    $scope.images.unshift(response);
-                },
-                function(rejection) {
-                    console.log('Failed to upload image');
-                    console.log(rejection);
-                }
-            );
-        };
 
-        /**
-         * Delete an image on Button Press
-         */
-        $scope.deleteImage = function(image) {
-            // call REST API endpoint
-            image.$delete(
-                // process response of delete
-                function(response) {
-                    // success delete
-                    console.log('Deleted it');
-                    // update $scope.images
-                    $scope.images = Images.query();
+        // Try to send image with JSON
+        //1. Used to list all selected files
+        $scope.files = [];
+
+        //3. listen for the file selected event which is raised from directive
+        $scope.$on("seletedFile", function (event, args) {
+            $scope.$apply(function () {
+                //add the file object to the scope's files collection
+                $scope.files.push(args.file);
+            });
+        });
+
+        //4. Post data and selected files.
+        $scope.saveActivity = function () {
+            var date = $filter('date')(vm.activity.date, "yyyyMMdd");
+            var activity = {
+                "name": vm.activity.name,
+                "description": vm.activity.detail,
+                "date": date,
+                "image": null
+            };
+            console.log(activity);
+
+            $http({
+                method: 'POST',
+                url: "/api/charity/activity/",
+                headers: { 'Content-Type': undefined },
+
+                transformRequest: function (data) {
+                    var formData = new FormData();
+                    formData.append("model", angular.toJson(data.model));
+                    for (var i = 0; i < data.files.length; i++) {
+                        formData.append("file" + i, data.files[i]);
+                    }
+                    return formData;
                 },
-                function(rejection) {
-                    // failed to delete it
-                    console.log('Failed to delete image');
-                    console.log(rejection);
-                }
-            );
+                data: { model: activity, files: $scope.files }
+            })
         };
     }
 })();
