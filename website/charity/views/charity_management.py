@@ -201,8 +201,13 @@ class CharityActivitySearchView(APIView):
     # Returns specific charity activities
     def get(self, request):
 
-        charity_profile_id = request.GET.get('id', None)
-        charity_profile = CharityProfile.objects.get(id=charity_profile_id)
+        charity_username = request.GET.get('username', None)
+        charity = User.objects.filter(username=charity_username).first()
+        if not charity:
+            response_data = json.dumps({"error": "No charity found with this username. "})
+            return HttpResponse(response_data, content_type='application/json')
+
+        charity_profile = charity.charity_profile
         charity_activities = charity_profile.activities
 
         charity_activity_serializer = CharityActivitySerializer(charity_activities, many=True)
