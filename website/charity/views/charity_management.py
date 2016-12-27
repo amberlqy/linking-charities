@@ -95,7 +95,7 @@ class CharitySearchView(APIView):
     def get(self, request):
 
         # If the request contains a single ID, return only one charity profile.
-        charity_username = request.GET.get('id', None)
+        charity_username = request.GET.get('name', None)
         if charity_username:
             # Search by matching with charity_name instead of id
             charity_profile = CharityProfile.objects.filter(user__username=charity_username).first()
