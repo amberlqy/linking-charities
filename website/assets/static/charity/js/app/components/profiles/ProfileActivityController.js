@@ -13,6 +13,10 @@
         vm.isCharity = true;
         vm.activity = {};
 
+        var strDate = "20161224";
+        var pattern = /(\d{4})(\d{2})(\d{2})/;
+        vm.date = new Date(strDate.replace(pattern, '$1-$2-$3'));
+
         activate();
 
         function activate() {
@@ -35,6 +39,7 @@
                     $location.url('/home');
                     return;
                 }
+                // TODO: format string to date before rendering page
                 vm.activity = charityActivity;
 
                 vm.name = $routeParams.name; // name of charity
@@ -43,7 +48,8 @@
 
         // Called when the user clicks on Update profile
         // TODO After save success direct to activities page
-        vm.update = function(){
+        vm.update = function(activity){
+            console.log(activity);
             // TODO Next phase can delete activity
             // return $http.post('/api/charity/activity/', activity).then(updateSuccessFn, updateErrorFn);
             //

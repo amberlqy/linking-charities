@@ -9,55 +9,55 @@
 <div style="background-color: #eeeeee;">
     <!-- aside menu -->
     <section>
-    <!-- aside menubar -->
-    <div id="sidebar">
-        <ul class="sidebar-menu">
-            <li>
-                <a id="descriptionLink" href="profile/{{vm.name}}">
-                    <i></i>
-                    <span>Profile</span>
-                </a>
-            </li>
-            <li class="sub-menu">
-                <a href="javascript:;" class="">
-                    <i></i>
-                    <span>Activity</span>
-                    <!-- Create class later, just a draft -->
-                    <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
-                </a>
-                <ul class="sub">
-                    <li><a id="lastActivityLink" href="profile/{{vm.name}}#lastActivity">Last Activity</a></li>
-                    <li class="active"><a class="" href="#">Past Activities</a></li>
-                    <li ng-show="vm.isMatched"><a class="" href="profile/{{vm.name}}/new_activity">New Activity</a></li>
-                </ul>
-            </li>
-            <li>
-                <a id="financialLink" href="profile/{{vm.name}}#financial">
-                    <i></i>
-                    <span>Financial</span>
-                </a>
-            </li>
-            <li>
-                <a class="" href="payment">
-                    <i></i>
-                    <span>Donate To Us</span>
-                </a>
-            </li>
-            <li>
-                <a id="contactDetailLink" href="profile/{{vm.name}}#contactDetail">
-                    <i></i>
-                    <span>Contact Us</span>
-                </a>
-            </li>
-            <li ng-show="vm.isMatched">
-                <a class="" href="{{vm.profile.name}}/setting">
-                    <i></i>
-                    <span>Setting</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</section>
+        <!-- aside menubar -->
+        <div id="sidebar">
+            <ul class="sidebar-menu">
+                <li>
+                    <a id="descriptionLink" href="profile/{{vm.name}}">
+                        <i></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;" class="">
+                        <i></i>
+                        <span>Activity</span>
+                        <!-- Create class later, just a draft -->
+                        <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
+                    </a>
+                    <ul class="sub">
+                        <li><a id="lastActivityLink" href="profile/{{vm.name}}#lastActivity">Last Activity</a></li>
+                        <li class="active"><a class="" href="#">Past Activities</a></li>
+                        <li ng-show="vm.isMatched"><a class="" href="profile/{{vm.name}}/new_activity">New Activity</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a id="financialLink" href="profile/{{vm.name}}#financial">
+                        <i></i>
+                        <span>Financial</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="" href="payment">
+                        <i></i>
+                        <span>Donate To Us</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="contactDetailLink" href="profile/{{vm.name}}#contactDetail">
+                        <i></i>
+                        <span>Contact Us</span>
+                    </a>
+                </li>
+                <li ng-show="vm.isMatched">
+                    <a class="" href="{{vm.profile.name}}/setting">
+                        <i></i>
+                        <span>Setting</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </section>
 
     <section id="main-content">
         <section class="wrapper">
@@ -70,8 +70,8 @@
             <div id="activityList">
                 <table>
                     <tr ng-repeat="activity in vm.activity track by $index">
-                        <td align="center" style="border: 1px #ccc solid; height: 250px; width: 575px; vertical-align: top; text-align: center;">
-                            <div id="carousel" style="margin-left: 140px; margin-top: 30px;">
+                        <td align="center" class="tdImage">
+                            <div id="carousel" class="rotate">
                                 <figure><img src="http://lorempixel.com/186/116/nature/1" alt=""></figure>
                                 <figure><img src="http://lorempixel.com/186/116/nature/1" alt=""></figure>
                                 <figure><img src="http://lorempixel.com/186/116/nature/3" alt=""></figure>
@@ -79,16 +79,33 @@
                                 <figure><img src="http://lorempixel.com/186/116/nature/5" alt=""></figure>
                                 <figure><img src="http://lorempixel.com/186/116/nature/6" alt=""></figure>
                             </div>
-                            <div style="margin-top: 240px;">
+                            <div class="activityList">
                                 <button type="button" class="btn btn-info btn-md"><a href="#">All Pictures</a></button>
                             </div>
                         </td>
-                        <td style="border: 1px #ccc solid;">
-                            <h3>Activity Name : {{activity.name}}</h3>
-                            <h3>Activity Date :</h3>
+                        <td class="tdInfo">
+                            <!-- button console -->
+                            <!--<div style="text-align: right; margin-top: 0px" ng-show="vm.isMatched">-->
+                            <div style="text-align: right;">
+                                <!-- edit -->
+                                <button type="button" id="editButton" name="editButton" class="btn btn-default btn-sm" value='{{$index}}' onclick="editClick(this.value)">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <!-- save -->
+                                <button type="button" id="saveButton" name="saveButton" class="btn btn-default btn-sm" value='{{$index}}' ng-click="vm.update(activity)" onclick="saveClick(this.value)" disabled="true">
+                                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                                </button>
+                                <!-- cancel -->
+                                <button type="button" id="cancelButton" name="cancelButton" class="btn btn-default btn-sm" value='{{$index}}' onclick="cancelClick(this.value)" disabled="true">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                                <br/>
+                            </div>
+                            <h3>Activity Name : <textarea id="nameTextArea" name="nameTextArea" class="disTextArea" ng-model="activity.name" rows="1" cols="31" maxlength="25" readonly="readonly"></textarea></h3>
+                            <h3>Activity Date &nbsp; : <input type="date" id="dateInput" name="dateInput" class="disDateInput" ng-model="vm.date" readonly/></h3>
                             <h3>Activity Description :</h3>
-                            <p style="font-size:24px; font-weight:200;">
-                                <textarea id="desTextArea" name="desTextArea" class="disTextArea" rows="4" cols="45" maxlength="200" readonly="readonly">{{activity.description}}</textarea>
+                            <p class="descTextArea">
+                                <textarea id="desTextArea" name="desTextArea" class="disTextArea" ng-model="activity.description" rows="4" cols="45" maxlength="200" readonly="readonly"></textarea>
                             </p>
                         </td>
                     </tr>
@@ -98,7 +115,97 @@
     </section>
 </div>
 <script>
+    $(document).ready(function(){
+        var lines = 1;
+        $('#nameTextArea').keydown(function(e) {
+            newLines = $(this).val().split("\n");
+            cntNewLines = newLines.length;
+            if (e.keyCode == 13 && cntNewLines >= lines) {
+                return false;
+            }
+        });
+    });
 
+    // init variables
+    var initName;
+    var initDate;
+    var initDescription;
+    // Input fields
+    var nameTextArea = document.getElementsByName("nameTextArea");
+    var dateInput = document.getElementsByName("dateInput");
+    var desTextArea = document.getElementsByName("desTextArea");
+    // Button
+    var editButton = document.getElementsByName("editButton");
+    var saveButton = document.getElementsByName("saveButton");
+    var cancelButton = document.getElementsByName("cancelButton");
+
+    function editClick(rowIndex) {
+        // Save init value
+        if (initName == undefined || initName == null) {
+            initValue();
+        }
+        // Enable edit
+        nameTextArea[rowIndex].className = "enTextArea";
+        nameTextArea[rowIndex].readOnly = false;
+        dateInput[rowIndex].className = "enDateInput";
+        dateInput[rowIndex].readOnly = false;
+        desTextArea[rowIndex].className = "enTextArea";
+        desTextArea[rowIndex].readOnly = false;
+        // Button
+        disabledButton(rowIndex);
+    }
+
+    function saveClick(rowIndex) {
+        initValue(rowIndex);
+        disabledEdit(rowIndex);
+        disabledButton(rowIndex);
+    }
+
+    function cancelClick(rowIndex){
+        setInit(rowIndex);
+        disabledEdit(rowIndex);
+        disabledButton(rowIndex);
+    }
+
+    function initValue(rowIndex) {
+        // first time init
+        if (rowIndex == undefined || rowIndex == null) {
+            initName = [];
+            initDate = [];
+            initDescription = [];
+            for (var i = 0; i < desTextArea.length; i++) {
+                initName.push(nameTextArea[i].value);
+                initDate.push(dateInput[i].value);
+                initDescription.push(desTextArea[i].value);
+            }
+        } else { // update init value when saved
+            initName[rowIndex] = nameTextArea[rowIndex].value;
+            initDate[rowIndex] = dateInput[rowIndex].value;
+            initDescription[rowIndex] = desTextArea[rowIndex].value;
+        }
+    }
+
+    function setInit(rowIndex) {
+        nameTextArea[rowIndex].value = initName[rowIndex];
+        dateInput[rowIndex].value = initDate[rowIndex];
+        desTextArea[rowIndex].value = initDescription[rowIndex];
+    }
+
+    function disabledEdit(rowIndex) {
+        // Disabled fields
+        nameTextArea[rowIndex].className = "disTextArea";
+        nameTextArea[rowIndex].readOnly = true;
+        dateInput[rowIndex].className = "disDateInput";
+        dateInput[rowIndex].readOnly = true;
+        desTextArea[rowIndex].className = "disTextArea";
+        desTextArea[rowIndex].readOnly = true;
+    }
+
+    function disabledButton(rowIndex) {
+        editButton[rowIndex].disabled = !editButton[rowIndex].disabled;
+        saveButton[rowIndex].disabled = !saveButton[rowIndex].disabled;
+        cancelButton[rowIndex].disabled = !cancelButton[rowIndex].disabled;
+    }
 </script>
 
 <script src="/static/charity/css/profilecss/scripts.js"></script>

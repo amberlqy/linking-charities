@@ -366,13 +366,43 @@ p.lead {
 	position: relative;
 }
 
+#activityList .tdImage {
+    border: 1px #ccc solid;
+    height: 250px;
+    width: 575px;
+    vertical-align: top;
+    text-align: center;
+}
+#activityList .tdInfo {
+    border: 1px #ccc solid;
+}
+#activityList .rotate {
+    margin-left: 140px;
+    margin-top: 30px;
+}
+#activityList .allButton {
+    margin-top: 240px;
+}
+#activityList .descTextArea {
+    font-size:24px;
+    font-weight:200;
+}
 #activityList .enTextArea {
     resize: none;
     color: black;
+    margin-top: -3px;
 }
 #activityList .disTextArea {
     resize: none;
     /*color: #acb1b8;*/
+    border: none;
+    background: transparent;
+    margin-top: -3px;
+}
+#activityList .enDateInput {
+
+}
+#activityList .disDateInput {
     border: none;
     background: transparent;
 }

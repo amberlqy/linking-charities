@@ -110,7 +110,6 @@
                         <div class="maintitle">
                             <h3 class="section-title">Our Aim</h3>
                             <p class="lead wow flipInX">
-                                <!--<textarea id="desTextArea" class="enTextArea" ng-model="vm.profile.description" rows="4" cols="60" maxlength="200" placeholder="Insert description here ..."></textarea>-->
                                 <textarea id="desTextArea" class="disTextArea" ng-model="vm.profile.description" rows="4" cols="60" maxlength="200" readonly="readonly"></textarea>
                             </p>
                         </div>
@@ -166,7 +165,7 @@
 
                     <div class="col-md-12">
                         <div class="maintitle">
-                            <button type="button" class="btn btn-info btn-md"><a href="#">More Activities</a></button>
+                            <button type="button" class="btn btn-info btn-md"><a href="profile/{{vm.profile.name}}/activities">More Activities</a></button>
                         </div>
                     </div>
                 </div>
@@ -291,6 +290,7 @@
         });
 
         $('[data-toggle="tooltip"]').tooltip();
+
     });
 
     // init variables
