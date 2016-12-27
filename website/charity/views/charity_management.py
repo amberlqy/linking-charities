@@ -176,6 +176,10 @@ class CharityActivityView(APIView):
         # Read required parameters
         data = request.data
         name = data.get('name', None)
+        if not name:
+            response_data = json.dumps({"error": "The activity name cannot be null. "})
+            return HttpResponse(response_data, content_type='application/json')
+
         description = data.get('description', None)
         date = data.get('date', None)
         files = request.FILES
