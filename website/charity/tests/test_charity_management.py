@@ -265,7 +265,7 @@ class CharityManagementViewTestCase(TestCase):
         self.assertEqual(len(charity_activities), 1)
 
         # Get activities of charity as a regular visitor
-        response = self.client.get("/api/charity/get_activity/", {"username": "Charity1"})
+        response = self.client.get("/api/charity/get_activity/", {"name": "Charity1"})
         response_content = json.loads(response.content.decode('utf-8'))
         charity_activities = response_content["charity_activities"]
 

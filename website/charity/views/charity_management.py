@@ -209,7 +209,7 @@ class CharityActivitySearchView(APIView):
     # Returns specific charity activities
     def get(self, request):
 
-        charity_username = request.GET.get('username', None)
+        charity_username = request.GET.get('name', None)
         charity = User.objects.filter(username=charity_username).first()
         if not charity:
             response_data = json.dumps({"error": "No charity found with this username. "})
