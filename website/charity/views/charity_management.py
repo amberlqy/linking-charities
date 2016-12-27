@@ -177,19 +177,14 @@ class CharityActivityView(APIView):
         data = request.data
         name = data.get('name', None)
         description = data.get('description', None)
-        start_time = data.get('start_time', None)
-        if start_time:
-            start_time = timezone.make_aware(dateutil.parser.parse(start_time), timezone.get_current_timezone())
-        end_time = data.get('end_time', None)
-        if end_time:
-            end_time = timezone.make_aware(dateutil.parser.parse(end_time), timezone.get_current_timezone())
+        date = data.get('date', None)
         files = request.FILES
         if files:
             image = files['image']
         else:
             image = None
 
-        CharityActivity.objects.create(charity_profile=user.charity_profile, name=name, description=description, start_time=start_time, end_time=end_time, image=image)
+        CharityActivity.objects.create(charity_profile=user.charity_profile, name=name, description=description, date=date, image=image)
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 

@@ -8,7 +8,6 @@ class CharityActivity(models.Model):
     charity_profile = models.ForeignKey(CharityProfile, related_name='activities')
     name = models.CharField(max_length=100, null=False)
     description = models.CharField(max_length=255, null=True)
-    start_time = models.DateTimeField(null=True)
-    end_time = models.DateTimeField(null=True)
+    date = models.CharField(max_length=10, null=True)
     image = models.FileField(upload_to='charity/activity_images/', null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
