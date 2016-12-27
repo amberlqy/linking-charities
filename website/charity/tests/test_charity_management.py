@@ -256,7 +256,8 @@ class CharityManagementViewTestCase(TestCase):
         token = response_content["token"]
 
         # Like this random charity
-        self.client.post("/api/charity/activity/", {"name": "Awesome event"},
+        details = json.dumps({"name": 'Awesome event'})
+        self.client.post("/api/charity/activity/", {"model": details},
                          HTTP_AUTHORIZATION='JWT {}'.format(token))
 
         # Check if the activity exists
