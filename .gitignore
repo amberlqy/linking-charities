@@ -9,3 +9,4 @@ website/.coverage
 website/assets/static/dependencies/*
 website/assets/static/compressed/*
 website/db.sqlite3
+website/assets/media/*
