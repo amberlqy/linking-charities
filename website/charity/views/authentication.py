@@ -134,6 +134,9 @@ class CharityProfileView(APIView):
             email = data.get('email', None)
             phone_number = data.get('phone_number', None)
 
+            paypal_email = data.get('paypal_email', None)
+            paypal_identity_token = data.get('paypal_identity_token', None)
+
             charity_profile = user.charity_profile
             charity_profile.charity_name = charity_name
             charity_profile.goal = goal
@@ -144,6 +147,9 @@ class CharityProfileView(APIView):
             charity_profile.email = email
             charity_profile.phone_number = phone_number
             charity_profile.description = description
+
+            charity_profile.paypal_email = paypal_email
+            charity_profile.paypal_identity_token = paypal_identity_token
             charity_profile.save()
 
             response_data = json.dumps({"success": True})
