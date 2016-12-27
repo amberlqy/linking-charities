@@ -16,8 +16,7 @@
             getCurrent: getCurrentCharityProfile,
             getProfile: getSpecificCharityProfile,
             getAuthenticatedAccount: getAuthenticatedAccount,
-            getActivity: getCharityActivity,
-            uploadActivityPicture: uploadActivityPicture
+            getActivity: getCharityActivity
         };
 
         function destroy(profile) {
@@ -37,7 +36,7 @@
 
         // Return the specific profile information.
         function getSpecificCharityProfile(profileName) {
-            return $http.get('/api/charity/charity_search/', {params: {"id": profileName}});
+            return $http.get('/api/charity/charity_search/', {params: {"name": profileName}});
         }
 
         // Returns important details about the authenticated user/charity
@@ -61,41 +60,7 @@
 
         // Return activity information.
         function getCharityActivity(profileName) {
-            return $http.get('/api/charity/get_activity/', {params: {"id": profileName}});
-        }
-
-        // Upload activity picture
-        function uploadActivityPicture() {
-            return $resource('/api/images/:pk/', {'pk': '@pk'}, { // Change into our URL
-                'save': {
-                    method: 'POST',
-                    transformRequest: transformImageRequest,
-                    headers: {'Content-Type':undefined}
-                }
-            });
-        }
-
-        // Transform uploaded image
-        function transformImageRequest(data) {
-            if (data === undefined)
-                return data;
-
-            var fd = new FormData();
-            angular.forEach(data, function(value, key) {
-                if (value instanceof FileList) {
-                    if (value.length == 1) {
-                        fd.append(key, value[0]);
-                    } else {
-                        angular.forEach(value, function(file, index) {
-                            fd.append(key + '_' + index, file);
-                        });
-                    }
-                } else {
-                    fd.append(key, value);
-                }
-            });
-
-            return fd;
+            return $http.get('/api/charity/get_activity/', {params: {"name": profileName}});
         }
     }
 })();

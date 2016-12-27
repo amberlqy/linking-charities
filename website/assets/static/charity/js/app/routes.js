@@ -45,8 +45,7 @@
             resolve: {
                 activityPrepService: function($route, Profile){
                     var name = $route.current.params.name;
-                    // return Profile.getActivity(name);
-                    return Profile.getActivity("1");
+                    return Profile.getActivity(name);
                 }
             }
         }).when('/+:username/setting', {
