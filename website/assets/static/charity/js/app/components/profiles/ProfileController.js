@@ -60,6 +60,7 @@
                 vm.profile.postcode = charity_profile.postcode;
                 vm.profile.email = charity_profile.email;
                 vm.profile.phone_number = charity_profile.phone_number;
+                vm.profile.rate = "3";
             }
         }
 
@@ -88,6 +89,11 @@
             var donateInfo = Payment.donateInfo();
             donateInfo.setDonateInfo(donateKey);
             $location.path('/payment');
+        }
+
+        // TODO : Set rate to back-end
+        vm.rateChange = function(){
+            alert(angular.element('#rateCharity').val());
         }
     }
 })();

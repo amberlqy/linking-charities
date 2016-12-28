@@ -54,6 +54,23 @@
                     <span>Setting</span>
                 </a>
             </li>
+            <li>
+                <div>
+                    <!--<input id="stars-existing" class="starrr" data-rating='4'>-->
+                    <!--<div id="stars-existing" class="starrr" ng-model="vm.profile.rate"></div>-->
+                    <!--<input type="hidden" id="rateCharity" />-->
+                </div>
+                <div style="pointer-events: none;">
+                    Average Rate: <br/>
+                    <div id="stars" class="starrr" data-rating='1' ng-model="vm.profile.rate"></div>
+                    <br/> 3 Stars from 10 Users
+                </div>
+                <div ng-click="vm.rateChange()">
+                    User Rate: <br/>
+                    <div id="stars-existing" class="starrr" ng-model="vm.profile.userRate"></div>
+                    <input type="hidden" id="rateCharity" />
+                </div>
+            </li>
         </ul>
     </div>
 </section>
@@ -403,5 +420,6 @@
 
 <script src="/static/charity/css/profilecss/scripts.js"></script>
 <script src="/static/charity/css/profilecss/common.js"></script>
+<script src="/static/charity/css/profilecss/star.js"></script>
 </body>
 </html>
