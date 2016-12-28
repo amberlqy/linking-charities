@@ -271,6 +271,41 @@ class CharityManagementViewTestCase(TestCase):
         self.assertEqual(len(existing_charity_profile.ratings.all()), 1)
         self.assertEqual(existing_charity_profile.ratings.first().rate_by_user, 3.5)
 
+    # Tests if we can successfully get ratings of charity profiles
+    def test_get_charity_ratings(self):
+        # Log in as a user
+        response = self.client.post("/api/auth/login/", {"username": "Heffalumps", "password": "Woozles"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        self.client.post("/api/charity/charity_rating/", {"charity_name": "Charity1", "rate_by_user": 3.0},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        # Register a second user
+        self.response = self.client.post("/api/auth/register/", {"username": "Marci5",
+                                                                 "email": "marci5@woozles.com",
+                                                                 "password": "Woozles",
+                                                                 "user_type": "user"})
+
+        # Log in as another user
+        response = self.client.post("/api/auth/login/", {"username": "Marci5", "password": "Woozles"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        self.client.post("/api/charity/charity_rating/", {"charity_name": "Charity1", "rate_by_user": 5.0},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        # Get ratings of the charity profile
+        response = self.client.get("/api/charity/charity_rating_aggregates/", {"username": "Marci5", "charity_name": "Charity1"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        rate_by_user = response_content["rate_by_user"]
+        average_rate = response_content["average_rate"]
+        total_users = response_content["total_users"]
+
+        self.assertEqual(rate_by_user, 5.0)
+        self.assertEqual(average_rate, 4.0)
+        self.assertEqual(total_users, 2)
+
     # Tests if we can upload an activity as a charity
     def test_upload_activity_as_a_charity(self):
 

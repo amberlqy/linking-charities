@@ -1,7 +1,6 @@
 import csv
 import os
 
-from django.db import transaction
 from rest_framework import status, permissions
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
@@ -12,10 +11,8 @@ from django.template import loader
 from django.db import models
 import json
 from urllib.request import urlopen
-import dateutil.parser
-from django.utils import timezone
 from django.utils.http import urlencode
-from django.db.models import Q
+from django.db.models import Q, Avg
 
 from assets import settings
 from charity.models.charity_activity import CharityActivity
@@ -281,6 +278,39 @@ class CharityRatingView(APIView):
             CharityRating.objects.create(user=user, charity_profile=charity_profile, rate_by_user=rate_by_user)
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+
+# Returns ratings related information for a specific charity
+class CharityRatingPublicView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    # Returns specific charity ratings
+    def get(self, request):
+        charity_username = request.GET.get('charity_name', None)
+        username = request.GET.get('username', None)
+        charity = User.objects.filter(username=charity_username).first()
+        user = User.objects.filter(username=username).first()
+        if not charity:
+            response_data = json.dumps({"error": "No charity found with this username."})
+            return HttpResponse(response_data, content_type='application/json')
+
+        if not user:
+            response_data = json.dumps({"error": "No user found with this username."})
+            return HttpResponse(response_data, content_type='application/json')
+
+        charity_profile = charity.charity_profile
+        charity_ratings = charity_profile.ratings
+
+        rate_by_user = charity_ratings.filter(user=user).first().rate_by_user
+        average_rate = charity_ratings.aggregate(average_rate=Avg('rate_by_user'))["average_rate"]
+        total_users = charity_ratings.count()
+
+        return_dictionary = {"rate_by_user": rate_by_user,
+                             "average_rate": average_rate,
+                             "total_users": total_users}
+        json_charity_activities = JSONRenderer().render(return_dictionary)
+
+        return HttpResponse(json_charity_activities, content_type='application/json')
 
 
 # Responsible for returning data related to the popularity of charities
