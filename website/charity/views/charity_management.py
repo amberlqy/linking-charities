@@ -1,6 +1,7 @@
 import csv
 import os
 
+from django.db import transaction
 from rest_framework import status, permissions
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
@@ -20,6 +21,7 @@ from assets import settings
 from charity.models.charity_activity import CharityActivity
 from charity.models.charity_data import CharityData
 from charity.models.charity_profile import CharityProfile
+from charity.models.charity_rating import CharityRating
 from charity.models.payment import Payment
 from charity.roles import roles
 from tagging.models import Tag, TaggedItem
@@ -170,7 +172,7 @@ class CharityActivityView(APIView):
 
         user = request.user
         if user.role == roles.user:
-            response_data = json.dumps({"error": "You are not authorised to like a charity. "})
+            response_data = json.dumps({"error": "You are not authorised to post an activity. "})
             return HttpResponse(response_data, content_type='application/json')
 
         # Read required parameters
@@ -229,12 +231,12 @@ class CharityLikeView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication,)
 
-    # Search for charities based on tags
+    # Allows users to like a charity
     def post(self, request, format=None):
 
         user = request.user
         if user.role == roles.charity:
-            response_data = json.dumps({"error": "You are not authorised to like a charity. "})
+            response_data = json.dumps({"error": "You are not authorised to like a charity."})
             return HttpResponse(response_data, content_type='application/json')
 
         # Read required parameters
@@ -243,6 +245,34 @@ class CharityLikeView(APIView):
 
         charity_profile = CharityProfile.objects.get(id=charity_profile_id)
         charity_profile.likes.add(user.user_profile)
+
+        return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+
+class CharityRatingView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    # Allows users to rate a charity
+    def post(self, request, format=None):
+        user = request.user
+
+        # Read required parameters
+        data = request.data
+        charity_name = data.get('charity_name', None)
+        charity_user = User.objects.filter(username=charity_name).first()
+        if not charity_user:
+            response_data = json.dumps({"error": "No charity exists with this name."})
+            return HttpResponse(response_data, content_type='application/json')
+
+        charity_profile = charity_user.charity_profile
+
+        rate_by_user = data.get('rate_by_user', None)
+        if not rate_by_user:
+            response_data = json.dumps({"error": "No rating was given."})
+            return HttpResponse(response_data, content_type='application/json')
+
+        CharityRating.objects.create(user=user, charity_profile=charity_profile, rate_by_user=rate_by_user)
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 

@@ -247,6 +247,24 @@ class CharityManagementViewTestCase(TestCase):
         most_popular_charity_profile = charity_profiles[0]
         self.assertEqual(most_popular_charity_profile["charity_name"], "PopularCharity4")
 
+    # Tests if a user profile can rate a charity profile
+    def test_rating_a_charity(self):
+
+        # Log in as a user
+        response = self.client.post("/api/auth/login/", {"username": "Heffalumps", "password": "Woozles"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        # Get the already created charity
+        existing_charity = User.objects.get(username="Charity1")
+        existing_charity_profile = existing_charity.charity_profile
+
+        self.client.post("/api/charity/charity_rating/", {"charity_name": "Charity1", "rate_by_user": 4.5},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        self.assertEqual(len(existing_charity_profile.ratings.all()), 1)
+        self.assertEqual(existing_charity_profile.ratings.first().rate_by_user, 4.5)
+
     # Tests if we can upload an activity as a charity
     def test_upload_activity_as_a_charity(self):
 
