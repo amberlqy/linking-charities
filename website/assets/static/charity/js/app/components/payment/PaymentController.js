@@ -14,6 +14,10 @@
         activate();
 
         function activate() {
+            var donateInfo = Payment.donateInfo();
+            console.log(donateInfo.getDonateInfo());
+            // TODO: Set donateInfo
+            // Ex. vm.name = donateInfo.name
 
             vm.verified = "Waiting...";
 

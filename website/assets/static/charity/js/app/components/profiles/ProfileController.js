@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal', '$scope', 'profilePrepService'];
+    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal', '$scope', 'profilePrepService', 'Payment'];
 
-    function ProfileController($location, Authentication, Profile, $modal, $scope, profilePrepService) {
+    function ProfileController($location, Authentication, Profile, $modal, $scope, profilePrepService, Payment) {
         var vm = this;
         // vm.isCharity = true;
         vm.profile = {};
@@ -63,16 +63,6 @@
             }
         }
 
-        // vm.preview = function(){
-        //     var modalInstance = $modal.open({
-        //         templateUrl: '/static/charity/js/app/components/preview/previewprofile.html',
-        //          controller: 'PreviewProfileController',
-        //         scope: $scope,
-        //         size:'lg',
-        //         resolve: {} // empty storage
-        //     });
-        // }
-
         // Called when the user clicks on Update profile
         vm.update = function(){
             var profile = {
@@ -87,6 +77,17 @@
                 "phone_number": vm.profile.phone_number
             };
             Profile.update(profile);
+        }
+
+        // TODO : Set donateKey and send to payment controller
+        vm.donate = function(){
+            var donateKey = {name: "TEST NAME",
+                              paypal_email: null,
+                              paypal_token: null // etc.
+                            };
+            var donateInfo = Payment.donateInfo();
+            donateInfo.setDonateInfo(donateKey);
+            $location.path('/payment');
         }
     }
 })();
