@@ -265,11 +265,18 @@ class CharityManagementViewTestCase(TestCase):
         self.assertEqual(len(existing_charity_profile.ratings.all()), 1)
         self.assertEqual(existing_charity_profile.ratings.first().rate_by_user, 4.5)
 
+        # Rate again
         self.client.post("/api/charity/charity_rating/", {"charity_name": "Charity1", "rate_by_user": 3.5},
                          HTTP_AUTHORIZATION='JWT {}'.format(token))
 
         self.assertEqual(len(existing_charity_profile.ratings.all()), 1)
         self.assertEqual(existing_charity_profile.ratings.first().rate_by_user, 3.5)
+
+        # Remove rating
+        self.client.post("/api/charity/charity_rating/", {"charity_name": "Charity1", "rate_by_user": 0.0},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        self.assertEqual(len(existing_charity_profile.ratings.all()), 0)
 
     # Tests if we can successfully get ratings of charity profiles
     def test_get_charity_ratings(self):

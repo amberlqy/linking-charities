@@ -269,6 +269,16 @@ class CharityRatingView(APIView):
             response_data = json.dumps({"error": "No rating was given."})
             return HttpResponse(response_data, content_type='application/json')
 
+        # If the rating is 0.0, attempt to remove the already existing rating
+        if float(rate_by_user) == 0.0:
+            if charity_profile.ratings.filter(user=user).exists():
+                existing_rating = charity_profile.ratings.filter(user=user).first()
+                existing_rating.delete()
+                return Response({'success': True}, status=status.HTTP_201_CREATED)
+            else:
+                response_data = json.dumps({"error": "Cannot remove your rating, because you haven't given one yet."})
+                return HttpResponse(response_data, content_type='application/json')
+
         # Check if user has already rated this charity profile
         if charity_profile.ratings.filter(user=user).exists():
             existing_rating = charity_profile.ratings.filter(user=user).first()
