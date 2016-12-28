@@ -296,7 +296,19 @@ class CharityManagementViewTestCase(TestCase):
                          HTTP_AUTHORIZATION='JWT {}'.format(token))
 
         # Get ratings of the charity profile
-        response = self.client.get("/api/charity/charity_rating_aggregates/", {"username": "Marci5", "charity_name": "Charity1"})
+        response = self.client.get("/api/charity/charity_rating_aggregates/", {"charity_name": "Charity1"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        rate_by_user = response_content["rate_by_user"]
+        average_rate = response_content["average_rate"]
+        total_users = response_content["total_users"]
+
+        self.assertEqual(rate_by_user, 0.0)
+        self.assertEqual(average_rate, 4.0)
+        self.assertEqual(total_users, 2)
+
+        # Get ratings of the charity profile
+        response = self.client.get("/api/charity/charity_rating_aggregates/", {"charity_name": "Charity1"},
+                                   HTTP_AUTHORIZATION='JWT {}'.format(token))
         response_content = json.loads(response.content.decode('utf-8'))
         rate_by_user = response_content["rate_by_user"]
         average_rate = response_content["average_rate"]

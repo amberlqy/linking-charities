@@ -287,21 +287,22 @@ class CharityRatingPublicView(APIView):
     # Returns specific charity ratings
     def get(self, request):
         charity_username = request.GET.get('charity_name', None)
-        username = request.GET.get('username', None)
         charity = User.objects.filter(username=charity_username).first()
-        user = User.objects.filter(username=username).first()
+
         if not charity:
             response_data = json.dumps({"error": "No charity found with this username."})
-            return HttpResponse(response_data, content_type='application/json')
-
-        if not user:
-            response_data = json.dumps({"error": "No user found with this username."})
             return HttpResponse(response_data, content_type='application/json')
 
         charity_profile = charity.charity_profile
         charity_ratings = charity_profile.ratings
 
-        rate_by_user = charity_ratings.filter(user=user).first().rate_by_user
+        # Create the return values
+        logged_in_user = request.user
+        if not logged_in_user.is_authenticated():
+            rate_by_user = 0.0
+        else:
+            rate_by_user = charity_ratings.filter(user=logged_in_user).first().rate_by_user
+
         average_rate = charity_ratings.aggregate(average_rate=Avg('rate_by_user'))["average_rate"]
         total_users = charity_ratings.count()
 
