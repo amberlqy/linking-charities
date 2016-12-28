@@ -272,7 +272,13 @@ class CharityRatingView(APIView):
             response_data = json.dumps({"error": "No rating was given."})
             return HttpResponse(response_data, content_type='application/json')
 
-        CharityRating.objects.create(user=user, charity_profile=charity_profile, rate_by_user=rate_by_user)
+        # Check if user has already rated this charity profile
+        if charity_profile.ratings.filter(user=user).exists():
+            existing_rating = charity_profile.ratings.filter(user=user).first()
+            existing_rating.rate_by_user = rate_by_user
+            existing_rating.save()
+        else:
+            CharityRating.objects.create(user=user, charity_profile=charity_profile, rate_by_user=rate_by_user)
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 

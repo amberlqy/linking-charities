@@ -265,6 +265,12 @@ class CharityManagementViewTestCase(TestCase):
         self.assertEqual(len(existing_charity_profile.ratings.all()), 1)
         self.assertEqual(existing_charity_profile.ratings.first().rate_by_user, 4.5)
 
+        self.client.post("/api/charity/charity_rating/", {"charity_name": "Charity1", "rate_by_user": 3.5},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        self.assertEqual(len(existing_charity_profile.ratings.all()), 1)
+        self.assertEqual(existing_charity_profile.ratings.first().rate_by_user, 3.5)
+
     # Tests if we can upload an activity as a charity
     def test_upload_activity_as_a_charity(self):
 
