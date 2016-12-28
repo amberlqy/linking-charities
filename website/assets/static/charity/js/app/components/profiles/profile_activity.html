@@ -50,7 +50,7 @@
                     </a>
                 </li>
                 <li ng-show="vm.isMatched">
-                    <a class="" href="{{vm.profile.name}}/setting">
+                    <a class="" href="profile/{{vm.profile.name}}/setting">
                         <i></i>
                         <span>Setting</span>
                     </a>
@@ -72,8 +72,8 @@
                     <tr ng-repeat="activity in vm.activity track by $index">
                         <td align="center" class="tdImage">
                             <div id="carousel" class="rotate">
-                                <figure><img src="http://lorempixel.com/186/116/nature/1" alt=""></figure>
-                                <figure><img src="http://lorempixel.com/186/116/nature/1" alt=""></figure>
+                                <figure><img src="{{activity.image}}" alt=""></figure>
+                                <figure><img src="/media/charity/activity_images/NoNetGame_yKQiaq3.png" alt=""></figure>
                                 <figure><img src="http://lorempixel.com/186/116/nature/3" alt=""></figure>
                                 <figure><img src="/static/charity/images/no-user-image.gif" alt=""></figure>
                                 <figure><img src="http://lorempixel.com/186/116/nature/5" alt=""></figure>

@@ -48,7 +48,7 @@
                     return Profile.getActivity(name);
                 }
             }
-        }).when('/+:username/setting', {
+        }).when('/profile/:name/setting', {
             controller: 'ProfileSettingsController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/profiles/profile_setting.html'

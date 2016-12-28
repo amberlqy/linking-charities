@@ -7,65 +7,57 @@
         .controller('ProfileSettingsController', ProfileSettingsController);
 
     ProfileSettingsController.$inject = [
-        '$location', 'Authentication', 'Profile', 'Snackbar'
+        'Profile', '$routeParams'
     ];
 
-    function ProfileSettingsController($location, Authentication, Profile, Snackbar) {
+    function ProfileSettingsController(Profile, $routeParams) {
         var vm = this;
-        vm.profile = {};
+        vm.setting = {};
 
-        vm.destroy = destroy;
         vm.update = update;
 
         activate();
 
         function activate() {
-            // TODO Check if login and correct user login
-            vm.isAuthenticated = Authentication.isAuthenticated();
-            var authenticatedAccount = Authentication.getAuthenticatedAccount();
-            if (!authenticatedAccount) {
-                $location.url('/login');
-                //Snackbar.error('You are not authorized to view this page.');
-            } else {
-                if (authenticatedAccount != undefined){
-                    vm.user = authenticatedAccount.username;
-                }
+            // initial value
+            vm.isMatched = false;
+            // Get activity data
+            setSetting();
+
+            var user_role = Profile.getAuthenticatedAccount();
+            if (user_role != undefined && user_role != null) {
+                vm.isCharity = user_role.userRole == "charity";
+                vm.isMatched = user_role.username == vm.name;
+            }
+
+            // TODO: GET request for receive setting info (Only Paypal Info)
+            function setSetting() {
+                vm.name = $routeParams.name; // name of charity
+                var charitySetting; //= Profile.getSetting(vm.name).then ....;
+                // console.log(charitySetting);
+                // if (charitySetting == undefined || charitySetting == null) {
+                //     alert("Page Not Found. We could not find the page you requested.");
+                //     $location.url('/home');
+                //     return;
+                // }
+
+                vm.setting.paypal_email = ""; // charitySetting.paypal_email;
+                vm.setting.paypal_token = ""; // charitySetting.paypal_token
             }
         }
 
-        // TODO: outdated
-        function destroy() {
-            Profile.destroy(vm.profile).then(profileSuccessFn, profileErrorFn);
-
-            function profileSuccessFn(data, status, headers, config) {
-                Authentication.unauthenticate();
-                window.location = '/';
-
-                Snackbar.show('Your account has been deleted.');
-            }
-
-            function profileErrorFn(data, status, headers, config) {
-                console.log(data);
-                console.log(headers);
-                Snackbar.error(data.error);
-            }
-        }
-
-        // TODO: outdated
+        // TODO: Add URL service for setting
         function update() {
+            console.log(vm.setting);
 
-            if (vm.profile.password === "" ){
-                delete vm.profile.password;
-            }
-
-            Profile.update(vm.profile).then(profileSuccessFn, profileErrorFn);
+            // Profile.someFunctionInService(vm.setting).then(profileSuccessFn, profileErrorFn);
 
             function profileSuccessFn(data, status, headers, config) {
-                Snackbar.show('Your profile has been updated.');
+
             }
 
             function profileErrorFn(data, status, headers, config) {
-                Snackbar.error(data.error);
+
             }
         }
     }

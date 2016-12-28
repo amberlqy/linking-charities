@@ -5,13 +5,12 @@
 </head>
 <body>
 
-<!-- container section start -->
 <section class="profile-container">
     <!-- aside menubar -->
     <div id="sidebar">
         <ul class="sidebar-menu">
             <li>
-                <a class="" href="{{vm.user}}/profile">
+                <a id="descriptionLink" href="profile/{{vm.name}}">
                     <i></i>
                     <span>Profile</span>
                 </a>
@@ -24,12 +23,31 @@
                     <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
                 </a>
                 <ul class="sub">
-                    <li><a class="" href="{{vm.user}}/new_activity">New Activity</a></li>
-                    <li><a class="" href="{{vm.user}}/activities">Past Activity</a></li>
+                    <li><a id="lastActivityLink" href="profile/{{vm.name}}#lastActivity">Last Activity</a></li>
+                    <li class="active"><a class="" href="#">Past Activities</a></li>
+                    <li ng-show="vm.isMatched"><a class="" href="profile/{{vm.name}}/new_activity">New Activity</a></li>
                 </ul>
             </li>
-            <li class="active">
-                <a class="" href="{{vm.user}}/setting">
+            <li>
+                <a id="financialLink" href="profile/{{vm.name}}#financial">
+                    <i></i>
+                    <span>Financial</span>
+                </a>
+            </li>
+            <li>
+                <a class="" href="payment">
+                    <i></i>
+                    <span>Donate To Us</span>
+                </a>
+            </li>
+            <li>
+                <a id="contactDetailLink" href="profile/{{vm.name}}#contactDetail">
+                    <i></i>
+                    <span>Contact Us</span>
+                </a>
+            </li>
+            <li class="active" ng-show="vm.isMatched">
+                <a class="" href="#">
                     <i></i>
                     <span>Setting</span>
                 </a>
@@ -52,29 +70,58 @@
                             Change Password
                         </header>
                         <div class="panel-body">
-                            <form class="form-horizontal" name="passwordForm" ng-submit="vm.update()">
+                            <form class="form-horizontal" name="settingForm" ng-submit="vm.update()">
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Current Password<font color="#FF0000"> *</font></label>
+                                    <label class="col-sm-2 control-label">Paypal Email</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" ng-model="vm.profile.cur_password" ng-required="true">
+                                        <input type="email" name="paypalEmail" class="form-control" ng-model="vm.setting.paypal_email" ng-required="true">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Paypal Token</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" ng-model="vm.setting.paypal_token">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Current Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" ng-model="vm.setting.cur_password">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">New Password</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" ng-model="vm.profile.new_password" ng-required="true">
+                                        <input type="password" name="newPass" class="form-control" ng-model="vm.setting.new_password">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Re-New Password</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" ng-model="vm.profile.renew_password" ng-required="true">
+                                        <input type="password" name="newRepass" class="form-control" ng-model="vm.setting.renew_password">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary" ng-disabled="!passwordForm.$valid">Submit</button>
+                                        <span class="error" ng-show="settingForm.paypalEmail.$error.email">
+                                            Not valid email! &nbsp;
+                                        </span>
+                                        <span class="error" ng-show="!vm.setting.cur_password && vm.setting.new_password">
+                                            Current password is required! &nbsp;
+                                        </span>
+                                        <span class="error" ng-show="vm.setting.cur_password && !vm.setting.new_password">
+                                            New password is required! &nbsp;
+                                        </span>
+                                        <span class="error" ng-show="vm.setting.new_password != vm.setting.renew_password">
+                                            New password is not matched! &nbsp;
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary" ng-disabled="(vm.setting.cur_password && !vm.setting.new_password) || (!vm.setting.cur_password && vm.setting.new_password) || (vm.setting.new_password != vm.setting.renew_password) || (settingForm.paypalEmail.$error.email)">Submit</button>
                                     </div>
                                 </div>
                             </form>
