@@ -23,6 +23,24 @@ class CharityManagementViewTestCase(TestCase):
                                                                          "user_type": "charity",
                                                                          "goal": "To save lonely kittens."})
 
+    # Tests the settings endpoints of charity profiles
+    def test_charity_settings(self):
+        response = self.client.post("/api/auth/login/", {"username": "Charity1", "password": "Woozles123"})
+
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        self.client.post("/api/charity/settings/", {"tags": "kitten,cat,soft", "paypal_email": "marci@new.hu"},
+                                        HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        tag_response = self.client.get("/api/charity/settings/", {},
+                                       HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        tag_response_content = json.loads(tag_response.content.decode('utf-8'))
+        tags = tag_response_content["tags"]
+        self.assertIn("kitten", tags)
+        self.assertEqual("marci@new.hu", tag_response_content["paypal_email"])
+
     # Tests if we can successfully associate tags with a charity
     def test_upload_tags(self):
         response = self.client.post("/api/auth/login/", {"username": "Charity1", "password": "Woozles123"})

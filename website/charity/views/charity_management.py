@@ -33,7 +33,7 @@ from charity.serializers.charity_profile_serializer import CharityProfileSeriali
 
 # Returns the default home page
 class IndexView(APIView):
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
 
     def get(self, request):
         template = loader.get_template('charity/index.html')
@@ -45,9 +45,10 @@ class CharitySettingsView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication,)
 
-    # Adds tags to the profile of a charity. The 'tags' parameter has so be a string with words seperated by commans/spaces.
+    # Adds tags to the profile of a charity.
+    # The 'tags' parameter has so be a string with words separated by commas/spaces.
     # Updates PayPal information, and password
-    def post(self, request, format=None):
+    def post(self, request):
 
         # Check the user's role
         user = request.user
@@ -60,35 +61,38 @@ class CharitySettingsView(APIView):
         tags = data.get('tags', None)
         Tag.objects.update_tags(user.charity_profile, tags)
 
-        tags = data.get('tags', None)
+        paypal_email = data.get('paypal_email', None)
+        paypal_token = data.get('paypal_token', None)
+
+        charity_profile = user.charity_profile
+        charity_profile.paypal_email = paypal_email
+        charity_profile.paypal_identity_token = paypal_token
+        charity_profile.save()
+
+        # TODO: update password as well
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 
-    # Gets the tags of a specific charity profile, or returns the overall tag usage for all charity profiles
+    # Gets the tags and the paypal information of a charity
     def get(self, request):
-        mode = request.GET.get('mode', None)
 
-        if not mode:
-            response_data = json.dumps({"error": "Mode unrecognised!"})
+        # Check the user's role
+        user = request.user
+        if user.role != roles.charity:
+            response_data = json.dumps({"authorised": False})
             return HttpResponse(response_data, content_type='application/json')
 
-        # Get usage counts for tags used by charity profiles
-        if mode == "usage":
-            tags_and_counts = Tag.objects.usage_for_model(CharityProfile, counts=True)
-            response_data = json.dumps({"tags_and_counts": tags_and_counts})
-            return HttpResponse(response_data, content_type='application/json')
-
-        # Get the tags used by a specific charity
-        id = request.GET.get('id', None)
-        charity_profile = CharityProfile.objects.filter(id=id).first()
-        if not charity_profile:
-            response_data = json.dumps({"error": "Charity profile doesn't exist!"})
-            return HttpResponse(response_data, content_type='application/json')
-
+        charity_profile = user.charity_profile
         tags = Tag.objects.get_for_object(charity_profile)
         charity_tags_strings = [tag.name for tag in tags]
-        response_data = json.dumps({"tags": charity_tags_strings})
-        return HttpResponse(response_data, content_type='application/json')
+        charity_tags_string = ",".join(charity_tags_strings)
+
+        return_dictionary = {"tags": charity_tags_string,
+                             "paypal_email": charity_profile.paypal_email,
+                             "paypal_token": charity_profile.paypal_identity_token}
+        json_charity_profiles = JSONRenderer().render(return_dictionary)
+
+        return HttpResponse(json_charity_profiles, content_type='application/json')
 
 
 class CharityTagsView(APIView):
@@ -296,7 +300,6 @@ class CharityLikeView(APIView):
 
     # Allows users to like a charity
     def post(self, request, format=None):
-
         user = request.user
         if user.role == roles.charity:
             response_data = json.dumps({"error": "You are not authorised to like a charity."})
@@ -396,8 +399,8 @@ class CharityPopularityView(APIView):
 
     # Get the 5 most popular charities
     def get(self, request):
-
-        top_charity_profiles = CharityProfile.objects.annotate(likes_count=models.Count('likes')).order_by('-likes_count')[:5]
+        top_charity_profiles = CharityProfile.objects.annotate(likes_count=models.Count('likes')).order_by(
+            '-likes_count')[:5]
 
         charity_profile_serializer = CharityProfileSerializer(top_charity_profiles, many=True)
         return_dictionary = {"charity_profiles": charity_profile_serializer.data}
@@ -412,7 +415,6 @@ class CharityDataProcessorView(APIView):
 
     # Get the 5 most popular charities
     def get(self, request):
-
         zip_file = os.path.join(settings.MEDIA_ROOT, 'charity\\data\\zip\\RegPlusExtract_September_2016.zip')
         new_path = os.path.join(settings.MEDIA_ROOT, 'charity\\data\\csv')
 
@@ -443,7 +445,8 @@ class PaymentConfirmationView(APIView):
         # Read parameter from the URL
         charity_profile = User.objects.filter(username=charity_username).first()
         if not charity_profile:
-            response_data = json.dumps({"error": "Charity profile does not exist with the provided username: " + str(charity_username)})
+            response_data = json.dumps(
+                {"error": "Charity profile does not exist with the provided username: " + str(charity_username)})
             return HttpResponse(response_data, content_type='application/json')
 
         data = request.data
