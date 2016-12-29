@@ -41,6 +41,56 @@ class IndexView(APIView):
         return HttpResponse(template.render())
 
 
+class CharitySettingsView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    # Adds tags to the profile of a charity. The 'tags' parameter has so be a string with words seperated by commans/spaces.
+    # Updates PayPal information, and password
+    def post(self, request, format=None):
+
+        # Check the user's role
+        user = request.user
+        if user.role != roles.charity:
+            response_data = json.dumps({"authorised": False})
+            return HttpResponse(response_data, content_type='application/json')
+
+        # Read required parameters
+        data = request.data
+        tags = data.get('tags', None)
+        Tag.objects.update_tags(user.charity_profile, tags)
+
+        tags = data.get('tags', None)
+
+        return Response({'success': True}, status=status.HTTP_201_CREATED)
+
+    # Gets the tags of a specific charity profile, or returns the overall tag usage for all charity profiles
+    def get(self, request):
+        mode = request.GET.get('mode', None)
+
+        if not mode:
+            response_data = json.dumps({"error": "Mode unrecognised!"})
+            return HttpResponse(response_data, content_type='application/json')
+
+        # Get usage counts for tags used by charity profiles
+        if mode == "usage":
+            tags_and_counts = Tag.objects.usage_for_model(CharityProfile, counts=True)
+            response_data = json.dumps({"tags_and_counts": tags_and_counts})
+            return HttpResponse(response_data, content_type='application/json')
+
+        # Get the tags used by a specific charity
+        id = request.GET.get('id', None)
+        charity_profile = CharityProfile.objects.filter(id=id).first()
+        if not charity_profile:
+            response_data = json.dumps({"error": "Charity profile doesn't exist!"})
+            return HttpResponse(response_data, content_type='application/json')
+
+        tags = Tag.objects.get_for_object(charity_profile)
+        charity_tags_strings = [tag.name for tag in tags]
+        response_data = json.dumps({"tags": charity_tags_strings})
+        return HttpResponse(response_data, content_type='application/json')
+
+
 class CharityTagsView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication,)
@@ -209,17 +259,32 @@ class CharityActivitySearchView(APIView):
     # Returns specific charity activities
     def get(self, request):
 
+        # Get all activities belonging to a charity
         charity_username = request.GET.get('name', None)
-        charity = User.objects.filter(username=charity_username).first()
-        if not charity:
-            response_data = json.dumps({"error": "No charity found with this username. "})
+        if charity_username:
+            charity = User.objects.filter(username=charity_username).first()
+            if not charity:
+                response_data = json.dumps({"error": "No charity found with this username. "})
+                return HttpResponse(response_data, content_type='application/json')
+
+            charity_profile = charity.charity_profile
+            charity_activities = charity_profile.activities
+
+            charity_activity_serializer = CharityActivitySerializer(charity_activities, many=True)
+            return_dictionary = {"charity_activities": charity_activity_serializer.data}
+            json_charity_activities = JSONRenderer().render(return_dictionary)
+
+            return HttpResponse(json_charity_activities, content_type='application/json')
+
+        # Get a specific activity
+        activity_id = request.GET.get('activity_id', None)
+        activity = CharityActivity.objects.filter(id=activity_id).first()
+        if not activity:
+            response_data = json.dumps({"error": "No activity found with this ID: " + str(activity_id)})
             return HttpResponse(response_data, content_type='application/json')
 
-        charity_profile = charity.charity_profile
-        charity_activities = charity_profile.activities
-
-        charity_activity_serializer = CharityActivitySerializer(charity_activities, many=True)
-        return_dictionary = {"charity_activities": charity_activity_serializer.data}
+        charity_activity_serializer = CharityActivitySerializer(activity)
+        return_dictionary = {"charity_activity": charity_activity_serializer.data}
         json_charity_activities = JSONRenderer().render(return_dictionary)
 
         return HttpResponse(json_charity_activities, content_type='application/json')
