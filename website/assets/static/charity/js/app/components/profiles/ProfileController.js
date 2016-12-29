@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal', '$scope', 'profilePrepService', 'Payment'];
+    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal', '$scope', 'profilePrepService', 'Payment', '$http'];
 
-    function ProfileController($location, Authentication, Profile, $modal, $scope, profilePrepService, Payment) {
+    function ProfileController($location, Authentication, Profile, $modal, $scope, profilePrepService, Payment, $http) {
         var vm = this;
         // vm.isCharity = true;
         vm.profile = {};
@@ -20,22 +20,12 @@
         activate();
 
         function activate() {
-            // TODO : Use this path in Setting Controller
-            // vm.isAuthenticated = Authentication.isAuthenticated();
-            // var authenticatedAccount = Authentication.getAuthenticatedAccount();
-            // if (!authenticatedAccount) {
-            //     $location.url('/login');
-            //     //Snackbar.error('You are not authorized to view this page.');
-            // } else {
-            //     if (authenticatedAccount != undefined){
-            //         vm.user = authenticatedAccount.username;
-            //     }
-            // }
-
             // initial value
             vm.isMatched = false;
             // Get current charity profile data
             setProfile();
+            // Get rating
+            getRating();
 
             var user_role = Profile.getAuthenticatedAccount();
             if (user_role != undefined && user_role != null) {
@@ -46,7 +36,7 @@
             function setProfile() {
                 var charity_profile = profilePrepService.data.charity_profile;
                 console.log(charity_profile);
-                if (charity_profile == undefined || charity_profile == null) {
+                if (charity_profile == undefined || charity_profile == null || charity_profile.charity_name == "") {
                     alert("Page Not Found. We could not find the page you requested.");
                     $location.url('/home');
                     return;
@@ -60,7 +50,25 @@
                 vm.profile.postcode = charity_profile.postcode;
                 vm.profile.email = charity_profile.email;
                 vm.profile.phone_number = charity_profile.phone_number;
-                vm.profile.rate = "3";
+            }
+
+            // TODO: Temporary GET function (Will move to service after test)
+            function getRating() {
+                $http.get('/api/charity/charity_rating_aggregates/', {params: {"charity_name": vm.profile.name}}).then(getSuccessFn, getErrorFn);
+
+                function getSuccessFn(data, status, headers, config) {
+                    var rate = data.data;
+                    console.log(rate.average_rate);
+                    console.log(rate.total_users);
+                    console.log(rate.rate_by_user);
+                    vm.profile.rate = rate.rate_by_user == null ? 0 : rate.rate_by_user;
+                    vm.profile.total_users = rate.total_users;
+                    vm.profile.userRate = rate.rate_by_user;
+                }
+
+                function getErrorFn(data, status, headers, config) {
+                    console.error('Getting Search failed! ' + status);
+                }
             }
         }
 
@@ -91,9 +99,15 @@
             $location.path('/payment');
         }
 
-        // TODO : Set rate to back-end
+        // TODO: Temporary POST function (Will move to service after test)
         vm.rateChange = function(){
-            alert(angular.element('#rateCharity').val());
+            // alert(angular.element('#rateCharity').val());
+            var rate = angular.element('#rateCharity').val() + '.0';
+            var setRate = {
+                "charity_name": vm.profile.name,
+                "rate_by_user": rate
+            };
+            $http.post('/api/charity/charity_rating/', setRate);
         }
     }
 })();

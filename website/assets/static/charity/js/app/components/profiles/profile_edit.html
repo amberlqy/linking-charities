@@ -55,20 +55,17 @@
                 </a>
             </li>
             <li>
-                <div>
-                    <!--<input id="stars-existing" class="starrr" data-rating='4'>-->
-                    <!--<div id="stars-existing" class="starrr" ng-model="vm.profile.rate"></div>-->
-                    <!--<input type="hidden" id="rateCharity" />-->
-                </div>
                 <div style="pointer-events: none;">
                     Average Rate: <br/>
                     <div id="stars" class="starrr" data-rating='1' ng-model="vm.profile.rate"></div>
-                    <br/> 3 Stars from 10 Users
+                    <br/> {{vm.profile.rate}} Stars from {{vm.profile.total_users}} Users
                 </div>
-                <div ng-click="vm.rateChange()">
+                <div>
                     User Rate: <br/>
-                    <div id="stars-existing" class="starrr" ng-model="vm.profile.userRate"></div>
-                    <input type="hidden" id="rateCharity" />
+                    <div ng-click="vm.rateChange()">
+                        <div id="stars-existing" class="starrr" ng-model="vm.profile.userRate"></div>
+                        <input type="hidden" id="rateCharity" />
+                    </div>
                 </div>
             </li>
         </ul>
