@@ -9,5 +9,4 @@ class CharityActivity(models.Model):
     name = models.CharField(max_length=100, null=False)
     description = models.CharField(max_length=255, null=True)
     date = models.CharField(max_length=10, null=True)
-    image = models.FileField(upload_to='charity/activity_images/', null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)

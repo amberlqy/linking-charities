@@ -16,6 +16,7 @@ from django.db.models import Q, Avg
 
 from assets import settings
 from charity.models.charity_activity import CharityActivity
+from charity.models.charity_activity_image import CharityActivityImage
 from charity.models.charity_data import CharityData
 from charity.models.charity_profile import CharityProfile
 from charity.models.charity_rating import CharityRating
@@ -190,13 +191,13 @@ class CharityActivityView(APIView):
         else:
             date = None
 
+        charity_activity = CharityActivity.objects.create(charity_profile=user.charity_profile, name=name,
+                                                          description=description, date=date)
+
         files = request.FILES
         if files:
-            image = files["file0"]
-        else:
-            image = None
-
-        CharityActivity.objects.create(charity_profile=user.charity_profile, name=name, description=description, date=date, image=image)
+            for image_name in files:
+                CharityActivityImage.objects.create(charity_activity=charity_activity, image=files[image_name])
 
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 
