@@ -320,7 +320,7 @@ class CharityManagementViewTestCase(TestCase):
         self.client.post("/api/charity/charity_rating/", {"charity_name": "Charity1", "rate_by_user": 5.0},
                          HTTP_AUTHORIZATION='JWT {}'.format(token))
 
-        # Get ratings of the charity profile
+        # Get ratings of the charity profile as a non-logged in user
         response = self.client.get("/api/charity/charity_rating_aggregates/", {"charity_name": "Charity1"})
         response_content = json.loads(response.content.decode('utf-8'))
         rate_by_user = response_content["rate_by_user"]
@@ -331,7 +331,7 @@ class CharityManagementViewTestCase(TestCase):
         self.assertEqual(average_rate, 4.0)
         self.assertEqual(total_users, 2)
 
-        # Get ratings of the charity profile
+        # Get ratings of the charity profile as a logged in user
         response = self.client.get("/api/charity/charity_rating_aggregates/", {"charity_name": "Charity1"},
                                    HTTP_AUTHORIZATION='JWT {}'.format(token))
         response_content = json.loads(response.content.decode('utf-8'))

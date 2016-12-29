@@ -380,7 +380,11 @@ class CharityRatingPublicView(APIView):
         if not logged_in_user.is_authenticated():
             rate_by_user = 0.0
         else:
-            rate_by_user = charity_ratings.filter(user=logged_in_user).first().rate_by_user
+            existing_charity_rating = charity_ratings.filter(user=logged_in_user).first()
+            if existing_charity_rating:
+                rate_by_user = existing_charity_rating.rate_by_user
+            else:
+                rate_by_user = 0.0
 
         average_rate = charity_ratings.aggregate(average_rate=Avg('rate_by_user'))["average_rate"]
         total_users = charity_ratings.count()
