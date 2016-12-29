@@ -5,17 +5,20 @@
         .module('charity.search.controllers')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll'];
+    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', '$modal', 'NgMap'];
 
-
-    function SearchController($scope, $http, Search, $location, $anchorScroll) {
+    function SearchController($scope, $http, Search, $location, $anchorScroll, $modal, NgMap) {
         //search function
         var searchKey = Search.getSearchKey();
         $scope.searchKeyWord = searchKey.name;
         search();
         function search(row) {
-            $http.get('/api/charity/charity_search/', {params: {"name": searchKey.name,
-                                                                "target": null,"country": searchKey.country, "city": searchKey.city, "ranking": null}}).then(getSuccessFn, getErrorFn);
+            $http.get('/api/charity/charity_search/', {
+                params: {
+                    "name": searchKey.name,
+                    "target": null, "country": searchKey.country, "city": searchKey.city, "ranking": null
+                }
+            }).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
                 var search = data.data["charity_profiles"];
@@ -113,13 +116,40 @@
             if ($scope.locations.length == 0) {
                 for (var j = 0; j < $scope.filteredItems.length; j++) {
                     if ($scope.filteredItems[j].country != null && $scope.filteredItems[j].city != null && $scope.filteredItems[j].postcode != null) {
-                        $scope.locations.push($scope.filteredItems[j].country +"&nbsp"+ $scope.filteredItems[j].city +"&nbsp"+ $scope.filteredItems[j].postcode);
+                        $scope.locations.push($scope.filteredItems[j].country + "&nbsp" + $scope.filteredItems[j].city + "&nbsp" + $scope.filteredItems[j].postcode);
                         $scope.locationsID.push($scope.filteredItems[j].id);
                         $scope.locationsName.push($scope.filteredItems[j].charity_name);
                     }
                 }
             }
         };
+
+
+
+        // NgMap.getMap().then(function (map) {
+        //     console.log(map.getCenter());
+        //     console.log('markers', map.markers);
+        //     console.log('shapes', map.shapes);
+        // });
+
+
+
+        // var mapOptions = {
+        //     center: {
+        //         lat: 51.508742,
+        //         lng: -0.120850
+        //     },
+        //     zoom: 10
+        // };
+        //
+        // // $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        //
+        // $scope.loadMap = function () {
+        //
+        // };
+
+
+
         $scope.mapFunction = function () {
             var mapCanvas = document.getElementById("map");
             var myCenter = new google.maps.LatLng(51.508742, -0.120850);
@@ -177,18 +207,18 @@
             var createMarker = function (address, id, name, lat, lng) {
                 //set style of info window content
                 var contentString = '<table class="infoTable">' +
-                                    '<tbody>' +
-                                        '<tr>' +
-                                            '<td class="showPicture">' +
-                                                '<img class="picStyle" src="/static/charity/images/no-user-image.gif">' +
-                                            '</td>' +
-                                            '<td class="infoShowContent">' +
-                                                '<a href= "/charity/charityprofile/' + id + '">' + name + '</a>' +
-                                                '<p>' + address + '</p>' +
-                                            '</td>' +
-                                        '</tr>' +
-                                    '</tbodyclass>' +
-                                    '</table>';
+                    '<tbody>' +
+                    '<tr>' +
+                    '<td class="showPicture">' +
+                    '<img class="picStyle" src="/static/charity/images/no-user-image.gif">' +
+                    '</td>' +
+                    '<td class="infoShowContent">' +
+                    '<a href= "/charity/charityprofile/' + id + '">' + name + '</a>' +
+                    '<p>' + address + '</p>' +
+                    '</td>' +
+                    '</tr>' +
+                    '</tbodyclass>' +
+                    '</table>';
 
                 //set markers
                 var marker = new google.maps.Marker({
@@ -230,6 +260,19 @@
         };
 
 
+        // $scope.uploadPictureFunction = function () {
+        //     var modalInstance = $modal.open({
+        //         templateUrl: '/static/charity/js/app/components/imgcrop/uploadimg.html',
+        //         controller: 'UploadimgController'
+        //     });
+        // };
+        //
+        // $scope.updateImageFunction = function(){
+        //     var modalInstance = $modal.open({
+        //         templateUrl: '/static/charity/js/app/components/imgcrop/imgcrop.html',
+        //         controller: 'ImgcropController'
+        //     });
+        // };
     }
 })
 ();

@@ -1,6 +1,7 @@
 <head>
     <link href="/static/charity/css/searchcss/search.css" rel="stylesheet">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwYtBup_b7knHtvd_PmFMxkaWnAK60d4c&libraries=geometry"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwYtBup_b7knHtvd_PmFMxkaWnAK60d4c&libraries=geometry"></script>
 </head>
 
 <div class="search">
@@ -16,12 +17,14 @@
             </ul>
         </div>
     </div>
-    <div class="searchMap" ng-if="isMap == 1">
+    <div class="searchMap" ng-if="isMap == 1" ng-init="pushLocations()">
         <div class="col-md-8 col-md-offset-2">
-            <div id="map" style="width:100%;height:470px">
-            {{mapFunction()}}
-            {{pushLocations()}}
-            </div>
+            <div id="map" style="width:100%;height:470px" ng-init="mapFunction()"></div>
+            <!--<div id="map" style="width:100%;height:470px">-->
+            <!--{{mapFunction()}}-->
+            <!--{{pushLocations()}}-->
+            <!--</div>-->
+            <!--<ng-map center="4,-87" zoom="3"></ng-map>-->
         </div>
     </div>
     <div class="searchList" ng-if="isMap == 0">
@@ -64,7 +67,7 @@
                         </td>
                         <td class="showContent">
                             <h4 class="nameLinkStyle">
-                                <a href="profile/{{ data.charity_name }}">{{data.charity_name}}</a>
+                                <a href="javascript:void(0);" ng-click="profilePage(data.id)">{{data.charity_name}}</a>
                             </h4>
                             {{data.description}}
                             </br>
@@ -104,3 +107,6 @@
         </div>
     </div>
 </div>
+
+<!--<button ng-click="uploadPictureFunction()">Upload Pictures</button>-->
+<!--<button ng-click="updateImageFunction()">Update Profile Image</button>-->
