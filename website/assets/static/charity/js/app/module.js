@@ -16,7 +16,8 @@ angular
             'charity.profiles',
             'charity.dashboard',
             'charity.search',
-            'charity.payment'
+            'charity.payment',
+            'charity.user'
         ]);
 
     angular

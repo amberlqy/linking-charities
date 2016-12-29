@@ -23,7 +23,8 @@
 
         <div class=".col-sm-4 col-md-4">
             <ul class="pull-right">
-                <li ng-show="vm.isAuthenticated" ng-class="{ active: vm.isActive('/profile/' + vm.user)}"><a href="profile/{{ vm.user }}">{{ vm.user }}</a></li>
+                <li ng-show="vm.isAuthenticated && vm.userRole == 'charity'" ng-class="{ active: vm.isActive('/profile/' + vm.user)}"><a href="profile/{{ vm.user }}">{{ vm.user }}</a></li>
+                <li ng-show="vm.isAuthenticated && vm.userRole == 'user'" ng-class="{ active: vm.isActive('/user/' + vm.user)}"><a href="user/{{ vm.user }}">{{ vm.user }}</a></li>
                 <li ng-show="vm.isAuthenticated" ><a href="javascript:void(0)" ng-click="vm.logout()">Logout</a></li>
                 <li ng-hide="vm.isAuthenticated" ng-class="{ active: vm.isActive('/login')}"><a href="login">Login</a></li>
                 <li ng-hide="vm.isAuthenticated" ng-class="{ active: vm.isActive('/register')}"><a href="register">Register</a></li>
