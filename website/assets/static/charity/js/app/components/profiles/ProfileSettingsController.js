@@ -43,11 +43,13 @@
 
                 vm.setting.paypal_email = ""; // charitySetting.paypal_email;
                 vm.setting.paypal_token = ""; // charitySetting.paypal_token
+                vm.setting.tag = "child,parent";
             }
         }
 
         // TODO: Add URL service for setting
         function update() {
+            vm.setting.tag = angular.element('#tagsetting').val();
             console.log(vm.setting);
 
             // Profile.someFunctionInService(vm.setting).then(profileSuccessFn, profileErrorFn);

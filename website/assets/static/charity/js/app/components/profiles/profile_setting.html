@@ -35,7 +35,7 @@
                 </a>
             </li>
             <li>
-                <a class="" href="payment">
+                <a class="" href="#" ng-click="vm.donate()">
                     <i></i>
                     <span>Donate To Us</span>
                 </a>
@@ -67,14 +67,20 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Change Password
+                            Change Info
                         </header>
                         <div class="panel-body">
                             <form class="form-horizontal" name="settingForm" ng-submit="vm.update()">
                                 <div class="form-group">
+                                    <label class="col-sm-2 control-label">Tag</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control tagsetting" name="tagsetting" id="tagsetting" ng-model="vm.setting.tag" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 control-label">Paypal Email</label>
                                     <div class="col-sm-10">
-                                        <input type="email" name="paypalEmail" class="form-control" ng-model="vm.setting.paypal_email" ng-required="true">
+                                        <input type="email" name="paypalEmail" class="form-control" ng-model="vm.setting.paypal_email">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -133,7 +139,14 @@
         </section>
     </section>
 </section>
+<script>
+    $(document).ready(function(){
+        // Tags Input
+        $(".tagsetting").tagsInput();
+    });
+</script>
 
 <script src="/static/charity/css/profilecss/scripts.js"></script>
+<script src="/static/charity/js/library/jquery.tagsinput.js"></script>
 </body>
 </html>
