@@ -5,7 +5,7 @@ import uuid
 
 # Gives a unique name to each file
 def content_file_name(instance, filename):
-    return 'charity/activity_images/'.join([uuid.uuid4(), instance.charity_activity.id, filename])
+    return 'charity/activity_images/' + str(uuid.uuid4()) + str(instance.charity_activity.id) + filename
 
 
 # Specifies the one-to-many "Images" relation of a charity activity.
