@@ -19,13 +19,12 @@
                 <a href="javascript:;" class="">
                     <i></i>
                     <span>Activity</span>
-                    <!-- Create class later, just a draft -->
-                    <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
+                    <span class="glyphicon glyphicon-plus act-sidebar"></span>
                 </a>
                 <ul class="sub">
                     <li><a id="lastActivityLink" href="profile/{{vm.name}}#lastActivity">Last Activity</a></li>
-                    <li class="active"><a class="" href="#">Past Activities</a></li>
-                    <li ng-show="vm.isMatched"><a class="" href="profile/{{vm.name}}/new_activity">New Activity</a></li>
+                    <li><a class="" href="profile/{{vm.name}}/activities">Past Activities</a></li>
+                    <li><a class="" href="profile/{{vm.name}}/new_activity">New Activity</a></li>
                 </ul>
             </li>
             <li>
@@ -35,18 +34,12 @@
                 </a>
             </li>
             <li>
-                <a class="" href="#" ng-click="vm.donate()">
-                    <i></i>
-                    <span>Donate To Us</span>
-                </a>
-            </li>
-            <li>
                 <a id="contactDetailLink" href="profile/{{vm.name}}#contactDetail">
                     <i></i>
                     <span>Contact Us</span>
                 </a>
             </li>
-            <li class="active" ng-show="vm.isMatched">
+            <li class="active">
                 <a class="" href="#">
                     <i></i>
                     <span>Setting</span>

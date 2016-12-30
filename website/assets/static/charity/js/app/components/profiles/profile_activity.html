@@ -22,8 +22,7 @@
                     <a href="javascript:;" class="">
                         <i></i>
                         <span>Activity</span>
-                        <!-- Create class later, just a draft -->
-                        <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
+                        <span class="glyphicon glyphicon-plus act-sidebar"></span>
                     </a>
                     <ul class="sub">
                         <li><a id="lastActivityLink" href="profile/{{vm.name}}#lastActivity">Last Activity</a></li>
@@ -50,7 +49,7 @@
                     </a>
                 </li>
                 <li ng-show="vm.isMatched">
-                    <a class="" href="profile/{{vm.profile.name}}/setting">
+                    <a class="" href="profile/{{vm.name}}/setting">
                         <i></i>
                         <span>Setting</span>
                     </a>
@@ -67,6 +66,7 @@
                 </div>
             </div>
 
+            <div ng-show="!vm.activity.length"><h3>There is no activity of this charity.</h3></div>
             <div id="activityList">
                 <table>
                     <tr ng-repeat="activity in vm.activity track by $index">
@@ -85,8 +85,8 @@
                         </td>
                         <td class="tdInfo">
                             <!-- button console -->
-                            <!--<div style="text-align: right; margin-top: 0px" ng-show="vm.isMatched">-->
-                            <div style="text-align: right;">
+                            <!--<div class="buttonArea" ng-show="vm.isMatched">-->
+                            <div class="buttonArea">
                                 <!-- edit -->
                                 <button type="button" id="editButton" name="editButton" class="btn btn-default btn-sm" value='{{$index}}' onclick="editClick(this.value)">
                                     <span class="glyphicon glyphicon-pencil"></span>
@@ -101,7 +101,7 @@
                                 </button>
                                 <br/>
                             </div>
-                            <h3>Activity Name : <textarea id="nameTextArea" name="nameTextArea" class="disTextArea" ng-model="activity.name" rows="1" cols="31" maxlength="25" readonly="readonly"></textarea></h3>
+                            <h3>Activity Name : <input type="text" id="nameTextArea" name="nameTextArea" class="disNameInput" ng-model="activity.name" maxlength="40" readonly="readonly" required></h3>
                             <h3>Activity Date &nbsp; : <input type="date" id="dateInput" name="dateInput" class="disDateInput" ng-model="vm.date" readonly/></h3>
                             <h3>Activity Description :</h3>
                             <p class="descTextArea">
@@ -116,8 +116,8 @@
 </div>
 <script>
     $(document).ready(function(){
-        var lines = 1;
-        $('#nameTextArea').keydown(function(e) {
+        var lines = 4;
+        $('#desTextArea').keydown(function(e) {
             newLines = $(this).val().split("\n");
             cntNewLines = newLines.length;
             if (e.keyCode == 13 && cntNewLines >= lines) {
@@ -145,7 +145,7 @@
             initValue();
         }
         // Enable edit
-        nameTextArea[rowIndex].className = "enTextArea";
+        nameTextArea[rowIndex].className = "enNameInput";
         nameTextArea[rowIndex].readOnly = false;
         dateInput[rowIndex].className = "enDateInput";
         dateInput[rowIndex].readOnly = false;
@@ -193,7 +193,7 @@
 
     function disabledEdit(rowIndex) {
         // Disabled fields
-        nameTextArea[rowIndex].className = "disTextArea";
+        nameTextArea[rowIndex].className = "disNameInput";
         nameTextArea[rowIndex].readOnly = true;
         dateInput[rowIndex].className = "disDateInput";
         dateInput[rowIndex].readOnly = true;

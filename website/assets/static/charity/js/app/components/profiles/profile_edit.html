@@ -18,11 +18,10 @@
                 </a>
             </li>
             <li class="sub-menu">
-                <a href="javascript:;" class="">
+                <a href="javascript:;">
                     <i></i>
                     <span>Activity</span>
-                    <!-- Create class later, just a draft -->
-                    <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
+                    <span class="glyphicon glyphicon-plus act-sidebar"></span>
                 </a>
                 <ul class="sub">
                     <li class="active"><a id="lastActivityLink" href="#">Last Activity</a></li>
@@ -54,16 +53,16 @@
                     <span>Setting</span>
                 </a>
             </li>
-            <li>
-                <div style="pointer-events: none;">
-                    Average Rate: <br/>
+            <li class="font-medium" ng-show="vm.user">
+                <div class="no-pointer">
+                    <br/>Average Rate : <br/>
                     <div id="stars" class="starrr" data-rating='1' ng-model="vm.profile.rate"></div>
                     <br/> {{vm.profile.rate}} Stars from {{vm.profile.total_users}} Users
                 </div>
                 <div>
-                    User Rate: <br/>
-                    <div ng-click="vm.rateChange()">
-                        <div id="stars-existing" class="starrr" ng-model="vm.profile.userRate"></div>
+                    User Rate : <br/>
+                    <div class="user-rate" ng-click="vm.rateChange()">
+                        <div id="stars-existing" class="starrr" data-rating='1' ng-model="vm.profile.userRate"></div>
                         <input type="hidden" id="rateCharity" />
                     </div>
                 </div>
@@ -92,9 +91,8 @@
                 <div class="row">
                     <div class="col-md-12 sol-sm-12">
                         <!-- button console -->
-                        <div style="text-align: right; margin-top: -100px" ng-show="vm.isMatched">
+                        <div class="buttonArea" ng-show="vm.isMatched">
                             <!-- edit -->
-                            <!--<button type="button" id="editButton" class="btn btn-default btn-sm" onclick="editClick();" data-toggle="tooltip" data-placement="bottom" title="Edit">-->
                             <button type="button" id="editButton" class="btn btn-default btn-sm" onclick="editClick();">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
@@ -216,7 +214,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
                             <h3>Spending</h3>
-                            <div class="financialchart" style="text-align: center;">
+                            <div class="financialchart">
                                 <canvas id="pie1" class="chart chart-pie"
                                         chart-data="spendingdata" chart-labels="labels" chart-options="options">
                                 </canvas>
@@ -245,42 +243,42 @@
                                 <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
                                     <label class="col-sm-4 control-label">Address</label>
                                     <div class="col-sm-4">
-                                        <input id="addressTextbox" type="text" class="form-control" ng-model="vm.profile.address" readonly="readonly">
+                                        <input id="addressTextbox" type="text" class="form-control" ng-model="vm.profile.address" maxlength="50" readonly="readonly">
                                     </div>
                                 </div>
                                 <!-- City -->
                                 <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
                                     <label class="col-sm-4 control-label">City</label>
                                     <div class="col-sm-4">
-                                        <input id="cityTextbox" type="text" class="form-control" ng-model="vm.profile.city" readonly="readonly">
+                                        <input id="cityTextbox" type="text" class="form-control" ng-model="vm.profile.city" maxlength="30" readonly="readonly">
                                     </div>
                                 </div>
                                 <!-- Country -->
                                 <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
                                     <label class="col-sm-4 control-label">Country</label>
                                     <div class="col-sm-4">
-                                        <input id="countryTextbox" type="text" class="form-control" ng-model="vm.profile.country" readonly="readonly">
+                                        <input id="countryTextbox" type="text" class="form-control" ng-model="vm.profile.country" maxlength="30" readonly="readonly">
                                     </div>
                                 </div>
                                 <!-- Postcode -->
                                 <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
                                     <label class="col-sm-4 control-label">Postcode</label>
                                     <div class="col-sm-4">
-                                        <input id="postTextbox" type="text" class="form-control" ng-model="vm.profile.postcode" readonly="readonly">
+                                        <input id="postTextbox" type="text" class="form-control" ng-model="vm.profile.postcode" maxlength="20" readonly="readonly">
                                     </div>
                                 </div>
                                 <!-- Email -->
                                 <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
                                     <label class="col-sm-4 control-label">Email</label>
                                     <div class="col-sm-4">
-                                        <input id="emailTextbox" type="text" class="form-control" ng-model="vm.profile.email" readonly="readonly">
+                                        <input id="emailTextbox" type="text" class="form-control" ng-model="vm.profile.email" maxlength="50" readonly="readonly">
                                     </div>
                                 </div>
                                 <!-- Phone Number -->
                                 <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
                                     <label class="col-sm-4 control-label">Phone Number</label>
                                     <div class="col-sm-4">
-                                        <input id="phoneTextbox" type="text" class="form-control" ng-model="vm.profile.phone_number" readonly="readonly">
+                                        <input id="phoneTextbox" type="text" class="form-control" ng-model="vm.profile.phone_number" maxlength="15" readonly="readonly">
                                     </div>
                                 </div>
                             </form>

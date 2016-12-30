@@ -7,10 +7,10 @@
         .controller('ProfileSettingsController', ProfileSettingsController);
 
     ProfileSettingsController.$inject = [
-        'Profile', '$routeParams'
+        '$location', 'Profile', '$routeParams'
     ];
 
-    function ProfileSettingsController(Profile, $routeParams) {
+    function ProfileSettingsController($location, Profile, $routeParams) {
         var vm = this;
         vm.setting = {};
 
@@ -19,16 +19,23 @@
         activate();
 
         function activate() {
-            // initial value
-            vm.isMatched = false;
-            // Get activity data
-            setSetting();
+            vm.name = $routeParams.name; // name of charity
 
             var user_role = Profile.getAuthenticatedAccount();
             if (user_role != undefined && user_role != null) {
-                vm.isCharity = user_role.userRole == "charity";
-                vm.isMatched = user_role.username == vm.name;
+                if (user_role.userRole != "charity" || user_role.username != vm.name) {
+                    alert('You do not have permission to access this page');
+                    $location.url('/home');
+                    return;
+                }
+            } else {
+                alert('You do not have permission to access this page');
+                $location.url('/home');
+                return;
             }
+
+            // Get activity data
+            setSetting();
 
             // TODO: GET request for receive setting info (Only Paypal Info)
             function setSetting() {

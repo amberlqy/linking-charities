@@ -6,11 +6,10 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Authentication', 'Profile', '$modal', '$scope', 'profilePrepService', 'Payment', '$http'];
+    ProfileController.$inject = ['$location', 'Profile', '$scope', 'profilePrepService', 'Payment', '$http'];
 
-    function ProfileController($location, Authentication, Profile, $modal, $scope, profilePrepService, Payment, $http) {
+    function ProfileController($location, Profile, $scope, profilePrepService, Payment, $http) {
         var vm = this;
-        // vm.isCharity = true;
         vm.profile = {};
 
         $scope.labels = ["Voluntary £", "Trading to raise funds £", "Investment £"];
@@ -31,6 +30,7 @@
             if (user_role != undefined && user_role != null) {
                 vm.isCharity = user_role.userRole == "charity";
                 vm.isMatched = user_role.username == vm.profile.name;
+                vm.user = user_role.username;
             }
 
             function setProfile() {
@@ -58,10 +58,7 @@
 
                 function getSuccessFn(data, status, headers, config) {
                     var rate = data.data;
-                    console.log(rate.average_rate);
-                    console.log(rate.total_users);
-                    console.log(rate.rate_by_user);
-                    vm.profile.rate = rate.rate_by_user == null ? 0 : rate.rate_by_user;
+                    vm.profile.rate = rate.average_rate == null ? 0 : rate.average_rate;
                     vm.profile.total_users = rate.total_users;
                     vm.profile.userRate = rate.rate_by_user;
                 }
@@ -90,7 +87,7 @@
 
         // TODO : Set donateKey and send to payment controller
         vm.donate = function(){
-            var donateKey = {name: "TEST NAME",
+            var donateKey = {name: vm.profile.name,
                               paypal_email: null,
                               paypal_token: null // etc.
                             };
@@ -101,8 +98,7 @@
 
         // TODO: Temporary POST function (Will move to service after test)
         vm.rateChange = function(){
-            // alert(angular.element('#rateCharity').val());
-            var rate = angular.element('#rateCharity').val() + '.0';
+            var rate = vm.profile.userRate + '.0';
             var setRate = {
                 "charity_name": vm.profile.name,
                 "rate_by_user": rate

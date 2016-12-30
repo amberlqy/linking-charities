@@ -11,7 +11,7 @@
     <div id="sidebar">
         <ul class="sidebar-menu">
             <li>
-                <a class="" href="{{vm.user}}/profile">
+                <a class="" href="profile/{{vm.name}}">
                     <i></i>
                     <span>Profile</span>
                 </a>
@@ -20,16 +20,28 @@
                 <a href="javascript:;" class="">
                     <i></i>
                     <span>Activity</span>
-                    <!-- Create class later, just a draft -->
-                    <span class="glyphicon glyphicon-plus" style="float: right; margin-right: 8px; margin-top: 6px; font-size: 10px;"></span>
+                    <span class="glyphicon glyphicon-plus act-sidebar"></span>
                 </a>
                 <ul class="sub">
-                    <li class="active"><a class="" href="{{vm.user}}/new_activity">New Activity</a></li>
-                    <li><a class="" href="{{vm.user}}/activities">Past Activity</a></li>
+                    <li><a id="lastActivityLink" href="profile/{{vm.name}}#lastActivity">Last Activity</a></li>
+                    <li><a href="profile/{{vm.name}}/activities">Past Activities</a></li>
+                    <li class="active"><a href="#">New Activity</a></li>
                 </ul>
             </li>
             <li>
-                <a class="" href="{{vm.user}}/setting">
+                <a id="financialLink" href="profile/{{vm.name}}#financial">
+                    <i></i>
+                    <span>Financial</span>
+                </a>
+            </li>
+            <li>
+                <a id="contactDetailLink" href="profile/{{vm.name}}#contactDetail">
+                    <i></i>
+                    <span>Contact Us</span>
+                </a>
+            </li>
+            <li>
+                <a class="" href="profile/{{vm.name}}/setting">
                     <i></i>
                     <span>Setting</span>
                 </a>
@@ -51,17 +63,22 @@
                         <header class="panel-heading">
                             Create
                         </header>
-                        <div class="panel-body" ng-show="vm.isCharity">
-                            <form class="form-horizontal" ng-submit="vm.update()" enctype="multipart/form-data">
+                        <div class="panel-body">
+                            <form class="form-horizontal" ng-submit="vm.saveActivity()" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Activity/Event Name</label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="text" ng-model="vm.activity.name" placeholder="Ex. Help Children 2016" required>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" type="text" ng-model="vm.activity.name" maxlength="40" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Activity Picture</label>
-                                    <input style="padding-left: 15px;" type="file" id="activityPicture" files-model="vm.activity.picture" />
+                                    <div class="col-sm-10">
+                                        <input type="file" upload-files multiple />
+                                        <ul>
+                                            <li ng-repeat="file in files">{{file.name}}</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Date</label>
@@ -70,9 +87,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label">Detail</label>
+                                    <label class="col-sm-2 control-label">Description</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" ng-model="vm.activity.detail" placeholder="Ex. Queens Gate">
+                                        <input type="text" class="form-control" ng-model="vm.activity.description" maxlength="200">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -86,19 +103,6 @@
                     </section>
                 </div>
             </div>
-            <!-- page end-->
-
-            <!-- try to send image with JSON -->
-            <div>
-                <input type="file" upload-files multiple />
-                <ul>
-                    <li ng-repeat="file in files">{{file.name}}</li>
-                </ul>
-                <br />
-                <br />
-                <button ng-click="saveActivity()">Save</button>
-            </div>
-
         </section>
     </section>
 </section>

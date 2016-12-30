@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileActivityController', ProfileActivityController);
 
-    ProfileActivityController.$inject = ['$http', '$location', 'Authentication', 'Profile', '$routeParams', 'activityPrepService'];
+    ProfileActivityController.$inject = ['$http', '$location', 'Payment', 'Profile', '$routeParams', 'activityPrepService'];
 
-    function ProfileActivityController($http, $location, Authentication, Profile, $routeParams, activityPrepService) {
+    function ProfileActivityController($http, $location, Payment, Profile, $routeParams, activityPrepService) {
         var vm = this;
         vm.isCharity = true;
         vm.activity = {};
@@ -62,6 +62,17 @@
             //     alert('Fail');
             //     console.error('Update failed!' + status);
             // }
+        }
+
+        // TODO : Set donateKey and send to payment controller
+        vm.donate = function(){
+            var donateKey = {name: vm.name,
+                              paypal_email: null,
+                              paypal_token: null // etc.
+                            };
+            var donateInfo = Payment.donateInfo();
+            donateInfo.setDonateInfo(donateKey);
+            $location.path('/payment');
         }
     }
 })();
