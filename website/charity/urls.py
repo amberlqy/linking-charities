@@ -4,13 +4,14 @@ from charity.views.authentication import LoginView, LogoutView, RestrictedView, 
     CharityProfileView, CharityVerificationView
 from charity.views.charity_management import CharityTagsView, CharitySearchView, CharityLikeView, CharityPopularityView, \
     CharityDataProcessorView, CharityActivityView, CharityActivitySearchView, PaymentConfirmationView, CharityRatingView, \
-    CharityRatingPublicView, CharitySettingsView
+    CharityRatingPublicView, CharitySettingsView, CharityAdvancedSearchView
 
 urlpatterns = patterns(
     '',
     url(r'^charity/settings/$', CharitySettingsView.as_view(), name='charity_settings'),
     url(r'^charity/charity_tags/$', CharityTagsView.as_view(), name='charity_tags'),
     url(r'^charity/charity_search/$', CharitySearchView.as_view(), name='charity_search'),
+    url(r'^charity/charity_advanced_search/$', CharityAdvancedSearchView.as_view(), name='charity_advanced_search'),
     url(r'^charity/charity_like/$', CharityLikeView.as_view(), name='charity_like'),
     url(r'^charity/charity_rating/$', CharityRatingView.as_view(), name='charity_rating'),
     url(r'^charity/charity_rating_aggregates/$', CharityRatingPublicView.as_view(), name='charity_rating_aggregates'),

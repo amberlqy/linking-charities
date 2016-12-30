@@ -157,19 +157,11 @@ class CharitySearchView(APIView):
             rating_aggregates = get_rating_aggregates(request, charity_profile)
 
             charity_profile_serializer = CharityProfileSerializer(charity_profile)
-            return_dictionary = {"charity_profile": charity_profile_serializer.data, "rating_charity": rating_aggregates}
+            return_dictionary = {"charity_profile": charity_profile_serializer.data,
+                                 "rating_charity": rating_aggregates}
             json_charity_profiles = JSONRenderer().render(return_dictionary)
 
             return HttpResponse(json_charity_profiles, content_type='application/json')
-
-        # If the request contains a "name" parameter with "all", return all charity names.
-        charity_name = request.GET.get('name', None)
-        if charity_name == "all":
-            charity_names = CharityProfile.objects.values_list('charity_name', flat=True)
-            return_dictionary = {"charity_names": charity_names}
-            json_charity_names = JSONRenderer().render(return_dictionary)
-
-            return HttpResponse(json_charity_names, content_type='application/json')
 
         # If the request contains an "all" parameter with "True", return all charity profiles.
         return_all = request.GET.get('all', None)
@@ -181,29 +173,39 @@ class CharitySearchView(APIView):
 
             return HttpResponse(json_charity_profiles, content_type='application/json')
 
-        # If the request contains a set of tags (separated  by whitespace), return all charity profiles with a match.
-        tags = request.GET.get('tags', None)
-        if tags:
-            # Search for all relevant charities
-            charity_profiles = list(TaggedItem.objects.get_union_by_model(CharityProfile, tags))
+        response_data = json.dumps({"error": "Your request did not contain the correct parameters."})
+        return HttpResponse(response_data, content_type='application/json')
 
+class CharityAdvancedSearchView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    # Search for charities based on specific parameters
+    def get(self, request):
+
+        tags = request.GET.get('tags', None)
+        filter = request.GET.get('filter', "")
+        charity_name = request.GET.get('name', "")
+        country = request.GET.get('country', "")
+        city = request.GET.get('city', "")
+
+        # If the request contains no parameter at all, return all profiles
+        if not (tags or filter or country or city or charity_name):
+            charity_profiles = CharityProfile.objects.all()
             charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
             return_dictionary = {"charity_profiles": charity_profile_serializer.data}
             json_charity_profiles = JSONRenderer().render(return_dictionary)
 
             return HttpResponse(json_charity_profiles, content_type='application/json')
 
-        charity_name = request.GET.get('name', "")
-        goal = request.GET.get('target', "")
-        country = request.GET.get('country', "")
-        city = request.GET.get('city', "")
-        ranking = request.GET.get('ranking', "")
-
+        # Keep filtering query sets with respect to the parameters
         charity_profiles = CharityProfile.objects.all()
+        if tags:
+            # If the request contains a set of tags (separated  by whitespace),
+            # return all charity profiles with a match.
+            charity_profiles = list(TaggedItem.objects.get_union_by_model(charity_profiles, tags))
+
         if charity_name:
             charity_profiles = charity_profiles.filter(Q(charity_name__contains=charity_name))
-        if goal:
-            charity_profiles = charity_profiles.filter(Q(goal__contains=goal))
         if country:
             charity_profiles = charity_profiles.filter(Q(country__contains=country))
         if city:

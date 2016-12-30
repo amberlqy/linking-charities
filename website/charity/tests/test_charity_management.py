@@ -80,7 +80,7 @@ class CharityManagementViewTestCase(TestCase):
         self.assertIn("soft", tags)
 
     # Tests if we can successfully search for charity profiles using tags
-    def test_search_for_charity_with_tags(self):
+    def test_advanced_search_for_charity(self):
 
         # Cat charity
         response_cat_charity = self.client.post("/api/auth/register/", {
@@ -93,7 +93,7 @@ class CharityManagementViewTestCase(TestCase):
         cat_response_content = json.loads(response_cat_charity.content.decode('utf-8'))
         cat_token = cat_response_content["token"]
 
-        self.client.post("/api/charity/charity_tags/", {"tags": "kitten cat soft"},
+        self.client.post("/api/charity/charity_tags/", {"tags": "kitten,cat,soft"},
                                         HTTP_AUTHORIZATION='JWT {}'.format(cat_token))
 
         # Dog charity
@@ -107,17 +107,17 @@ class CharityManagementViewTestCase(TestCase):
         dog_response_content = json.loads(response_dog_charity.content.decode('utf-8'))
         dog_token = dog_response_content["token"]
 
-        self.client.post("/api/charity/charity_tags/", {"tags": "doggie dog soft"},
+        self.client.post("/api/charity/charity_tags/", {"tags": "doggie,dog,soft"},
                          HTTP_AUTHORIZATION='JWT {}'.format(dog_token))
 
         # Search with tags
-        search_result_response = self.client.get("/api/charity/charity_search/", {"tags": "dog doggie"})
+        search_result_response = self.client.get("/api/charity/charity_advanced_search/", {"tags": "dog,doggie"})
         search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
         self.assertEqual(len(search_result_response_content["charity_profiles"]), 1)
         self.assertEqual(search_result_response_content["charity_profiles"][0]["goal"], "To save lonely doggies.")
 
         # Search for dogs and cats
-        search_result_response = self.client.get("/api/charity/charity_search/", {"tags": "dog cat"})
+        search_result_response = self.client.get("/api/charity/charity_advanced_search/", {"tags": "dog,cat"})
         search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
         self.assertEqual(len(search_result_response_content["charity_profiles"]), 2)
 
@@ -135,7 +135,12 @@ class CharityManagementViewTestCase(TestCase):
                          HTTP_AUTHORIZATION='JWT {}'.format(dog_token))
 
         # Search for dogs
-        search_result_response = self.client.get("/api/charity/charity_search/", {"tags": "dog"})
+        search_result_response = self.client.get("/api/charity/charity_advanced_search/", {"tags": "dog"})
+        search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
+        self.assertEqual(len(search_result_response_content["charity_profiles"]), 2)
+
+        # Search for dogs
+        search_result_response = self.client.get("/api/charity/charity_advanced_search/", {"name": "dog"})
         search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
         self.assertEqual(len(search_result_response_content["charity_profiles"]), 2)
 
