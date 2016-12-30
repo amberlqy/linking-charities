@@ -79,8 +79,8 @@
                                 <figure><img src="{{activity.image}}" alt=""></figure>
                                 <figure><img src="{{activity.image}}" alt=""></figure>
                             </div>
-                            <div class="activityList">
-                                <button type="button" class="btn btn-info btn-md"><a href="#">All Pictures</a></button>
+                            <div class="allPicBtn">
+                                <button type="button" class="btn btn-info btn-md"><a href="profile/{{vm.name}}/activity/{{activity.id}}">All Pictures</a></button>
                             </div>
                         </td>
                         <td class="tdInfo">
@@ -102,7 +102,7 @@
                                 <br/>
                             </div>
                             <h3>Activity Name : <input type="text" id="nameTextArea" name="nameTextArea" class="disNameInput" ng-model="activity.name" maxlength="40" readonly="readonly" required></h3>
-                            <h3>Activity Date &nbsp; : <input type="date" id="dateInput" name="dateInput" class="disDateInput" ng-model="vm.date" readonly/></h3>
+                            <h3>Activity Date &nbsp; : <input type="date" id="dateInput" name="dateInput" class="disDateInput" ng-model="activity.date" readonly/></h3>
                             <h3>Activity Description :</h3>
                             <p class="descTextArea">
                                 <textarea id="desTextArea" name="desTextArea" class="disTextArea" ng-model="activity.description" rows="4" cols="45" maxlength="200" readonly="readonly"></textarea>

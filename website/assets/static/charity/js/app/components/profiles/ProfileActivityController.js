@@ -6,16 +6,14 @@
         .module('charity.profiles.controllers')
         .controller('ProfileActivityController', ProfileActivityController);
 
-    ProfileActivityController.$inject = ['$http', '$location', 'Payment', 'Profile', '$routeParams', 'activityPrepService'];
+    ProfileActivityController.$inject = ['$http', '$location', 'Payment', 'Profile', '$routeParams', 'activityPrepService', '$filter'];
 
-    function ProfileActivityController($http, $location, Payment, Profile, $routeParams, activityPrepService) {
+    function ProfileActivityController($http, $location, Payment, Profile, $routeParams, activityPrepService, $filter) {
         var vm = this;
         vm.isCharity = true;
         vm.activity = {};
 
-        var strDate = "20161224";
-        var pattern = /(\d{4})(\d{2})(\d{2})/;
-        vm.date = new Date(strDate.replace(pattern, '$1-$2-$3'));
+        var pattern = /(\d{4})(\d{2})(\d{2})/; // date pattern
 
         activate();
 
@@ -33,35 +31,50 @@
 
             function setActivity() {
                 var charityActivity = activityPrepService.data.charity_activities;
-                console.log(charityActivity);
                 if (charityActivity == undefined || charityActivity == null) {
                     alert("Page Not Found. We could not find the page you requested.");
                     $location.url('/home');
                     return;
                 }
-                // TODO: format string to date before rendering page
+                // String to date format
+                for (var i = 0; i < charityActivity.length; i++) {
+                    var date = charityActivity[i].date;
+                    if (date != undefined && date != null){
+                        var strDate = date.toString();
+                        charityActivity[i].date = new Date(strDate.replace(pattern, '$1-$2-$3'));
+                    }
+                }
                 vm.activity = charityActivity;
 
                 vm.name = $routeParams.name; // name of charity
             }
         }
 
-        // Called when the user clicks on Update profile
-        // TODO After save success direct to activities page
+        // Update activity (
         vm.update = function(activity){
-            console.log(activity);
-            // TODO Next phase can delete activity
-            // return $http.post('/api/charity/activity/', activity).then(updateSuccessFn, updateErrorFn);
-            //
-            // function updateSuccessFn(data, status, headers, config) {
-            //     alert('Finish');
-            //     console.log('Update successful!');
-            // }
-            //
-            // function updateErrorFn(data, status, headers, config) {
-            //     alert('Fail');
-            //     console.error('Update failed!' + status);
-            // }
+            var date = $filter('date')(activity.date, "yyyyMMdd");
+            var activityObj = {
+                "id": activity.id,
+                "name": activity.name,
+                "description": activity.description,
+                "date": date
+            };
+            console.log(activityObj);
+
+            $http({
+                method: 'POST',
+                url: "/api/charity/activity/",
+                headers: { 'Content-Type': undefined },
+                transformRequest: function (data) {
+                    var formData = new FormData();
+                    formData.append("model", angular.toJson(data.model));
+                    for (var i = 0; i < data.files.length; i++) {
+                        formData.append("file" + i, data.files[i]);
+                    }
+                    return formData;
+                },
+                data: { model: activityObj, files: [] }
+            });
         }
 
         // TODO : Set donateKey and send to payment controller

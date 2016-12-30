@@ -48,6 +48,10 @@
                     return Profile.getActivity(name);
                 }
             }
+        }).when('/profile/:name/activity/:id', {
+            controller: 'ProfileActivityAlbumController',
+            controllerAs: 'vm',
+            templateUrl: '/static/charity/js/app/components/profiles/profile_activity_album.html'
         }).when('/profile/:name/setting', {
             controller: 'ProfileSettingsController',
             controllerAs: 'vm',

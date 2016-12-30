@@ -415,6 +415,9 @@ p.lead {
     margin-left: 140px;
     margin-top: 30px;
 }
+#activityList .allPicBtn {
+    padding-top: 220px;
+}
 #activityList .allButton {
     margin-top: 240px;
 }
