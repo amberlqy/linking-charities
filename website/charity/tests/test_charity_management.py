@@ -162,7 +162,7 @@ class CharityManagementViewTestCase(TestCase):
                                                  "user_type": "charity",
                                                  "goal": "To save lonely doggies."})
 
-        search_result_response = self.client.get("/api/charity/charity_search/", {"country": "Hun"})
+        search_result_response = self.client.get("/api/charity/charity_advanced_search/", {"country": "Hun"})
         search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
         self.assertEqual(len(search_result_response_content["charity_profiles"]), 1)
 
