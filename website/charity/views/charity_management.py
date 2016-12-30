@@ -154,8 +154,10 @@ class CharitySearchView(APIView):
             # Search by matching with charity_name instead of id
             charity_profile = CharityProfile.objects.filter(user__username=charity_username).first()
 
+            rating_aggregates = get_rating_aggregates(request, charity_profile)
+
             charity_profile_serializer = CharityProfileSerializer(charity_profile)
-            return_dictionary = {"charity_profile": charity_profile_serializer.data}
+            return_dictionary = {"charity_profile": charity_profile_serializer.data, "rating_charity": rating_aggregates}
             json_charity_profiles = JSONRenderer().render(return_dictionary)
 
             return HttpResponse(json_charity_profiles, content_type='application/json')
@@ -266,7 +268,8 @@ class CharityActivityView(APIView):
             files = request.FILES
             if files:
                 for image_name in files:
-                    CharityActivityImage.objects.create(charity_activity=existing_charity_activity, image=files[image_name])
+                    CharityActivityImage.objects.create(charity_activity=existing_charity_activity,
+                                                        image=files[image_name])
 
             response_data = json.dumps({"success": True})
             return HttpResponse(response_data, content_type='application/json')
@@ -415,28 +418,33 @@ class CharityRatingPublicView(APIView):
             return HttpResponse(response_data, content_type='application/json')
 
         charity_profile = charity.charity_profile
-        charity_ratings = charity_profile.ratings
-
-        # Create the return values
-        logged_in_user = request.user
-        if not logged_in_user.is_authenticated():
-            rate_by_user = 0.0
-        else:
-            existing_charity_rating = charity_ratings.filter(user=logged_in_user).first()
-            if existing_charity_rating:
-                rate_by_user = existing_charity_rating.rate_by_user
-            else:
-                rate_by_user = 0.0
-
-        average_rate = charity_ratings.aggregate(average_rate=Avg('rate_by_user'))["average_rate"]
-        total_users = charity_ratings.count()
-
-        return_dictionary = {"rate_by_user": rate_by_user,
-                             "average_rate": average_rate,
-                             "total_users": total_users}
+        return_dictionary = get_rating_aggregates(request, charity_profile)
         json_charity_activities = JSONRenderer().render(return_dictionary)
 
         return HttpResponse(json_charity_activities, content_type='application/json')
+
+
+# Helper function to prepare rating aggregates for a specific charity profile
+def get_rating_aggregates(request, charity_profile):
+    charity_ratings = charity_profile.ratings
+
+    # Create the return values
+    logged_in_user = request.user
+    if not logged_in_user.is_authenticated():
+        rate_by_user = 0.0
+    else:
+        existing_charity_rating = charity_ratings.filter(user=logged_in_user).first()
+        if existing_charity_rating:
+            rate_by_user = existing_charity_rating.rate_by_user
+        else:
+            rate_by_user = 0.0
+
+    average_rate = charity_ratings.aggregate(average_rate=Avg('rate_by_user'))["average_rate"]
+    total_users = charity_ratings.count()
+
+    return {"rate_by_user": rate_by_user,
+            "average_rate": average_rate,
+            "total_users": total_users}
 
 
 # Responsible for returning data related to the popularity of charities
