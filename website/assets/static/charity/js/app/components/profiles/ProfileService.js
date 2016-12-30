@@ -17,7 +17,8 @@
             getAuthenticatedAccount: getAuthenticatedAccount,
             getActivity: getCharityActivity,
             getSetting: getSettingInfo,
-            setSetting: setSettingInfo
+            setSetting: setSettingInfo,
+            getRating: getRatingInfo
         };
 
         function destroy(profile) {
@@ -75,6 +76,11 @@
             function updateErrorFn(data, status, headers, config) {
                 console.error('Update failed!' + status);
             }
+        }
+
+        // Return rating info
+        function getRatingInfo(profileName){
+            return $http.get('/api/charity/charity_rating_aggregates/', {params: {"charity_name": profileName}});
         }
     }
 })();

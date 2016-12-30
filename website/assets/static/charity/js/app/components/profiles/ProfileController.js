@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Profile', '$scope', 'profilePrepService', 'Payment', '$http'];
+    ProfileController.$inject = ['$location', 'Profile', '$scope', 'profilePrepService', 'ratingPrepService', 'Payment', '$http'];
 
-    function ProfileController($location, Profile, $scope, profilePrepService, Payment, $http) {
+    function ProfileController($location, Profile, $scope, profilePrepService, ratingPrepService, Payment, $http) {
         var vm = this;
         vm.profile = {};
 
@@ -52,20 +52,31 @@
                 vm.profile.phone_number = charity_profile.phone_number;
             }
 
-            // TODO: Temporary GET function (Will move to service after test)
+            // Get rate information
             function getRating() {
-                $http.get('/api/charity/charity_rating_aggregates/', {params: {"charity_name": vm.profile.name}}).then(getSuccessFn, getErrorFn);
-
-                function getSuccessFn(data, status, headers, config) {
-                    var rate = data.data;
-                    vm.profile.rate = rate.average_rate == null ? 0 : rate.average_rate;
-                    vm.profile.total_users = rate.total_users;
-                    vm.profile.userRate = rate.rate_by_user;
+                var rateInfo = ratingPrepService.data;
+                console.log(ratingPrepService.data);
+                if (rateInfo != undefined && rateInfo != null) {
+                    vm.profile.rate = rateInfo.average_rate == null ? 0 : rateInfo.average_rate;
+                    vm.profile.total_users = rateInfo.total_users;
+                    vm.profile.userRate = rateInfo.rate_by_user;
+                } else {
+                    vm.profile.rate = "0";
+                    vm.profile.total_users = "0";
+                    vm.profile.userRate = "0";
                 }
-
-                function getErrorFn(data, status, headers, config) {
-                    console.error('Getting Search failed! ' + status);
-                }
+                // $http.get('/api/charity/charity_rating_aggregates/', {params: {"charity_name": vm.profile.name}}).then(getSuccessFn, getErrorFn);
+                //
+                // function getSuccessFn(data, status, headers, config) {
+                //     var rate = data.data;
+                //     vm.profile.rate = rate.average_rate == null ? 0 : rate.average_rate;
+                //     vm.profile.total_users = rate.total_users;
+                //     vm.profile.userRate = rate.rate_by_user;
+                // }
+                //
+                // function getErrorFn(data, status, headers, config) {
+                //     console.error('Getting Search failed! ' + status);
+                // }
             }
         }
 
@@ -85,6 +96,28 @@
             Profile.update(profile);
         }
 
+        // Rate update
+        vm.rateChange = function(){
+            var rate = vm.profile.userRate + '.0';
+            var setRate = {
+                "charity_name": vm.profile.name,
+                "rate_by_user": rate
+            };
+            $http.post('/api/charity/charity_rating/', setRate).then(getSuccessFn, getErrorFn);
+
+            function getSuccessFn(data, status, headers, config) {
+                Profile.getRating(vm.profile.name).then(function(result) {
+                    var updateRating = result.data;
+                    vm.profile.rate = updateRating.average_rate == null ? 0 : updateRating.average_rate;
+                    vm.profile.total_users = updateRating.total_users;
+                });
+            }
+
+            function getErrorFn(data, status, headers, config) {
+                console.error('Getting Search failed! ' + status);
+            }
+        }
+
         // TODO : Set donateKey and send to payment controller
         vm.donate = function(){
             var donateKey = {name: vm.profile.name,
@@ -94,16 +127,6 @@
             var donateInfo = Payment.donateInfo();
             donateInfo.setDonateInfo(donateKey);
             $location.path('/payment');
-        }
-
-        // TODO: Temporary POST function (Will move to service after test)
-        vm.rateChange = function(){
-            var rate = vm.profile.userRate + '.0';
-            var setRate = {
-                "charity_name": vm.profile.name,
-                "rate_by_user": rate
-            };
-            $http.post('/api/charity/charity_rating/', setRate);
         }
     }
 })();
