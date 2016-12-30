@@ -351,7 +351,7 @@ class CharityManagementViewTestCase(TestCase):
         response_content = json.loads(response.content.decode('utf-8'))
         token = response_content["token"]
 
-        # Like this random charity
+        # Upload a new activity
         details = json.dumps({"name": 'Awesome event'})
         self.client.post("/api/charity/activity/", {"model": details},
                          HTTP_AUTHORIZATION='JWT {}'.format(token))
@@ -367,6 +367,23 @@ class CharityManagementViewTestCase(TestCase):
 
         self.assertEqual(len(charity_activities), 1)
 
+        # Test editing as well
+        latest_activity = CharityActivity.objects.latest("uploaded_at")
+        id = latest_activity.id
+        details = json.dumps({"name": 'Not Awesome event', "id": id})
+        self.client.post("/api/charity/activity/", {"model": details},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        charity_activities = CharityActivity.objects.all()
+        self.assertEqual(len(charity_activities), 1)
+
+        # Get activities of charity as a charity
+        response = self.client.get("/api/charity/get_activity/", {"name": "Charity1"},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+        response_content = json.loads(response.content.decode('utf-8'))
+        charity_activity = response_content["charity_activities"][0]
+
+        self.assertEqual(charity_activity["name"], "Not Awesome event")
 
     # Helper method to register charities
     def register_charity(self, name, email):

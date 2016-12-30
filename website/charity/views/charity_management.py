@@ -224,36 +224,78 @@ class CharityActivityView(APIView):
 
         user = request.user
         if user.role == roles.user:
-            response_data = json.dumps({"error": "You are not authorised to post an activity. "})
+            response_data = json.dumps({"error": "You are not authorised to post/update an activity. "})
             return HttpResponse(response_data, content_type='application/json')
 
         # Read required parameters
         data = request.data["model"]
         model_data = json.loads(data)
-        name = model_data['name']
-        if not name:
-            response_data = json.dumps({"error": "The activity name cannot be null. "})
+
+        id = None
+        if "id" in model_data:
+            id = model_data['id']
+
+        if id:
+            # Update
+            existing_charity_activity = CharityActivity.objects.filter(id=id).first()
+            if not existing_charity_activity:
+                response_data = json.dumps({"error": "Activity with the following ID could not be found: " + str(id)})
+                return HttpResponse(response_data, content_type='application/json')
+
+            name = model_data['name']
+            if not name:
+                response_data = json.dumps({"error": "The activity name cannot be null. "})
+                return HttpResponse(response_data, content_type='application/json')
+
+            if "description" in model_data:
+                description = model_data['description']
+            else:
+                description = None
+
+            if "date" in model_data:
+                date = model_data['date']
+            else:
+                date = None
+
+            existing_charity_activity.name = name
+            existing_charity_activity.description = description
+            existing_charity_activity.date = date
+            existing_charity_activity.save()
+
+            # TODO: handle image deletes as well
+            files = request.FILES
+            if files:
+                for image_name in files:
+                    CharityActivityImage.objects.create(charity_activity=existing_charity_activity, image=files[image_name])
+
+            response_data = json.dumps({"success": True})
             return HttpResponse(response_data, content_type='application/json')
-
-        if "description" in model_data:
-            description = model_data['description']
         else:
-            description = None
+            # Create new
+            name = model_data['name']
+            if not name:
+                response_data = json.dumps({"error": "The activity name cannot be null. "})
+                return HttpResponse(response_data, content_type='application/json')
 
-        if "date" in model_data:
-            date = model_data['date']
-        else:
-            date = None
+            if "description" in model_data:
+                description = model_data['description']
+            else:
+                description = None
 
-        charity_activity = CharityActivity.objects.create(charity_profile=user.charity_profile, name=name,
-                                                          description=description, date=date)
+            if "date" in model_data:
+                date = model_data['date']
+            else:
+                date = None
 
-        files = request.FILES
-        if files:
-            for image_name in files:
-                CharityActivityImage.objects.create(charity_activity=charity_activity, image=files[image_name])
+            charity_activity = CharityActivity.objects.create(charity_profile=user.charity_profile, name=name,
+                                                              description=description, date=date)
 
-        return Response({'success': True}, status=status.HTTP_201_CREATED)
+            files = request.FILES
+            if files:
+                for image_name in files:
+                    CharityActivityImage.objects.create(charity_activity=charity_activity, image=files[image_name])
+
+            return Response({'success': True}, status=status.HTTP_201_CREATED)
 
 
 # Returns the activities of charities
