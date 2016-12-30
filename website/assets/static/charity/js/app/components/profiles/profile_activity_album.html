@@ -69,9 +69,43 @@
             <div id="activityAlbum">
                 {{vm.name}}' Activity id {{vm.id}} Album
             </div>
+
+            <div id="fb-root"></div>
+            <div ng-repeat="post in posts">
+                <div>{{post.title}}</div>
+                <div>{{post.content}}</div>
+                <button ng-click="share(post)">SHARE</button>
+            </div>
         </section>
     </section>
 </div>
+<script>
+//    window.fbAsyncInit = function() {
+//        FB.init({appId: '1828642534025419', status: true, cookie: true,
+//            xfbml: true});
+//    };
+//    (function() {
+//        var e = document.createElement('script'); e.async = true;
+//        e.src = document.location.protocol +
+//                '//connect.facebook.net/en_US/all.js';
+//        document.getElementById('fb-root').appendChild(e);
+//    }());
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1828642534025419',
+            xfbml      : true
+//            version    : 'v2.8'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=1828642534025419";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 
 <script src="/static/charity/css/profilecss/scripts.js"></script>
 
