@@ -1,15 +1,13 @@
 <head>
     <link href="/static/charity/css/searchcss/search.css" rel="stylesheet">
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwYtBup_b7knHtvd_PmFMxkaWnAK60d4c&libraries=geometry"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwYtBup_b7knHtvd_PmFMxkaWnAK60d4c&libraries=geometry"></script>
 </head>
 
-<!--repush-->
 <div class="search">
     <div class="searchTop">
         <div class="col-md-8 col-md-offset-2">
             <p class="pull-left">Search Results</p>
-            <ul class="switchStyle pull-right">
+            <ul class="switchStyle pull-right" ng-if="numberOfPages()>=1">
                 <li><a href="#" ng-click="isList(1)" onclick="this.blur()">List <span class="glyphicon glyphicon-list"
                                                                                       aria-hidden="true"></span></a>
                 </li>
@@ -18,14 +16,13 @@
             </ul>
         </div>
     </div>
+    <div class="col-md-8 col-md-offset-2" ng-if="numberOfPages()==0">
+        <label>There are no charities corresponding to your search key words.</label>
+    </div>
+    <div ng-if="numberOfPages()>=1">
     <div class="searchMap" ng-if="isMap == 1" ng-init="pushLocations()">
         <div class="col-md-8 col-md-offset-2">
             <div id="map" style="width:100%;height:470px" ng-init="mapFunction()"></div>
-            <!--<div id="map" style="width:100%;height:470px">-->
-            <!--{{mapFunction()}}-->
-            <!--{{pushLocations()}}-->
-            <!--</div>-->
-            <!--<ng-map center="4,-87" zoom="3"></ng-map>-->
         </div>
     </div>
     <div class="searchList" ng-if="isMap == 0">
@@ -81,14 +78,14 @@
         </div>
         <div class="searchFoot">
             <div class="col-md-8 col-md-offset-2">
-                <div class="pull-left infoStyle">
+                <div class="pull-left infoStyle" ng-if="numberOfPages()>=1">
                     Showing {{firstInfo()}}
                     to {{secondInfo()}}
                     of {{filteredItems.length}}
                     charities
                 </div>
                 <div class="pull-right">
-                    <nav ng-if="numberOfPages()>=2">
+                    <nav ng-if="numberOfPages()>=1">
                         <ul class="paginationStyle">
                             <li><a href="#" ng-click="selectPage(1)" onclick="this.blur()">&laquo;</a></li>
                             <li><a href="#" ng-click="selectPage(pageProperties.current-1)" onclick="this.blur()">Previous</a>
@@ -106,6 +103,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 

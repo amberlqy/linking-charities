@@ -5,9 +5,10 @@
         .module('charity.search.controllers')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', '$modal', 'NgMap'];
+    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', '$modal'];
 
-    function SearchController($scope, $http, Search, $location, $anchorScroll, $modal, NgMap) {
+    function SearchController($scope, $http, Search, $location, $anchorScroll, $modal) {
+
         //search function
         var searchKey = Search.getSearchKey();
         $scope.searchKeyWord = searchKey.name;
@@ -45,11 +46,11 @@
             if ($scope.filteredItems != null) {
                 return Math.ceil($scope.filteredItems.length / $scope.pageProperties.size);
             } else {
-                return 1;
+                return 0;
             }
         };
         $scope.selectPage = function (page) {
-            if (page > 0 && page <= $scope.numberOfPages()) {
+            if (page >= 1 && page <= $scope.numberOfPages()) {
                 $scope.pageProperties.current = page;
                 document.getElementById("inputPage").value = $scope.pageProperties.current;
                 $anchorScroll();
@@ -123,34 +124,6 @@
                 }
             }
         };
-
-
-
-        // NgMap.getMap().then(function (map) {
-        //     console.log(map.getCenter());
-        //     console.log('markers', map.markers);
-        //     console.log('shapes', map.shapes);
-        // });
-
-
-
-        // var mapOptions = {
-        //     center: {
-        //         lat: 51.508742,
-        //         lng: -0.120850
-        //     },
-        //     zoom: 10
-        // };
-        //
-        // // $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        //
-        // $scope.loadMap = function () {
-        //
-        // };
-
-
-
-        //repush
         $scope.mapFunction = function () {
             var mapCanvas = document.getElementById("map");
             var myCenter = new google.maps.LatLng(51.508742, -0.120850);
@@ -200,7 +173,6 @@
                         else {
                             console.log("Geocode was not successful for the following reason: " + status);
                         }
-                        //next();
                     });
                 }
             };
@@ -249,15 +221,6 @@
                 //     map.setCenter(bounds.getCenter())
                 // }
             }
-            // var theNext = function () {
-            //     if (nextAddress < $scope.locations.length) {
-            //         //geocodeAddress($scope.locations[nextAddress]);
-            //         $timeout(geocodeAddress($scope.locations[nextAddress],theNext), delay);
-            //         nextAddress++;
-            //     } else {
-            //         map.fitBounds(bounds);
-            //     }
-            // };
         };
 
 
