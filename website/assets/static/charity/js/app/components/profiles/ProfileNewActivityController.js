@@ -11,6 +11,7 @@
     function ProfileNewActivityController($http, $location, Profile, $filter, $scope, $routeParams) {
         var vm = this;
         vm.activity = {};
+        vm.isDisabled = false;
 
         activate();
 
@@ -43,6 +44,7 @@
 
         // save new activity
         vm.saveActivity = function () {
+            vm.isDisabled = true;
             var date = $filter('date')(vm.activity.date, "yyyyMMdd");
             var activity = {
                 "name": vm.activity.name,
@@ -63,7 +65,16 @@
                     return formData;
                 },
                 data: { model: activity, files: $scope.files }
-            })
+            }).then(getSuccessFn, getErrorFn);
+
+            function getSuccessFn(data, status, headers, config) {
+                $location.url('/profile/' + vm.name + '/activities');
+            }
+
+            function getErrorFn(data, status, headers, config) {
+                vm.isDisabled = false;
+                console.error('Getting Search failed! ' + status);
+            }
         };
     }
 })();

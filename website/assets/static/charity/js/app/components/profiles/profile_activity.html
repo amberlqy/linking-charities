@@ -71,22 +71,32 @@
                 <table>
                     <tr ng-repeat="activity in vm.activity track by $index">
                         <td align="center" class="tdImage">
-                            <div id="carousel" class="rotate">
-                                <figure><img src="{{activity.image}}" alt=""></figure>
-                                <figure><img src="{{activity.image}}" alt=""></figure>
-                                <figure><img src="{{activity.image}}" alt=""></figure>
-                                <figure><img src="{{activity.image}}" alt=""></figure>
-                                <figure><img src="{{activity.image}}" alt=""></figure>
-                                <figure><img src="{{activity.image}}" alt=""></figure>
+                            <!-- At least one image -->
+                            <div id="carousel" class="rotate" ng-show="activity.image1">
+                                <figure><img src="{{activity.image1}}" alt=""></figure>
+                                <figure><img src="{{activity.image2}}" alt=""></figure>
+                                <figure><img src="{{activity.image3}}" alt=""></figure>
+                                <figure><img src="{{activity.image1}}" alt=""></figure>
+                                <figure><img src="{{activity.image2}}" alt=""></figure>
+                                <figure><img src="{{activity.image3}}" alt=""></figure>
                             </div>
-                            <div class="allPicBtn">
-                                <button type="button" class="btn btn-info btn-md"><a href="profile/{{vm.name}}/activity/{{activity.id}}">All Pictures</a></button>
+                            <div class="allPicBtn" ng-show="activity.image1">
+                                <button type="button" class="btn btn-info btn-md">
+                                    <a href="profile/{{vm.name}}/activity/{{activity.id}}" ng-hide="vm.isMatched">All Pictures</a>
+                                    <a href="profile/{{vm.name}}/activity/{{activity.id}}" ng-show="vm.isMatched">Edit Pictures</a>
+                                </button>
+                            </div>
+                            <!-- No image -->
+                            <div ng-hide="activity.image1">
+                                <h3>This activity doesn't have any pictures</h3>
+                            </div>
+                            <div class="allPicBtn" ng-hide="activity.image1">
+                                <button type="button" class="btn btn-info btn-md" ng-show="vm.isMatched"><a href="profile/{{vm.name}}/activity/{{activity.id}}">Add Picture</a></button>
                             </div>
                         </td>
                         <td class="tdInfo">
                             <!-- button console -->
-                            <!--<div class="buttonArea" ng-show="vm.isMatched">-->
-                            <div class="buttonArea">
+                            <div class="buttonArea" ng-show="vm.isMatched">
                                 <!-- edit -->
                                 <button type="button" id="editButton" name="editButton" class="btn btn-default btn-sm" value='{{$index}}' onclick="editClick(this.value)">
                                     <span class="glyphicon glyphicon-pencil"></span>

@@ -36,13 +36,34 @@
                     $location.url('/home');
                     return;
                 }
-                // String to date format
+
                 for (var i = 0; i < charityActivity.length; i++) {
+                    // String to date format
                     var date = charityActivity[i].date;
                     if (date != undefined && date != null){
                         var strDate = date.toString();
                         charityActivity[i].date = new Date(strDate.replace(pattern, '$1-$2-$3'));
                     }
+                    // list of images of each activity
+                    var imgLength = charityActivity[i].images.length;
+                    var image1, image2, image3;
+                    if (imgLength == 0) {
+                        image1 = image2 = image3 = null;
+                    } else if (imgLength == 1) {
+                        image1 = image2 = image3 = charityActivity[i].images[0].image;
+                    } else if (imgLength == 2) {
+                        image1 = image3 = charityActivity[i].images[0].image;
+                        image2 = charityActivity[i].images[1].image;
+                    } else {
+                        image1 = charityActivity[i].images[imgLength - 3].image;
+                        image2 = charityActivity[i].images[imgLength - 2].image;
+                        image3 = charityActivity[i].images[imgLength - 1].image;
+                    }
+
+                    charityActivity[i].images = null;
+                    charityActivity[i].image1 = image1;
+                    charityActivity[i].image2 = image2;
+                    charityActivity[i].image3 = image3;
                 }
                 vm.activity = charityActivity;
 
