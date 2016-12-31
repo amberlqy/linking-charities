@@ -40,9 +40,9 @@
                               city: null,
                               tag: null
                             };
-            console.log(searchKey);
-            // Search.setSearchKey(searchKey);
-            // $location.path('/search/#=' + Math.random().toString(36).substring(7));
+            // console.log(searchKey);
+            Search.setSearchKey(searchKey);
+            $location.url('/search/' + Math.random().toString(36).substring(7));
         };
 
         vm.advanceSearchClick = function() {
@@ -52,9 +52,9 @@
                               city: vm.search.city,
                               tag: angular.element('#tagsinput').val()
                             };
-            console.log(searchKey);
-            // Search.setSearchKey(searchKey);
-            // $location.path('/search/#=' + Math.random().toString(36).substring(7));
+            // console.log(searchKey);
+            Search.setSearchKey(searchKey);
+            $location.url('/search/' + Math.random().toString(36).substring(7));
         };
 
         $scope.inputSelected = function (selected) {
@@ -72,10 +72,11 @@
 
         function updateSuggestion(selected){
             $http.get('/api/charity/charity_search/', {params:{"all": true}}).then(getSuccessFn, getErrorFn);
+            // $http.get('/api/charity/charity_search/', {params:{"name": selected}}).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
                 var search = data.data["charity_profiles"];
-                console.log(search);
+                // console.log(search);
                 vm.search.suggestion = search;
             }
 

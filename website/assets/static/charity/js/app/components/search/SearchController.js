@@ -8,22 +8,35 @@
     SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', '$modal'];
 
     function SearchController($scope, $http, Search, $location, $anchorScroll, $modal) {
-
         //search function
         var searchKey = Search.getSearchKey();
-        $scope.searchKeyWord = searchKey.name;
+        // $scope.searchKeyWord = searchKey.name;
         search();
+
         function search(row) {
-            $http.get('/api/charity/charity_search/', {
-                params: {
-                    "name": searchKey.name,
-                    "target": null, "country": searchKey.country, "city": searchKey.city, "ranking": null
-                }
-            }).then(getSuccessFn, getErrorFn);
+            var url;
+            // Normal Search
+            if (searchKey.filter == null && searchKey.country == null && searchKey.city == null && searchKey.tag == null) {
+                url = "/api/charity/charity_search/";
+                $http.get(url, {
+                    params: {"name": searchKey.name}
+                }).then(getSuccessFn, getErrorFn);
+            } else { // Advance Search
+                url = "/api/charity/charity_advance_search/";
+                $http.get(url, {
+                    params: {
+                        "name": searchKey.name,
+                        "filter": searchKey.filter,
+                        "country": searchKey.country,
+                        "city": searchKey.city,
+                        "tag": searchKey.tag
+                    }
+                }).then(getSuccessFn, getErrorFn);
+            }
 
             function getSuccessFn(data, status, headers, config) {
+                console.log(data);
                 var search = data.data["charity_profiles"];
-                console.log(search);
                 $scope.searchResults = search;
             }
 

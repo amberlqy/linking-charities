@@ -54,7 +54,8 @@
             <div class="col-md-8 col-md-offset-2">
                 <table class="table">
                     <tbody>
-                    <tr ng-repeat="data in searchResults | filter : searchKeyWord | orderBy:sortKey:reverse | limitTo:pageProperties.size:(pageProperties.current-1)*pageProperties.size">
+                    <!--<tr ng-repeat="data in searchResults | filter : searchKeyWord | orderBy:sortKey:reverse | limitTo:pageProperties.size:(pageProperties.current-1)*pageProperties.size">-->
+                    <tr ng-repeat="data in searchResults | orderBy:sortKey:reverse | limitTo:pageProperties.size:(pageProperties.current-1)*pageProperties.size">
                         <td class="showPicture">
                             <div ng-if="$index == 0">
                                 <img class="picStyle" src="/static/charity/images/no-user-image.gif">
