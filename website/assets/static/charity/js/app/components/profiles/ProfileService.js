@@ -63,19 +63,11 @@
         // TODO : GET + POST Setting Info
         // Return account setting
         function getSettingInfo(profileName){
-            return $http.get('URL', {params: {"name": profileName}});
+            return $http.get('/api/charity/settings/', {params: {"name": profileName}});
         }
 
         function setSettingInfo(setting){
-            return $http.post('URL', setting).then(updateSuccessFn, updateErrorFn);
-
-            function updateSuccessFn(data, status, headers, config) {
-                console.log('Update successful!');
-            }
-
-            function updateErrorFn(data, status, headers, config) {
-                console.error('Update failed!' + status);
-            }
+            return $http.post('/api/charity/settings/', setting);
         }
 
         // Return rating info

@@ -37,29 +37,35 @@
             // Get activity data
             setSetting();
 
-            // TODO: GET request for receive setting info (Only Paypal Info)
+            // GET setting info (Only Paypal Info)
             function setSetting() {
                 vm.name = $routeParams.name; // name of charity
-                var charitySetting; //= Profile.getSetting(vm.name).then ....;
+                Profile.getSetting(vm.name).then(getSuccessFn, getErrorFn);
+
+                function getSuccessFn(data, status, headers, config) {
+                    var charitySetting = data.data;
+                    vm.setting.paypal_email = charitySetting.paypal_email;
+                    vm.setting.paypal_token = charitySetting.paypal_token;
+                    vm.setting.tag = charitySetting.tags;
+                }
+
+                function getErrorFn(data, status, headers, config) {
+                    console.error('Getting Search failed! ' + status);
+                }
                 // console.log(charitySetting);
                 // if (charitySetting == undefined || charitySetting == null) {
                 //     alert("Page Not Found. We could not find the page you requested.");
                 //     $location.url('/home');
                 //     return;
                 // }
-
-                vm.setting.paypal_email = ""; // charitySetting.paypal_email;
-                vm.setting.paypal_token = ""; // charitySetting.paypal_token
-                vm.setting.tag = "child,parent";
             }
         }
 
         // TODO: Add URL service for setting
         function update() {
             vm.setting.tag = angular.element('#tagsetting').val();
-            console.log(vm.setting);
 
-            // Profile.someFunctionInService(vm.setting).then(profileSuccessFn, profileErrorFn);
+            Profile.setSetting(vm.setting).then(profileSuccessFn, profileErrorFn);
 
             function profileSuccessFn(data, status, headers, config) {
 
