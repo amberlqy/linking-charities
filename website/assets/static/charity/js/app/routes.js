@@ -86,8 +86,7 @@
                     }
                     // Set search key param(s)
                     if (searchKey.filter == undefined && searchKey.country == undefined && searchKey.city == undefined && searchKey.tag == undefined) {
-                        var searchKeyParam = {"name": searchKey.name};
-                        return Search.search(searchKeyParam);
+                        return Search.search(searchKey);
                     } else {
                         return Search.advanceSearch(searchKey);
                     }

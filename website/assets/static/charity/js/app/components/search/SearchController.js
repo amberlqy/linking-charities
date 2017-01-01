@@ -13,29 +13,9 @@
         // search function
         search();
 
-        function search(row) {
-            var url;
-            // Normal Search
-            if (searchKey.filter == undefined && searchKey.country == undefined && searchKey.city == undefined && searchKey.tag == undefined) {
-                url = "/api/charity/charity_search/";
-                $http.get(url, {
-                    params: {"name": searchKey.name}
-                }).then(getSuccessFn, getErrorFn);
-            } else { // Advance Search
-                var searchResult = searchPrepService.data.charity_profiles;
-                $scope.searchResults = searchResult;
-            }
-
-            function getSuccessFn(data, status, headers, config) {
-                console.log(data);
-                console.log("--------------");
-                var search = data.data["charity_profiles"];
-                $scope.searchResults = search;
-            }
-
-            function getErrorFn(data, status, headers, config) {
-                console.error('Getting Search failed! ' + status);
-            }
+        function search() {
+            var searchResult = searchPrepService.data.charity_profiles;
+            $scope.searchResults = searchResult;
         }
 
         // filtered data

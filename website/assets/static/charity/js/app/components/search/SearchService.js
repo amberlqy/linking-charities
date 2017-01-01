@@ -16,7 +16,9 @@
 
         // Return search by name
         function getSearch(searchKey) {
-            return $http.get('/api/charity/charity_search/', searchKey);
+            return $http.get('/api/charity/charity_search/', {
+                params: {"name": searchKey.name}
+            });
         }
 
         // Return advance search
@@ -31,6 +33,4 @@
                     }});
         }
     }
-
-
 })();

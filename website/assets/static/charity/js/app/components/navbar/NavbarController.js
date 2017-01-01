@@ -40,7 +40,6 @@
                               city: null,
                               tag: null
                             };
-            // $location.path('/search/' + Math.random().toString(36).substring(7));
             $location.path('/search/key').search(searchKey);
         };
 
@@ -68,12 +67,11 @@
         };
 
         function updateSuggestion(selected){
-            $http.get('/api/charity/charity_search/', {params:{"all": true}}).then(getSuccessFn, getErrorFn);
-            // $http.get('/api/charity/charity_search/', {params:{"name": selected}}).then(getSuccessFn, getErrorFn);
+            var searchKey = {"name": selected};
+            Search.search(searchKey).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
                 var search = data.data["charity_profiles"];
-                // console.log(search);
                 vm.search.suggestion = search;
             }
 
