@@ -7,12 +7,13 @@
         .controller('ProfileSettingsController', ProfileSettingsController);
 
     ProfileSettingsController.$inject = [
-        '$location', 'Profile', '$routeParams'
+        '$location', 'Profile', '$routeParams', 'settingPrepService'
     ];
 
-    function ProfileSettingsController($location, Profile, $routeParams) {
+    function ProfileSettingsController($location, Profile, $routeParams, settingPrepService) {
         var vm = this;
         vm.setting = {};
+        vm.isSaving = false;
 
         vm.update = update;
 
@@ -34,45 +35,35 @@
                 return;
             }
 
-            // Get activity data
+            // Get setting data
             setSetting();
 
-            // GET setting info (Only Paypal Info)
+            // set setting info (Only Paypal Info)
             function setSetting() {
-                vm.name = $routeParams.name; // name of charity
-                Profile.getSetting(vm.name).then(getSuccessFn, getErrorFn);
-
-                function getSuccessFn(data, status, headers, config) {
-                    var charitySetting = data.data;
-                    vm.setting.paypal_email = charitySetting.paypal_email;
-                    vm.setting.paypal_token = charitySetting.paypal_token;
-                    vm.setting.tags = charitySetting.tags;
+                var charity_setting = settingPrepService.data;
+                if (charity_setting == undefined || charity_setting == null) {
+                    alert("Page Not Found. We could not find the page you requested.");
+                    $location.url('/home');
+                    return;
                 }
-
-                function getErrorFn(data, status, headers, config) {
-                    console.error('Getting Search failed! ' + status);
-                }
-                // console.log(charitySetting);
-                // if (charitySetting == undefined || charitySetting == null) {
-                //     alert("Page Not Found. We could not find the page you requested.");
-                //     $location.url('/home');
-                //     return;
-                // }
+                vm.setting.paypal_email = charity_setting.paypal_email;
+                vm.setting.paypal_token = charity_setting.paypal_token;
+                vm.setting.tags = charity_setting.tags;
             }
         }
 
-        // TODO: Add URL service for setting
+        // Update setting
         function update() {
+            vm.isSaving = true;
             vm.setting.tags = angular.element('#tagsetting').val();
+            Profile.setSetting(vm.setting).then(settingSuccessFn, settingErrorFn);
 
-            Profile.setSetting(vm.setting).then(profileSuccessFn, profileErrorFn);
-
-            function profileSuccessFn(data, status, headers, config) {
-
+            function settingSuccessFn(data, status, headers, config) {
+                vm.isSaving = false;
             }
 
-            function profileErrorFn(data, status, headers, config) {
-
+            function settingErrorFn(data, status, headers, config) {
+                vm.isSaving = false;
             }
         }
     }

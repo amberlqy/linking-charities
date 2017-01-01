@@ -59,7 +59,13 @@
         }).when('/profile/:name/setting', {
             controller: 'ProfileSettingsController',
             controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/profiles/profile_setting.html'
+            templateUrl: '/static/charity/js/app/components/profiles/profile_setting.html',
+            resolve: {
+                settingPrepService: function($route, Profile){
+                    var name = $route.current.params.name;
+                    return Profile.getSetting(name);
+                }
+            }
         }).when('/dashboard', {
             controller: 'DashboardController',
             controllerAs: 'vm',
