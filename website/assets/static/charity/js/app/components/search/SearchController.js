@@ -172,7 +172,7 @@
                     '<img class="picStyle" src="/static/charity/images/no-user-image.gif">' +
                     '</td>' +
                     '<td class="infoShowContent">' +
-                    '<a href= "/charity/charityprofile/' + id + '">' + name + '</a>' +
+                    '<a href= "/charity/profile/' + name + '">' + name + '</a>' +
                     '<p>' + address + '</p>' +
                     '</td>' +
                     '</tr>' +
