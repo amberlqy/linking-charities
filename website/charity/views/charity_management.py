@@ -537,6 +537,12 @@ class PaymentConfirmationView(APIView):
             response_data = json.dumps({"error": "Transaction ID was not provided."})
             return HttpResponseBadRequest(response_data, content_type='application/json')
 
+        # Check if this payment has already been verified
+        existing_payment = Payment.objects.filter(txn_id=transaction_id).first()
+        if existing_payment:
+            response_data = json.dumps({"error": "This payment has already been verified."})
+            return HttpResponseBadRequest(response_data, content_type='application/json')
+
         # Example: "-T0hTSFMJq_7jc_El8QNPTDRCLOmq7f4WswXwlQin6RNClH8bJAaBQbkEFa"
         charity_profile = charity.charity_profile
         charity_identity_token = charity_profile.paypal_identity_token
@@ -546,16 +552,19 @@ class PaymentConfirmationView(APIView):
         response = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes)
         data = response.read().decode('UTF-8')
 
+        gross = float(data["mc_gross"])
+        currency = data["mc_currency"]
+
         # Check if the user is logged in
         user = request.user
         if user.is_authenticated():
             # TODO: get real values from 'response'
             Payment.objects.create(user_profile=user.user_profile, charity_profile=charity_profile,
-                                                 gross=999, currency=None, txn_id=transaction_id)
+                                                 gross=gross, currency=currency, txn_id=transaction_id)
         else:
             # TODO: get real values from 'response'
             Payment.objects.create(user_profile=None, charity_profile=charity_profile,
-                                   gross=999, currency=None, txn_id=transaction_id)
+                                   gross=gross, currency=currency, txn_id=transaction_id)
 
         json_reponse = JSONRenderer().render({"success": data})
         return HttpResponse(json_reponse, content_type='application/json')
