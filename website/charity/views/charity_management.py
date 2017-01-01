@@ -529,13 +529,13 @@ class PaymentConfirmationView(APIView):
         if not charity_profile:
             response_data = json.dumps(
                 {"error": "Charity profile does not exist with the provided username: " + str(charity_username)})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         data = request.data
         transaction_id = data.get('transaction_id', None)
         if not transaction_id:
             response_data = json.dumps({"error": "Transaction ID was not provided."})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         # Example: "-T0hTSFMJq_7jc_El8QNPTDRCLOmq7f4WswXwlQin6RNClH8bJAaBQbkEFa"
         charity_identity_token = charity_profile.paypal_identity_token

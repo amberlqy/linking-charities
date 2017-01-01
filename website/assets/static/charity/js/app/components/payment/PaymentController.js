@@ -18,9 +18,8 @@
             console.log(donateInfo.getDonateInfo());
             // TODO: Set donateInfo
             // Ex. vm.name = donateInfo.name
-
+            vm.paypal_email = "wuzifan0817-facilitator@gmail.com";
             vm.verified = "Waiting...";
-
             vm.donation_amount = 100.00;
             vm.donation_currency = "USD";
 
@@ -29,22 +28,24 @@
               selected: "USD"
             };
 
+            // Payment confirmation starts here
+            // Read which charity the user has donated to: we can only read this from the URL
             var charity_username = $routeParams.charity_username;
 
-            // Check if we have any GET parameters
+            // Check if we have any GET parameters that were attached by PayPal
             var queryParameters = $location.search();
             if (typeof queryParameters.tx !== "undefined" && typeof charity_username !== "undefined"){
-                Payment.getPaymentVerification(queryParameters.tx, charity_username).then(registerSuccessFn, registerErrorFn);
+                Payment.getPaymentVerification(queryParameters.tx, charity_username).then(verificationSuccessFn, verificationErrorFn);
             }
 
-            function registerSuccessFn(data, status, headers, config) {
+            function verificationSuccessFn(data, status, headers, config) {
                 var response = data.data;
                 console.log(response);
 
                 vm.verified = "Verified!";
             }
 
-            function registerErrorFn(data, status, headers, config) {
+            function verificationErrorFn(data, status, headers, config) {
                 console.error('Payment confirmation failed! ' + status);
 
                 vm.verified = "Bad payment!";
