@@ -106,7 +106,7 @@ class CharityTagsView(APIView):
         user = request.user
         if user.role != roles.charity:
             response_data = json.dumps({"authorised": False})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         # Read required parameters
         data = request.data
@@ -121,7 +121,7 @@ class CharityTagsView(APIView):
 
         if not mode:
             response_data = json.dumps({"error": "Mode unrecognised!"})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         # Get usage counts for tags used by charity profiles
         if mode == "usage":
@@ -134,7 +134,7 @@ class CharityTagsView(APIView):
         charity_profile = CharityProfile.objects.filter(id=id).first()
         if not charity_profile:
             response_data = json.dumps({"error": "Charity profile doesn't exist!"})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         tags = Tag.objects.get_for_object(charity_profile)
         charity_tags_strings = [tag.name for tag in tags]
@@ -255,7 +255,7 @@ class CharityActivityView(APIView):
         user = request.user
         if user.role == roles.user:
             response_data = json.dumps({"error": "You are not authorised to post/update an activity. "})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         # Read required parameters
         data = request.data["model"]
@@ -270,12 +270,12 @@ class CharityActivityView(APIView):
             existing_charity_activity = CharityActivity.objects.filter(id=id).first()
             if not existing_charity_activity:
                 response_data = json.dumps({"error": "Activity with the following ID could not be found: " + str(id)})
-                return HttpResponse(response_data, content_type='application/json')
+                return HttpResponseBadRequest(response_data, content_type='application/json')
 
             name = model_data['name']
             if not name:
                 response_data = json.dumps({"error": "The activity name cannot be null. "})
-                return HttpResponse(response_data, content_type='application/json')
+                return HttpResponseBadRequest(response_data, content_type='application/json')
 
             if "description" in model_data:
                 description = model_data['description']
@@ -306,7 +306,7 @@ class CharityActivityView(APIView):
             name = model_data['name']
             if not name:
                 response_data = json.dumps({"error": "The activity name cannot be null. "})
-                return HttpResponse(response_data, content_type='application/json')
+                return HttpResponseBadRequest(response_data, content_type='application/json')
 
             if "description" in model_data:
                 description = model_data['description']
@@ -342,7 +342,7 @@ class CharityActivitySearchView(APIView):
             charity = User.objects.filter(username=charity_username).first()
             if not charity:
                 response_data = json.dumps({"error": "No charity found with this username. "})
-                return HttpResponse(response_data, content_type='application/json')
+                return HttpResponseBadRequest(response_data, content_type='application/json')
 
             charity_profile = charity.charity_profile
             charity_activities = charity_profile.activities
@@ -358,7 +358,7 @@ class CharityActivitySearchView(APIView):
         activity = CharityActivity.objects.filter(id=activity_id).first()
         if not activity:
             response_data = json.dumps({"error": "No activity found with this ID: " + str(activity_id)})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         charity_activity_serializer = CharityActivitySerializer(activity)
         return_dictionary = {"charity_activity": charity_activity_serializer.data}
@@ -376,7 +376,7 @@ class CharityLikeView(APIView):
         user = request.user
         if user.role == roles.charity:
             response_data = json.dumps({"error": "You are not authorised to like a charity."})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         # Read required parameters
         data = request.data
@@ -402,14 +402,14 @@ class CharityRatingView(APIView):
         charity_user = User.objects.filter(username=charity_name).first()
         if not charity_user:
             response_data = json.dumps({"error": "No charity exists with this name."})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         charity_profile = charity_user.charity_profile
 
         rate_by_user = data.get('rate_by_user', None)
         if not rate_by_user:
             response_data = json.dumps({"error": "No rating was given."})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         # If the rating is 0.0, attempt to remove the already existing rating
         if float(rate_by_user) == 0.0:
@@ -419,7 +419,7 @@ class CharityRatingView(APIView):
                 return Response({'success': True}, status=status.HTTP_201_CREATED)
             else:
                 response_data = json.dumps({"error": "Cannot remove your rating, because you haven't given one yet."})
-                return HttpResponse(response_data, content_type='application/json')
+                return HttpResponseBadRequest(response_data, content_type='application/json')
 
         # Check if user has already rated this charity profile
         if charity_profile.ratings.filter(user=user).exists():
@@ -443,7 +443,7 @@ class CharityRatingPublicView(APIView):
 
         if not charity:
             response_data = json.dumps({"error": "No charity found with this username."})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseBadRequest(response_data, content_type='application/json')
 
         charity_profile = charity.charity_profile
         return_dictionary = get_rating_aggregates(request, charity_profile)
