@@ -225,11 +225,11 @@ class CharityAdvancedSearchView(APIView):
             charity_profiles = TaggedItem.objects.get_union_by_model(charity_profiles, tags)
 
         if charity_name:
-            charity_profiles = charity_profiles.filter(Q(charity_name__contains=charity_name))
+            charity_profiles = charity_profiles.filter(Q(charity_name__icontains=charity_name))
         if country:
-            charity_profiles = charity_profiles.filter(Q(country__contains=country))
+            charity_profiles = charity_profiles.filter(Q(country__icontains=country))
         if city:
-            charity_profiles = charity_profiles.filter(Q(city__contains=city))
+            charity_profiles = charity_profiles.filter(Q(city__icontains=city))
 
         # Ordering
         if filter == "1":
