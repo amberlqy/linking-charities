@@ -543,8 +543,8 @@ class PaymentConfirmationView(APIView):
 
         post_data = [('tx', transaction_id), ("at", charity_identity_token), ("cmd", "_notify-synch"), ]
         post_data_bytes = urlencode(post_data).encode("utf-8")
-        response = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes).read().decode('UTF-8')
-        data = json.load(response)
+        response = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes)
+        data = response.read().decode('UTF-8')
 
         # Check if the user is logged in
         user = request.user
