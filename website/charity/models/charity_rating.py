@@ -7,7 +7,7 @@ from charity.models.charity_profile import CharityProfile
 class CharityRating(models.Model):
     user = models.ForeignKey(User, related_name='ratings')
     charity_profile = models.ForeignKey(CharityProfile, related_name='ratings')
-    rate_by_user = models.FloatField()
+    rate_by_user = models.FloatField(default=0.0)
     created_at = models.DateTimeField(auto_now_add=True)
 
 

@@ -233,12 +233,13 @@ class CharityAdvancedSearchView(APIView):
 
         # Ordering
         if filter == "1":
-            charity_profiles.annotate(donation_sum=Sum('payments__gross')).order_by('-donation_sum')
+            charity_profiles = charity_profiles.annotate(donation_sum=Sum('payments__gross')).order_by('-donation_sum')
         if filter == "2":
-            charity_profiles.annotate(rating_avg=Avg('ratings__rate_by_user')).order_by('-rating_avg')
+            charity_profiles = charity_profiles.annotate(rating_avg=Avg('ratings__rate_by_user')).order_by('-rating_avg')
 
         charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
-        return_dictionary = {"charity_profiles": charity_profile_serializer.data}
+        charity_profiles_data = charity_profile_serializer.data
+        return_dictionary = {"charity_profiles": charity_profiles_data}
         json_charity_profiles = JSONRenderer().render(return_dictionary)
 
         return HttpResponse(json_charity_profiles, content_type='application/json')

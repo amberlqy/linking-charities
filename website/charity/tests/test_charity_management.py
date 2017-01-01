@@ -5,6 +5,7 @@ import json
 
 from charity.models.charity_activity import CharityActivity
 from charity.models.charity_profile import CharityProfile
+from charity.models.charity_rating import CharityRating
 
 
 class CharityManagementViewTestCase(TestCase):
@@ -173,6 +174,37 @@ class CharityManagementViewTestCase(TestCase):
         search_result_response = self.client.get("/api/charity/charity_advanced_search/", {"name": "dog"})
         search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
         self.assertEqual(len(search_result_response_content["charity_profiles"]), 2)
+
+    # Tests if we can successfully search for charity profiles as well as sort them
+    def test_advanced_search_sorting(self):
+        # Cat charity
+        response_cat_charity = self.client.post("/api/auth/register/", {
+            "username": "CatCharity",
+            "email": "cat@woozles.com",
+            "password": "Woozles123",
+            "user_type": "charity",
+            "goal": "To save lonely kittens."})
+
+        # Dog charity
+        response_dog_charity = self.client.post("/api/auth/register/", {
+            "username": "DogCharity",
+            "email": "dog@woozles.com",
+            "password": "Woozles123",
+            "user_type": "charity",
+            "goal": "To save lonely doggies."})
+
+        # Set ratings
+        user = User.objects.get(username="Heffalumps")
+        cat_charity = CharityProfile.objects.get(charity_name="CatCharity")
+        dog_charity = CharityProfile.objects.get(charity_name="DogCharity")
+        CharityRating.objects.create(user=user, charity_profile=cat_charity, rate_by_user=5.0)
+        CharityRating.objects.create(user=user, charity_profile=dog_charity, rate_by_user=4.0)
+
+        # Search for dogs
+        search_result_response = self.client.get("/api/charity/charity_advanced_search/", {"filter": "2"})
+        search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
+        self.assertEqual(len(search_result_response_content["charity_profiles"]), 3)
+        self.assertEqual(search_result_response_content["charity_profiles"][0]["charity_name"], "CatCharity")
 
     # Search for charities using various fields
     def test_search_for_charity_with_fields(self):
