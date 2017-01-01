@@ -120,7 +120,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"></label>
                                     <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary" ng-disabled="(vm.setting.cur_password && !vm.setting.new_password) || (!vm.setting.cur_password && vm.setting.new_password) || (vm.setting.new_password != vm.setting.renew_password) || (settingForm.paypalEmail.$error.email)">Submit</button>
+                                        <button type="submit" class="btn btn-primary" ng-disabled="vm.isSaving || ((vm.setting.cur_password && !vm.setting.new_password) || (!vm.setting.cur_password && vm.setting.new_password) || (vm.setting.new_password != vm.setting.renew_password) || (settingForm.paypalEmail.$error.email))">Submit</button>
                                         <div ng-show="vm.isSaving">Saving ...</div>
                                     </div>
                                 </div>
