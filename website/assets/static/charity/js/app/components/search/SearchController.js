@@ -22,14 +22,14 @@
                     params: {"name": searchKey.name}
                 }).then(getSuccessFn, getErrorFn);
             } else { // Advance Search
-                url = "/api/charity/charity_advance_search/";
+                url = "/api/charity/charity_advanced_search/";
                 $http.get(url, {
                     params: {
                         "name": searchKey.name,
                         "filter": searchKey.filter,
                         "country": searchKey.country,
                         "city": searchKey.city,
-                        "tag": searchKey.tag
+                        "tags": searchKey.tag
                     }
                 }).then(getSuccessFn, getErrorFn);
             }

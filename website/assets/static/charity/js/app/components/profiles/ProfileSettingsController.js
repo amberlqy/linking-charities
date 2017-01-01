@@ -46,7 +46,7 @@
                     var charitySetting = data.data;
                     vm.setting.paypal_email = charitySetting.paypal_email;
                     vm.setting.paypal_token = charitySetting.paypal_token;
-                    vm.setting.tag = charitySetting.tags;
+                    vm.setting.tags = charitySetting.tags;
                 }
 
                 function getErrorFn(data, status, headers, config) {
@@ -63,7 +63,7 @@
 
         // TODO: Add URL service for setting
         function update() {
-            vm.setting.tag = angular.element('#tagsetting').val();
+            vm.setting.tags = angular.element('#tagsetting').val();
 
             Profile.setSetting(vm.setting).then(profileSuccessFn, profileErrorFn);
 
