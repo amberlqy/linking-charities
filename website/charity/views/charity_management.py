@@ -543,18 +543,19 @@ class PaymentConfirmationView(APIView):
 
         post_data = [('tx', transaction_id), ("at", charity_identity_token), ("cmd", "_notify-synch"), ]
         post_data_bytes = urlencode(post_data).encode("utf-8")
-        result = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes).read().decode('UTF-8')
+        response = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes).read().decode('UTF-8')
+        data = json.load(response)
 
         # Check if the user is logged in
         user = request.user
-        if user:
-            # TODO: get real values from 'result'
+        if user.is_authenticated():
+            # TODO: get real values from 'response'
             Payment.objects.create(user_profile=user.user_profile, charity_profile=charity_profile,
                                                  gross=999, currency=None, txn_id=transaction_id)
         else:
-            # TODO: get real values from 'result'
+            # TODO: get real values from 'response'
             Payment.objects.create(user_profile=None, charity_profile=charity_profile,
                                    gross=999, currency=None, txn_id=transaction_id)
 
-        json_reponse = JSONRenderer().render({"success": result})
+        json_reponse = JSONRenderer().render({"success": data})
         return HttpResponse(json_reponse, content_type='application/json')
