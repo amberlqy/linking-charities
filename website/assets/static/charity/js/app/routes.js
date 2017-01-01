@@ -70,7 +70,7 @@
             controller: 'DashboardController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/dashboard/dashboard.html'
-        }).when('/search/:searchKeyWord', {
+        }).when('/search/:searchKey', {
             controller: 'SearchController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/search/search.html'

@@ -40,9 +40,8 @@
                               city: null,
                               tag: null
                             };
-            // console.log(searchKey);
-            Search.setSearchKey(searchKey);
-            $location.url('/search/' + Math.random().toString(36).substring(7));
+            // $location.path('/search/' + Math.random().toString(36).substring(7));
+            $location.path('/search/key').search(searchKey);
         };
 
         vm.advanceSearchClick = function() {
@@ -52,9 +51,7 @@
                               city: vm.search.city,
                               tag: angular.element('#tagsinput').val()
                             };
-            // console.log(searchKey);
-            Search.setSearchKey(searchKey);
-            $location.url('/search/' + Math.random().toString(36).substring(7));
+            $location.path('/search/key').search(searchKey);
         };
 
         $scope.inputSelected = function (selected) {

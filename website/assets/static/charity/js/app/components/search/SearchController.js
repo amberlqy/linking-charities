@@ -5,18 +5,33 @@
         .module('charity.search.controllers')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', '$modal'];
+    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', '$modal', '$routeParams'];
 
-    function SearchController($scope, $http, Search, $location, $anchorScroll, $modal) {
-        //search function
-        var searchKey = Search.getSearchKey();
-        // $scope.searchKeyWord = searchKey.name;
+    function SearchController($scope, $http, Search, $location, $anchorScroll, $modal, $routeParams) {
+        var prefixKey = $routeParams.searchKey;
+        if (prefixKey != "key") {
+            alert("Page Not Found. We could not find the page you requested.");
+            $location.url('/home');
+            return;
+        }
+
+        var searchKey = $location.search();
+        if (searchKey.name == undefined && searchKey.filter == undefined && searchKey.country == undefined
+            && searchKey.city == undefined && searchKey.tag == undefined) {
+            alert("Page Not Found. We could not find the page you requested.");
+            $location.url('/home');
+            return;
+        }
+
+        console.log(searchKey);
+
+        // search function
         search();
 
         function search(row) {
             var url;
             // Normal Search
-            if (searchKey.filter == null && searchKey.country == null && searchKey.city == null && searchKey.tag == null) {
+            if (searchKey.filter == undefined && searchKey.country == undefined && searchKey.city == undefined && searchKey.tag == undefined) {
                 url = "/api/charity/charity_search/";
                 $http.get(url, {
                     params: {"name": searchKey.name}
@@ -35,7 +50,6 @@
             }
 
             function getSuccessFn(data, status, headers, config) {
-                console.log(data);
                 var search = data.data["charity_profiles"];
                 $scope.searchResults = search;
             }
@@ -47,7 +61,7 @@
 
         // filtered data
         $scope.$watch(function () {
-            $scope.filteredItems = $scope.$eval("searchResults | filter : searchKeyWord");
+            $scope.filteredItems = $scope.$eval("searchResults");
         });
 
         //pagination function
