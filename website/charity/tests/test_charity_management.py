@@ -79,6 +79,36 @@ class CharityManagementViewTestCase(TestCase):
         self.assertIn("cat", tags)
         self.assertIn("soft", tags)
 
+    # Tests if we can successfully search for charity profiles using names
+    def test_regular_search_for_charity(self):
+        # Cat charity
+        response_cat_charity = self.client.post("/api/auth/register/", {
+            "username": "CatCharity",
+            "email": "cat@woozles.com",
+            "password": "Woozles123",
+            "user_type": "charity",
+            "goal": "To save lonely kittens."})
+
+        # Dog charity
+        response_dog_charity = self.client.post("/api/auth/register/", {
+            "username": "DogCharity",
+            "email": "dog@woozles.com",
+            "password": "Woozles123",
+            "user_type": "charity",
+            "goal": "To save lonely doggies."})
+
+        # Search with name
+        search_result_response = self.client.get("/api/charity/charity_search/", {"name": "Do"})
+        search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
+        self.assertEqual(len(search_result_response_content["charity_profiles"]), 1)
+        self.assertEqual(search_result_response_content["charity_profiles"][0]["goal"], "To save lonely doggies.")
+
+        # Search with name - case insensitive check
+        search_result_response = self.client.get("/api/charity/charity_search/", {"name": "do"})
+        search_result_response_content = json.loads(search_result_response.content.decode('utf-8'))
+        self.assertEqual(len(search_result_response_content["charity_profiles"]), 1)
+        self.assertEqual(search_result_response_content["charity_profiles"][0]["goal"], "To save lonely doggies.")
+
     # Tests if we can successfully search for charity profiles using tags
     def test_advanced_search_for_charity(self):
 

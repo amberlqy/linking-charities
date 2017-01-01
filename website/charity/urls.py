@@ -2,15 +2,16 @@ from django.conf.urls import patterns, url
 
 from charity.views.authentication import LoginView, LogoutView, RestrictedView, CharityRestrictedView, RegistrationView, \
     CharityProfileView, CharityVerificationView
-from charity.views.charity_management import CharityTagsView, CharitySearchView, CharityLikeView, CharityPopularityView, \
+from charity.views.charity_management import CharityTagsView, CharityGetView, CharityLikeView, CharityPopularityView, \
     CharityDataProcessorView, CharityActivityView, CharityActivitySearchView, PaymentConfirmationView, CharityRatingView, \
-    CharityRatingPublicView, CharitySettingsView, CharityAdvancedSearchView
+    CharityRatingPublicView, CharitySettingsView, CharityAdvancedSearchView, CharityRegularSearchView
 
 urlpatterns = patterns(
     '',
     url(r'^charity/settings/$', CharitySettingsView.as_view(), name='charity_settings'),
     url(r'^charity/charity_tags/$', CharityTagsView.as_view(), name='charity_tags'),
-    url(r'^charity/get_charity/$', CharitySearchView.as_view(), name='charity_search'),
+    url(r'^charity/get_charity/$', CharityGetView.as_view(), name='get_charity'),
+    url(r'^charity/charity_search/$', CharityRegularSearchView.as_view(), name='charity_search'),
     url(r'^charity/charity_advanced_search/$', CharityAdvancedSearchView.as_view(), name='charity_advanced_search'),
     url(r'^charity/charity_like/$', CharityLikeView.as_view(), name='charity_like'),
     url(r'^charity/charity_rating/$', CharityRatingView.as_view(), name='charity_rating'),

@@ -6,7 +6,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseBadRequest
 from django.template import loader
 from django.db import models
 import json
@@ -142,7 +142,7 @@ class CharityTagsView(APIView):
         return HttpResponse(response_data, content_type='application/json')
 
 
-class CharitySearchView(APIView):
+class CharityGetView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     # Search for charities based on an ID or tags
@@ -174,7 +174,26 @@ class CharitySearchView(APIView):
             return HttpResponse(json_charity_profiles, content_type='application/json')
 
         response_data = json.dumps({"error": "Your request did not contain the correct parameters."})
-        return HttpResponse(response_data, content_type='application/json')
+        return HttpResponseBadRequest(response_data, content_type='application/json')
+
+
+class CharityRegularSearchView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    # Search for charities based on specific parameters
+    def get(self, request):
+
+        name = request.GET.get('name', None)
+        if not name:
+            response_data = json.dumps({"error": "Parameter 'name' was not provided!"})
+            return HttpResponseBadRequest(response_data, content_type='application/json')
+
+        charity_profiles = CharityProfile.objects.filter(Q(charity_name__icontains=name))
+        charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
+        return_dictionary = {"charity_profiles": charity_profile_serializer.data}
+        json_charity_profiles = JSONRenderer().render(return_dictionary)
+
+        return HttpResponse(json_charity_profiles, content_type='application/json')
 
 
 class CharityAdvancedSearchView(APIView):
