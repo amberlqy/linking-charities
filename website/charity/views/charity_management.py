@@ -525,8 +525,8 @@ class PaymentConfirmationView(APIView):
     def post(self, request, charity_username):
 
         # Read parameter from the URL
-        charity_profile = User.objects.filter(username=charity_username).first()
-        if not charity_profile:
+        charity = User.objects.filter(username=charity_username).first()
+        if not charity:
             response_data = json.dumps(
                 {"error": "Charity profile does not exist with the provided username: " + str(charity_username)})
             return HttpResponseBadRequest(response_data, content_type='application/json')
@@ -538,6 +538,7 @@ class PaymentConfirmationView(APIView):
             return HttpResponseBadRequest(response_data, content_type='application/json')
 
         # Example: "-T0hTSFMJq_7jc_El8QNPTDRCLOmq7f4WswXwlQin6RNClH8bJAaBQbkEFa"
+        charity_profile = charity.charity_profile
         charity_identity_token = charity_profile.paypal_identity_token
 
         post_data = [('tx', transaction_id), ("at", charity_identity_token), ("cmd", "_notify-synch"), ]
@@ -547,8 +548,13 @@ class PaymentConfirmationView(APIView):
         # Check if the user is logged in
         user = request.user
         if user:
-            new_payment = Payment()
-            pass
+            # TODO: get real values from 'result'
+            Payment.objects.create(user_profile=user.user_profile, charity_profile=charity_profile,
+                                                 gross=999, currency=None, txn_id=transaction_id)
+        else:
+            # TODO: get real values from 'result'
+            Payment.objects.create(user_profile=None, charity_profile=charity_profile,
+                                   gross=999, currency=None, txn_id=transaction_id)
 
         json_reponse = JSONRenderer().render({"success": result})
         return HttpResponse(json_reponse, content_type='application/json')
