@@ -5,25 +5,10 @@
         .module('charity.search.controllers')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', '$modal', '$routeParams'];
+    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', '$modal', 'searchPrepService'];
 
-    function SearchController($scope, $http, Search, $location, $anchorScroll, $modal, $routeParams) {
-        var prefixKey = $routeParams.searchKey;
-        if (prefixKey != "key") {
-            alert("Page Not Found. We could not find the page you requested.");
-            $location.url('/home');
-            return;
-        }
-
+    function SearchController($scope, $http, Search, $location, $anchorScroll, $modal, searchPrepService) {
         var searchKey = $location.search();
-        if (searchKey.name == undefined && searchKey.filter == undefined && searchKey.country == undefined
-            && searchKey.city == undefined && searchKey.tag == undefined) {
-            alert("Page Not Found. We could not find the page you requested.");
-            $location.url('/home');
-            return;
-        }
-
-        console.log(searchKey);
 
         // search function
         search();
@@ -37,19 +22,13 @@
                     params: {"name": searchKey.name}
                 }).then(getSuccessFn, getErrorFn);
             } else { // Advance Search
-                url = "/api/charity/charity_advanced_search/";
-                $http.get(url, {
-                    params: {
-                        "name": searchKey.name,
-                        "filter": searchKey.filter,
-                        "country": searchKey.country,
-                        "city": searchKey.city,
-                        "tags": searchKey.tag
-                    }
-                }).then(getSuccessFn, getErrorFn);
+                var searchResult = searchPrepService.data.charity_profiles;
+                $scope.searchResults = searchResult;
             }
 
             function getSuccessFn(data, status, headers, config) {
+                console.log(data);
+                console.log("--------------");
                 var search = data.data["charity_profiles"];
                 $scope.searchResults = search;
             }

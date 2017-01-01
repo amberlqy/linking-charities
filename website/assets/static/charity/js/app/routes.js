@@ -73,7 +73,26 @@
         }).when('/search/:searchKey', {
             controller: 'SearchController',
             controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/search/search.html'
+            templateUrl: '/static/charity/js/app/components/search/search.html',
+            resolve: {
+                searchPrepService: function($route, $location, Search){
+                    var prefixKey = $route.current.params.searchKey;
+                    var searchKey = $location.search();
+                    if (prefixKey != "key" || (searchKey.name == undefined && searchKey.filter == undefined && searchKey.country == undefined
+                        && searchKey.city == undefined && searchKey.tag == undefined)) {
+                        alert("Page Not Found. We could not find the page you requested.");
+                        $location.url('/home');
+                        return;
+                    }
+                    // Set search key param(s)
+                    if (searchKey.filter == undefined && searchKey.country == undefined && searchKey.city == undefined && searchKey.tag == undefined) {
+                        var searchKeyParam = {"name": searchKey.name};
+                        return Search.search(searchKeyParam);
+                    } else {
+                        return Search.advanceSearch(searchKey);
+                    }
+                }
+            }
         }).when('/payment', {
             controller: 'PaymentController',
             controllerAs: 'vm',

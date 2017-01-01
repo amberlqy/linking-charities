@@ -9,15 +9,27 @@
     Search.$inject = ['$http'];
 
     function Search($http) {
-        var _searchKey = "";
         return {
-            getSearchKey: function () {
-                return _searchKey;
-            },
-            setSearchKey: function(value) {
-                _searchKey = value;
-            }
+            search: getSearch,
+            advanceSearch: getAdvanceSearch
         };
+
+        // Return search by name
+        function getSearch(searchKey) {
+            return $http.get('/api/charity/charity_search/', searchKey);
+        }
+
+        // Return advance search
+        function getAdvanceSearch(searchKey) {
+            return $http.get('/api/charity/charity_advanced_search/', {
+                    params: {
+                        "name": searchKey.name,
+                        "filter": searchKey.filter,
+                        "country": searchKey.country,
+                        "city": searchKey.city,
+                        "tags": searchKey.tag
+                    }});
+        }
     }
 
 
