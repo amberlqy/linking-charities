@@ -12,7 +12,7 @@ from django.db import models
 import json
 from urllib.request import urlopen
 from django.utils.http import urlencode
-from django.db.models import Q, Avg
+from django.db.models import Q, Avg, Sum
 
 from assets import settings
 from charity.models.charity_activity import CharityActivity
@@ -176,6 +176,7 @@ class CharitySearchView(APIView):
         response_data = json.dumps({"error": "Your request did not contain the correct parameters."})
         return HttpResponse(response_data, content_type='application/json')
 
+
 class CharityAdvancedSearchView(APIView):
     permission_classes = (permissions.AllowAny,)
 
@@ -210,6 +211,12 @@ class CharityAdvancedSearchView(APIView):
             charity_profiles = charity_profiles.filter(Q(country__contains=country))
         if city:
             charity_profiles = charity_profiles.filter(Q(city__contains=city))
+
+        # Ordering
+        if filter == "1":
+            charity_profiles.annotate(donation_sum=Sum('payments__gross')).order_by('-donation_sum')
+        if filter == "2":
+            charity_profiles.annotate(rating_avg=Avg('ratings__rate_by_user')).order_by('-rating_avg')
 
         charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
         return_dictionary = {"charity_profiles": charity_profile_serializer.data}
