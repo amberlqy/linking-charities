@@ -185,8 +185,12 @@ class CharityRegularSearchView(APIView):
 
         name = request.GET.get('name', None)
         if not name:
-            response_data = json.dumps({"error": "Parameter 'name' was not provided!"})
-            return HttpResponseBadRequest(response_data, content_type='application/json')
+            charity_profiles = CharityProfile.objects.all()
+            charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
+            return_dictionary = {"charity_profiles": charity_profile_serializer.data}
+            json_charity_profiles = JSONRenderer().render(return_dictionary)
+
+            return HttpResponse(json_charity_profiles, content_type='application/json')
 
         charity_profiles = CharityProfile.objects.filter(Q(charity_name__icontains=name))
         charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
