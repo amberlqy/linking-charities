@@ -169,7 +169,7 @@ class CharityManagementViewTestCase(TestCase):
 
     # Tests if anyone can get all charity profiles
     def test_get_all_charity_profiles(self):
-        get_charity_response = self.client.get("/api/charity/charity_search/", {"all": True})
+        get_charity_response = self.client.get("/api/charity/get_charity/", {"all": True})
         get_charity_response_obj = json.loads(get_charity_response.content.decode('utf-8'))
 
         self.assertEqual(len(get_charity_response_obj["charity_profiles"]), 1)
@@ -179,7 +179,7 @@ class CharityManagementViewTestCase(TestCase):
         charity = User.objects.get(username="Charity1")
         charity_profile = charity.charity_profile
         charity_profile_username = charity_profile.user.username
-        get_charity_response = self.client.get("/api/charity/charity_search/", {"name": charity_profile_username})
+        get_charity_response = self.client.get("/api/charity/get_charity/", {"name": charity_profile_username})
 
         get_charity_response_obj = json.loads(get_charity_response.content.decode('utf-8'))
         self.assertEqual(get_charity_response_obj["charity_profile"]["goal"], "To save lonely kittens.")
@@ -187,7 +187,7 @@ class CharityManagementViewTestCase(TestCase):
 
     # Tests if anyone can get the list of charity-profile names
     def test_get_all_charity_names(self):
-        get_charity_response = self.client.get("/api/charity/charity_search/", {"all": True})
+        get_charity_response = self.client.get("/api/charity/get_charity/", {"all": True})
         get_charity_response_names = json.loads(get_charity_response.content.decode('utf-8'))
         self.assertEqual(len(get_charity_response_names["charity_profiles"]), 1)
         self.assertEqual(get_charity_response_names["charity_profiles"][0]["charity_name"], "Charity1")
