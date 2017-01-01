@@ -203,7 +203,7 @@ class CharityAdvancedSearchView(APIView):
         if tags:
             # If the request contains a set of tags (separated  by whitespace),
             # return all charity profiles with a match.
-            charity_profiles = list(TaggedItem.objects.get_union_by_model(charity_profiles, tags))
+            charity_profiles = TaggedItem.objects.get_union_by_model(charity_profiles, tags)
 
         if charity_name:
             charity_profiles = charity_profiles.filter(Q(charity_name__contains=charity_name))
