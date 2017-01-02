@@ -293,8 +293,14 @@ class CharityActivityView(APIView):
             else:
                 date = None
 
+            if "spending" in model_data:
+                spending = model_data['spending']
+            else:
+                spending = None
+
             existing_charity_activity.name = name
             existing_charity_activity.description = description
+            existing_charity_activity.spending = spending
             existing_charity_activity.date = date
             existing_charity_activity.save()
 
@@ -324,8 +330,13 @@ class CharityActivityView(APIView):
             else:
                 date = None
 
+            if "spending" in model_data:
+                spending = model_data['spending']
+            else:
+                spending = None
+
             charity_activity = CharityActivity.objects.create(charity_profile=user.charity_profile, name=name,
-                                                              description=description, date=date)
+                                                              description=description, spending=spending, date=date)
 
             files = request.FILES
             if files:
