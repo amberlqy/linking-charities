@@ -107,8 +107,8 @@
                         {
                             method: 'feed',
                             name: donateInfoTest.charityName,
-                            description: 'You have donated' + donateInfoTest.donateAmount + " " + donateInfoTest.donateCurrency +
-                                         'to ' + donateInfoTest.charityName,
+                            description: 'You have donated ' + donateInfoTest.donateAmount + " " + donateInfoTest.donateCurrency +
+                                         ' to ' + donateInfoTest.charityName,
                             link: 'http://ec2-54-194-73-253.eu-west-1.compute.amazonaws.com:8000/charity/profile/' + donateInfoTest.charityName,
                             // picture: 'http://www.hyperarts.com/external-xfbml/share-image.gif',
                             caption: time
@@ -148,7 +148,7 @@
 
 
             var expiry = new Date();
-            var minutes = 5;
+            var minutes = 10;
             expiry.setTime(expiry.getTime() + (minutes * 60 * 1000));
             // Save donateInfo in cookie
             $cookies.putObject('donateInfo', donateInfo,{

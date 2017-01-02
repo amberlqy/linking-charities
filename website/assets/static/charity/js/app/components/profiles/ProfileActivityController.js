@@ -97,15 +97,5 @@
                 data: { model: activityObj, files: [] }
             });
         }
-
-        // TODO : Set donateKey and send to payment controller
-        vm.donate = function(){
-            var donateKey = {name: vm.name,
-                              paypal_email: null,
-                              paypal_token: null // etc.
-                            };
-
-            $location.url('/payment');
-        }
     }
 })();

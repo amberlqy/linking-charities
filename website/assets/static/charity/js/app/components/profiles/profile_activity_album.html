@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="" href="#" ng-click="vm.donate()">
+                    <a class="" href="payment/{{vm.name}}">
                         <i></i>
                         <span>Donate To Us</span>
                     </a>
@@ -58,26 +58,6 @@
     </section>
 
     <section id="main-content">
-        <!--<section class="wrapper">-->
-            <!--<div class="row">-->
-                <!--<div class="col-lg-12">-->
-                    <!--<h3 class="page-header"><i class="fa fa-file-text-o"></i> Activity {{vm.name}} Album</h3>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--&lt;!&ndash;<div ng-show="!vm.activity.length"><h3>There is no activity of this charity.</h3></div>&ndash;&gt;-->
-            <!--<div id="activityAlbum">-->
-                <!--{{vm.name}}' Activity id {{vm.id}} Album-->
-            <!--</div>-->
-
-            <!--<div id="fb-root"></div>-->
-            <!--<div ng-repeat="post in posts">-->
-                <!--<div>{{post.title}}</div>-->
-                <!--<div>{{post.content}}</div>-->
-                <!--<button ng-click="share(post)">SHARE</button>-->
-            <!--</div>-->
-        <!--</section>-->
-
         <section id="gallery" class="parallax section">
             <div class="wrapsection">
                 <div class="parallax-overlay" style="background-color:#00c1c1;opacity:0.9;"></div>
@@ -168,34 +148,6 @@
         </section>
     </section>
 </div>
-<script>
-//    window.fbAsyncInit = function() {
-//        FB.init({appId: '1828642534025419', status: true, cookie: true,
-//            xfbml: true});
-//    };
-//    (function() {
-//        var e = document.createElement('script'); e.async = true;
-//        e.src = document.location.protocol +
-//                '//connect.facebook.net/en_US/all.js';
-//        document.getElementById('fb-root').appendChild(e);
-//    }());
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '1828642534025419',
-            xfbml      : true
-//            version    : 'v2.8'
-        });
-    };
-
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=1828642534025419";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
-
 <script src="/static/charity/css/profilecss/scripts.js"></script>
 
 </body>
