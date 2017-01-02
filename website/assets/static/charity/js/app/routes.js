@@ -92,14 +92,25 @@
                     }
                 }
             }
-        }).when('/payment', {
+        }).when('/payment/:charityName', {
             controller: 'PaymentController',
             controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/payment/payment.html'
+            templateUrl: '/static/charity/js/app/components/payment/payment.html',
+            resolve: {
+                paymentPrepService: function($route, Payment){
+                    var name = $route.current.params.charityName;
+                    return Payment.getCharity(name);
+                }
+            }
         }).when('/payment_confirmation/:charity_username', {
             controller: 'PaymentController',
             controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/payment/payment_confirmation.html'
+            templateUrl: '/static/charity/js/app/components/payment/payment_confirmation.html',
+            resolve: {
+                paymentPrepService: function(){
+                    return;
+                }
+            }
         }).when('/user/:name', {
             controller: 'UserController',
             controllerAs: 'vm',

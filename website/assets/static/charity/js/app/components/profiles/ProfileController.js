@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Profile', '$scope', 'profilePrepService', 'ratingPrepService', 'Payment', '$http'];
+    ProfileController.$inject = ['$location', 'Profile', '$scope', 'profilePrepService', 'ratingPrepService', '$http'];
 
-    function ProfileController($location, Profile, $scope, profilePrepService, ratingPrepService, Payment, $http) {
+    function ProfileController($location, Profile, $scope, profilePrepService, ratingPrepService, $http) {
         var vm = this;
         vm.profile = {};
 
@@ -124,9 +124,7 @@
                               paypal_email: null,
                               paypal_token: null // etc.
                             };
-            var donateInfo = Payment.donateInfo();
-            donateInfo.setDonateInfo(donateKey);
-            $location.path('/payment');
+            $location.url('/payment');
         }
     }
 })();

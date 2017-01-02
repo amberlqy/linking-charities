@@ -6,13 +6,14 @@
         .module('charity.payment.services')
         .factory('Payment', Payment);
 
-    Payment.$inject = ['$http'];
+    Payment.$inject = ['$http', '$cookies'];
 
-    function Payment($http) {
+    function Payment($http, $cookies) {
         var _donateKey = "";
         return {
             getPaymentVerification: getPaymentVerification,
-            donateInfo: donateInfo
+            getCharity: getCharityInfo,
+            volunteer: beVolunteer
         };
 
         function getPaymentVerification(transactionId, charity_username) {
@@ -20,15 +21,15 @@
                 {transaction_id: transactionId});
         }
 
-        function donateInfo() {
-            return {
-                getDonateInfo: function () {
-                    return _donateKey;
-                },
-                setDonateInfo: function(donateObj) {
-                    _donateKey = donateObj;
-                }
-            };
+        // TODO : temporary get charity all info
+        // Need URL that return only all activities in the charity, paypal email, paypal token
+        function getCharityInfo(charityName) {
+            return $http.get('/api/charity/get_charity/', {params: {"name": charityName}});
+        }
+
+        // Save volunteer data
+        function beVolunteer(volunteer) {
+            return $http.post('Change URL Here', volunteer);
         }
     }
 })();

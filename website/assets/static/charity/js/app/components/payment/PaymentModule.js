@@ -12,5 +12,5 @@
         .module('charity.payment.controllers', ['ngRoute']);
 
     angular
-        .module('charity.payment.services', []);
+        .module('charity.payment.services', ['ngCookies']);
 })();

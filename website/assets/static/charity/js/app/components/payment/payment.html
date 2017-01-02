@@ -1,22 +1,79 @@
+<div class="col-md-4 col-md-offset-4">
+    <h1>Donate To : {{vm.donate.charityName}}</h1>
+    <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Money">
+            <md-content class="md-padding">
+                <div class="well">
+                    <div class="form-group">
+                        <label>To Activity</label>
+                        <select class="form-control" ng-model="vm.donate.activity">
+                            <option value=""></option>
+                            <option ng-repeat="activity in vm.activities" value="{{activity.id}}">{{activity.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" class="form-control" ng-model="vm.donate.amount" ng-change="vm.amountChange()" placeholder="Insert amount without decimal digit" />
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <label ng-repeat="choice in vm.donate.currency.choices">
+                            <input name="currency" ng-model="vm.donate.currency.selected" type="radio" value="{{choice}}" />{{choice}} &nbsp;
+                        </label>
+                    </div>
 
-<br>
-<label for="amount">Amount</label>
-<input name="amount" type="number" ng-model="vm.donation_amount">
-<br>
-<label for="currency">Currency</label>
-<label ng-repeat="choice in vm.donation_currency_options.choices">
-  <input name="currency" ng-model="vm.donation_currency_options.selected" type="radio" value="{{choice}}" />{{choice}}
-</label>
+                    <!-- None-sandbox: https://www.paypal.com/cgi-bin/webscr -->
+                    <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                        <input type="hidden" name="cmd" value="_donations"> 
+                        <input type="hidden" name="business" ng-value="vm.donate.paypal_email">
+                        <input type="hidden" name="item_name" ng-value="vm.donate.charityName">
+                        <input type="hidden" name="item_number" value=""> <!--Reference: Fall Cleanup Campaign -->
+                        <input type="hidden" name="amount" ng-value="vm.donate.amount"> 
+                        <input type="hidden" name="currency_code" ng-value="vm.donate.currency.selected"> 
+                        <input ng-disabled="vm.donate.disabled" type="image" name="submit" ng-click="vm.donateClick()" border="0" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" alt="PayPal - The safer, easier way to pay online">
+                    </form>
+                </div>
+            </md-content>
+        </md-tab>
 
-<br>
+        <md-tab label="Volunteer">
+            <md-content class="md-padding">
+                <div class="well">
+                    <form role="form" ng-submit="vm.volunteerRegister()">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" ng-model="vm.volunteer.name" placeholder="Your name" maxlength="50" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Surname</label>
+                            <input type="text" class="form-control" ng-model="vm.volunteer.surname" placeholder="Your surname" maxlength="50" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" ng-model="vm.volunteer.email" placeholder="Your email" maxlength="50" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="number" class="form-control" ng-model="vm.volunteer.phone" placeholder="Your phone number" maxlength="20" />
+                        </div>
+                        <div class="form-group">
+                            <label>Volunteer in activity</label>
+                            <select class="form-control" ng-model="vm.volunteer.activity" required>
+                                <option value=""></option>
+                                <option ng-repeat="activity in vm.activities" value="{{activity.id}}">{{activity.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of volunteer</label>
+                            <input type="date" class="form-control" ng-model="vm.volunteer.date" required />
+                        </div>
 
-<!-- None-sandbox: https://www.paypal.com/cgi-bin/webscr -->
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-    <input type="hidden" name="cmd" value="_donations"> 
-    <input type="hidden" name="business" ng-value="vm.paypal_email">
-    <input type="hidden" name="item_name" value="Friends of the Park">
-    <input type="hidden" name="item_number" value="Fall Cleanup Campaign">
-    <input type="hidden" name="amount" ng-value="vm.donation_amount"> 
-    <input type="hidden" name="currency_code" ng-value="vm.donation_currency_options.selected"> 
-    <input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" alt="PayPal - The safer, easier way to pay online">
-</form>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit" ng-disabled="vm.volunteer.disable">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+</div>

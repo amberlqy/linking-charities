@@ -1,1 +1,39 @@
-{{ vm.verified }}
+<body>
+<div class="col-md-4 col-md-offset-4">
+    <br/><br/>
+    <h1>{{ vm.verified }}</h1>
+    <br/>
+
+    <section class="wrapper" ng-show="vm.donate.success">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="page-header"><i class="fa fa-file-text-o"></i>Thank you for your donation</h3>
+            </div>
+        </div>
+
+        <div id="fb-root"></div>
+        <a href="#" class="btn btn-primary" ng-click="vm.share()">SHARE Facebook</a>
+        <a href="profile/{{vm.charityName}}" class="btn btn-primary">Back to charity profile</a>
+
+        <!--<button ng-click="vm.share()">SHARE Facebook</button>-->
+    </section>
+</div>
+
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1828642534025419',
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=1828642534025419";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+</body>
