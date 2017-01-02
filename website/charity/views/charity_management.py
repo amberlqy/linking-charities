@@ -21,6 +21,7 @@ from charity.models.charity_data import CharityData
 from charity.models.charity_profile import CharityProfile
 from charity.models.charity_rating import CharityRating
 from charity.models.payment import Payment
+from charity.models.volunteer import Volunteer
 from charity.roles import roles
 from tagging.models import Tag, TaggedItem
 from django.contrib.auth.models import User
@@ -182,7 +183,6 @@ class CharityRegularSearchView(APIView):
 
     # Search for charities based on specific parameters
     def get(self, request):
-
         name = request.GET.get('name', None)
         if not name:
             charity_profiles = CharityProfile.objects.all()
@@ -239,7 +239,8 @@ class CharityAdvancedSearchView(APIView):
         if filter == "1":
             charity_profiles = charity_profiles.annotate(donation_sum=Sum('payments__gross')).order_by('-donation_sum')
         if filter == "2":
-            charity_profiles = charity_profiles.annotate(rating_avg=Avg('ratings__rate_by_user')).order_by('-rating_avg')
+            charity_profiles = charity_profiles.annotate(rating_avg=Avg('ratings__rate_by_user')).order_by(
+                '-rating_avg')
 
         charity_profile_serializer = CharityProfileSerializer(charity_profiles, many=True)
         charity_profiles_data = charity_profile_serializer.data
@@ -565,11 +566,42 @@ class PaymentConfirmationView(APIView):
         if user.is_authenticated():
             # TODO: get real values from 'response'
             Payment.objects.create(user_profile=user.user_profile, charity_profile=charity_profile,
-                                                 gross=gross, currency=currency, txn_id=transaction_id)
+                                   gross=gross, currency=currency, txn_id=transaction_id)
         else:
             # TODO: get real values from 'response'
             Payment.objects.create(user_profile=None, charity_profile=charity_profile,
                                    gross=gross, currency=currency, txn_id=transaction_id)
 
         json_reponse = JSONRenderer().render({"success": data})
+        return HttpResponse(json_reponse, content_type='application/json')
+
+
+# Responsible for registering volunteers for charity activities
+class VolunteerRegistrationView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request):
+
+        # Read parameters from the request
+        data = request.data
+        activity_id = data.get('charityActivity', None)
+        date = data.get('volunteerDate', None)
+        volunteer_forename = data.get('volunteerName', None)
+        volunteer_surname = data.get('volunteerSurname', None)
+        volunteer_email = data.get('volunteerEmail', None)
+        volunteer_phone = data.get('volunteerPhone', None)
+
+        if not activity_id:
+            response_data = json.dumps({"error": "No activity ID has been provided."})
+            return HttpResponseBadRequest(response_data, content_type='application/json')
+
+        activity = CharityActivity.objects.filter(id=activity_id).first()
+        if not activity:
+            response_data = json.dumps({"error": "No activity exists with the ID: " + str(activity_id)})
+            return HttpResponseBadRequest(response_data, content_type='application/json')
+
+        Volunteer.objects.create(charity_activity=activity, date=date, forename=volunteer_forename,
+                                 surname=volunteer_surname, email=volunteer_email, phone=volunteer_phone)
+
+        json_reponse = JSONRenderer().render({"success": True})
         return HttpResponse(json_reponse, content_type='application/json')

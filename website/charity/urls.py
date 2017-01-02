@@ -4,7 +4,8 @@ from charity.views.authentication import LoginView, LogoutView, RestrictedView, 
     CharityProfileView, CharityVerificationView
 from charity.views.charity_management import CharityTagsView, CharityGetView, CharityLikeView, CharityPopularityView, \
     CharityDataProcessorView, CharityActivityView, CharityActivitySearchView, PaymentConfirmationView, CharityRatingView, \
-    CharityRatingPublicView, CharitySettingsView, CharityAdvancedSearchView, CharityRegularSearchView
+    CharityRatingPublicView, CharitySettingsView, CharityAdvancedSearchView, CharityRegularSearchView, \
+    VolunteerRegistrationView
 
 urlpatterns = patterns(
     '',
@@ -17,8 +18,6 @@ urlpatterns = patterns(
     url(r'^charity/charity_rating/$', CharityRatingView.as_view(), name='charity_rating'),
     url(r'^charity/charity_rating_aggregates/$', CharityRatingPublicView.as_view(), name='charity_rating_aggregates'),
     url(r'^charity/popular_charities/$', CharityPopularityView.as_view(), name='popular_charity_profiles'),
-    url(r'^charity/activity/$', CharityActivityView.as_view(), name='charity_activity_update'),
-    url(r'^charity/get_activity/$', CharityActivitySearchView.as_view(), name='charity_activity_search'),
 
     # Authentication
     url(r'^auth/register/$', RegistrationView.as_view(), name='register'),
@@ -31,6 +30,11 @@ urlpatterns = patterns(
 
     # Payment
     url(r'^charity/payment_confirmation/(?P<charity_username>.+)/$', PaymentConfirmationView.as_view(), name='payment_confirmation'),
+
+    # Activity & Volunteering
+    url(r'^charity/activity/$', CharityActivityView.as_view(), name='charity_activity_update'),
+    url(r'^charity/get_activity/$', CharityActivitySearchView.as_view(), name='charity_activity_search'),
+    url(r'^charity/volunteering/$', VolunteerRegistrationView.as_view(), name='charity_volunteering'),
 
     # For testing purpose only
     url(r'^auth/authenticated_charity/$', CharityRestrictedView.as_view(), name='test_authorisation_token'),

@@ -6,6 +6,7 @@ import json
 from charity.models.charity_activity import CharityActivity
 from charity.models.charity_profile import CharityProfile
 from charity.models.charity_rating import CharityRating
+from charity.models.volunteer import Volunteer
 
 
 class CharityManagementViewTestCase(TestCase):
@@ -451,6 +452,28 @@ class CharityManagementViewTestCase(TestCase):
         charity_activity = response_content["charity_activities"][0]
 
         self.assertEqual(charity_activity["name"], "Not Awesome event")
+
+    # Tests if we can volunteer as an anonymous user
+    def test_volunteering_to_an_activity(self):
+        # Log in as a charity
+        response = self.client.post("/api/auth/login/", {"username": "Charity1", "password": "Woozles123"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        # Upload a new activity
+        details = json.dumps({"name": 'Awesome event'})
+        self.client.post("/api/charity/activity/", {"model": details},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        latest_activity = CharityActivity.objects.latest(field_name="uploaded_at")
+
+        # Volunteer as an anonymous user
+        self.client.post("/api/charity/volunteering/", {"charityActivity": latest_activity.id, "volunteerEmail": "a@b.c"})
+
+        volunteers = Volunteer.objects.all()
+
+        self.assertEqual(len(volunteers), 1)
+        self.assertEqual(volunteers[0].email, "a@b.c")
 
     # Helper method to register charities
     def register_charity(self, name, email):
