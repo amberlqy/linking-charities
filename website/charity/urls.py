@@ -5,7 +5,7 @@ from charity.views.authentication import LoginView, LogoutView, RestrictedView, 
 from charity.views.charity_management import CharityTagsView, CharityGetView, CharityLikeView, CharityPopularityView, \
     CharityDataProcessorView, CharityActivityView, CharityActivitySearchView, PaymentConfirmationView, CharityRatingView, \
     CharityRatingPublicView, CharitySettingsView, CharityAdvancedSearchView, CharityRegularSearchView, \
-    VolunteerRegistrationView
+    VolunteerRegistrationView, DonationStatisticsView
 
 urlpatterns = patterns(
     '',
@@ -30,6 +30,7 @@ urlpatterns = patterns(
 
     # Payment
     url(r'^charity/payment_confirmation/(?P<charity_username>.+)/$', PaymentConfirmationView.as_view(), name='payment_confirmation'),
+    url(r'^charity/donation_statistics/$', DonationStatisticsView.as_view(), name='charity_donation_statistics'),
 
     # Activity & Volunteering
     url(r'^charity/activity/$', CharityActivityView.as_view(), name='charity_activity_update'),

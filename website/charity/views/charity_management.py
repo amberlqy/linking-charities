@@ -587,6 +587,29 @@ class PaymentConfirmationView(APIView):
         return HttpResponse(json_reponse, content_type='application/json')
 
 
+# Responsible for returning statistics for past donations for charities
+class DonationStatisticsView(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+
+        charity_name = request.GET.get('charity_name', None)
+
+        if not charity_name:
+            response_data = json.dumps({"error": "Charity name was not provided as a GET parameter."})
+            return HttpResponseBadRequest(response_data, content_type='application/json')
+
+        # Sum past donations
+        charity_profile = CharityProfile.objects.filter(charity_name=charity_name).annotate(donation_sum=Sum('payments__gross')).first()
+        if not charity_profile:
+            response_data = json.dumps(
+                {"error": "Charity profile does not exist with the provided username: " + str(charity_name)})
+            return HttpResponseBadRequest(response_data, content_type='application/json')
+
+        json_reponse = JSONRenderer().render({"donation_sum": charity_profile.donation_sum})
+        return HttpResponse(json_reponse, content_type='application/json')
+
+
 # Responsible for registering volunteers for charity activities
 class VolunteerRegistrationView(APIView):
     permission_classes = (permissions.AllowAny,)

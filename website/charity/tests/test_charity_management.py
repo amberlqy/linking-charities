@@ -6,6 +6,7 @@ import json
 from charity.models.charity_activity import CharityActivity
 from charity.models.charity_profile import CharityProfile
 from charity.models.charity_rating import CharityRating
+from charity.models.payment import Payment
 from charity.models.volunteer import Volunteer
 
 
@@ -474,6 +475,18 @@ class CharityManagementViewTestCase(TestCase):
 
         self.assertEqual(len(volunteers), 1)
         self.assertEqual(volunteers[0].email, "a@b.c")
+
+    # Tests if we can get the donation statistics of a charity
+    def test_getting_donation_statistics(self):
+
+        charity_profile = CharityProfile.objects.get(charity_name="Charity1")
+        Payment.objects.create(charity_profile=charity_profile, gross=200.0, txn_id="Atrus is a great chap.")
+        Payment.objects.create(charity_profile=charity_profile, gross=250.0, txn_id="Yeesha")
+
+        response = self.client.get("/api/charity/donation_statistics/", {"charity_name": "Charity1"})
+        response_content = json.loads(response.content.decode('utf-8'))
+
+        self.assertEqual(response_content["donation_sum"], 450.0)
 
     # Helper method to register charities
     def register_charity(self, name, email):
