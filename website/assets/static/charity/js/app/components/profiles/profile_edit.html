@@ -53,13 +53,13 @@
                     <span>Setting</span>
                 </a>
             </li>
-            <li class="font-medium" ng-show="vm.user">
+            <li class="font-medium">
                 <div class="no-pointer">
                     <br/>Average Rate : <br/>
                     <div id="stars" class="starrr" data-rating='1' ng-model="vm.profile.rate"></div>
                     <br/> {{vm.profile.rate}} Stars from {{vm.profile.total_users}} Users
                 </div>
-                <div>
+                <div ng-show="vm.user">
                     User Rate : <br/>
                     <div class="user-rate" ng-click="vm.rateChange()">
                         <div id="stars-existing" class="starrr" data-rating='1' ng-model="vm.profile.userRate"></div>
