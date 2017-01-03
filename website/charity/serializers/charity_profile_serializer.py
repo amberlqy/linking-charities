@@ -7,4 +7,4 @@ class CharityProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CharityProfile
         fields = ('id', 'charity_name', 'goal', 'address', 'phone_number', 'country', 'city', 'postcode', 'email',
-                  'description', 'verified', 'paypal_email', 'paypal_identity_token')
+                  'description', 'verified', 'paypal_email', 'paypal_identity_token', 'profile_image')

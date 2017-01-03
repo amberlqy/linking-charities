@@ -1,7 +1,14 @@
+import uuid
+
 from django.contrib.auth.models import User
 from django.db import models
 from tagging.registry import register
 from charity.models.user_profile import UserProfile
+
+
+# Gives a unique name to each file
+def content_file_name(instance, filename):
+    return 'charity/profile_images/' + str(uuid.uuid4()) + str(instance.charity_activity.id) + filename
 
 
 # Specifies the profile of the charity
@@ -22,6 +29,8 @@ class CharityProfile(models.Model):
 
     paypal_email = models.CharField(max_length=255, null=True)
     paypal_identity_token = models.CharField(max_length=255, null=True)
+
+    profile_image = models.FileField(upload_to=content_file_name, null=True)
 
 # Register the charity profile for tagging purpose
 register(CharityProfile)

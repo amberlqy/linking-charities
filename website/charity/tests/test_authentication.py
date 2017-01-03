@@ -90,11 +90,17 @@ class AuthenticationViewTestCase(TestCase):
         charity_profile = charity.charity_profile
         self.assertEqual(charity_profile.phone_number, None)
 
-        response = self.client.post("/api/auth/charity_profile/", {"charity_name": "Mister Charity",
-                                                                   "location": "Budapest",
-                                                                   "goal": "To improve the city.",
-                                                                   "address": "Budapest 1 2 3",
-                                                                   "phone_number": "0123456789"}, HTTP_AUTHORIZATION='JWT {}'.format(token))
+        details = json.dumps({"charity_name": "Mister Charity",
+                               "location": "Budapest",
+                               "goal": "To improve the city.",
+                               "address": "Budapest 1 2 3",
+                               "phone_number": "0123456789",
+                               "description": "Yeesha",
+                               "city": "Tomahna",
+                               "country": "Myst",
+                               "postcode": "1234",
+                               "email": "a@b.c"})
+        response = self.client.post("/api/auth/charity_profile/", {"model": details}, HTTP_AUTHORIZATION='JWT {}'.format(token))
 
         charity = User.objects.get(username="Charity1")
         charity_profile = charity.charity_profile

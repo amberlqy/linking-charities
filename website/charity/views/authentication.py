@@ -123,19 +123,21 @@ class CharityProfileView(APIView):
         if user.role == roles.charity:
             # If the user can access this view, that means the user is authorised as a charity
 
-            data = request.data
-            charity_name = data.get('charity_name', None)
-            goal = data.get('goal', None)
-            description = data.get('description', None)
-            address = data.get('address', None)
-            city = data.get('city', None)
-            country = data.get('country', None)
-            postcode = data.get('postcode', None)
-            email = data.get('email', None)
-            phone_number = data.get('phone_number', None)
+            raw_data = request.data["model"]
+            data = json.loads(raw_data)
 
-            paypal_email = data.get('paypal_email', None)
-            paypal_identity_token = data.get('paypal_identity_token', None)
+            charity_name = data['charity_name']
+            goal = data['goal']
+            description = data['description']
+            address = data['address']
+            city = data['city']
+            country = data['country']
+            postcode = data['postcode']
+            email = data['email']
+            phone_number = data['phone_number']
+
+            # paypal_email = data['paypal_email']
+            # paypal_identity_token = data['paypal_identity_token']
 
             charity_profile = user.charity_profile
             charity_profile.charity_name = charity_name
@@ -148,8 +150,15 @@ class CharityProfileView(APIView):
             charity_profile.phone_number = phone_number
             charity_profile.description = description
 
-            charity_profile.paypal_email = paypal_email
-            charity_profile.paypal_identity_token = paypal_identity_token
+            # charity_profile.paypal_email = paypal_email
+            # charity_profile.paypal_identity_token = paypal_identity_token
+
+            # TODO: handle image deletes as well
+            files = request.FILES
+            if files:
+                for image_name in files:
+                    charity_profile.profile_image = files[image_name]
+
             charity_profile.save()
 
             response_data = json.dumps({"success": True})
