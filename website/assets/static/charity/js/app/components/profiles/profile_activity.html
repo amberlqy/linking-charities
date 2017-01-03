@@ -117,6 +117,7 @@
                             <p class="descTextArea">
                                 <textarea id="desTextArea" name="desTextArea" class="disTextArea" ng-model="activity.description" rows="4" cols="45" maxlength="200" readonly="readonly"></textarea>
                             </p>
+                            <h3 ng-show="vm.isMatched">Spending : <input type="number" id="spendTextArea" name="spendTextArea" class="disNameInput" ng-model="activity.spending" maxlength="10" readonly="readonly"></h3>
                         </td>
                     </tr>
                 </table>
@@ -144,6 +145,7 @@
     var nameTextArea = document.getElementsByName("nameTextArea");
     var dateInput = document.getElementsByName("dateInput");
     var desTextArea = document.getElementsByName("desTextArea");
+    var spendTextArea = document.getElementsByName("spendTextArea");
     // Button
     var editButton = document.getElementsByName("editButton");
     var saveButton = document.getElementsByName("saveButton");
@@ -161,6 +163,8 @@
         dateInput[rowIndex].readOnly = false;
         desTextArea[rowIndex].className = "enTextArea";
         desTextArea[rowIndex].readOnly = false;
+        spendTextArea[rowIndex].className = "enNameInput";
+        spendTextArea[rowIndex].readOnly = false;
         // Button
         disabledButton(rowIndex);
     }
@@ -183,15 +187,18 @@
             initName = [];
             initDate = [];
             initDescription = [];
+            initSpend = [];
             for (var i = 0; i < desTextArea.length; i++) {
                 initName.push(nameTextArea[i].value);
                 initDate.push(dateInput[i].value);
                 initDescription.push(desTextArea[i].value);
+                initSpend.push(spendTextArea[i].value);
             }
         } else { // update init value when saved
             initName[rowIndex] = nameTextArea[rowIndex].value;
             initDate[rowIndex] = dateInput[rowIndex].value;
             initDescription[rowIndex] = desTextArea[rowIndex].value;
+            initSpend[rowIndex] = spendTextArea[rowIndex].value;
         }
     }
 
@@ -199,6 +206,7 @@
         nameTextArea[rowIndex].value = initName[rowIndex];
         dateInput[rowIndex].value = initDate[rowIndex];
         desTextArea[rowIndex].value = initDescription[rowIndex];
+        spendTextArea[rowIndex].value = initSpend[rowIndex];
     }
 
     function disabledEdit(rowIndex) {
@@ -209,6 +217,8 @@
         dateInput[rowIndex].readOnly = true;
         desTextArea[rowIndex].className = "disTextArea";
         desTextArea[rowIndex].readOnly = true;
+        spendTextArea[rowIndex].className = "disNameInput";
+        spendTextArea[rowIndex].readOnly = true;
     }
 
     function disabledButton(rowIndex) {

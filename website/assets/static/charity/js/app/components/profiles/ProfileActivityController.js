@@ -78,7 +78,8 @@
                 "id": activity.id,
                 "name": activity.name,
                 "description": activity.description,
-                "date": date
+                "date": date,
+                "spending": activity.spending
             };
             console.log(activityObj);
 
