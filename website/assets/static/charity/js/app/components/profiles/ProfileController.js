@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Profile', 'profilePrepService', 'ratingPrepService', '$http', 'activityPrepService'];
+    ProfileController.$inject = ['$location', 'Profile', 'profilePrepService', 'ratingPrepService', '$http', 'activityPrepService', '$scope'];
 
-    function ProfileController($location, Profile, profilePrepService, ratingPrepService, $http, activityPrepService) {
+    function ProfileController($location, Profile, profilePrepService, ratingPrepService, $http, activityPrepService, $scope) {
         var vm = this;
         vm.profile = {};
 
@@ -123,9 +123,19 @@
             }
         }
 
-        // Called when the user clicks on Update profile
+        $scope.files = [];
+
+        // listen for the file selected event which is raised from directive
+        $scope.$on("seletedFile", function (event, args) {
+            $scope.$apply(function () {
+                //add the file object to the scope's files collection
+                $scope.files.push(args.file);
+            });
+        });
+
+        // TODO : update profile
         vm.update = function(){
-            var profile = {
+            var profileObj = {
                 "charity_name": vm.profile.name,
                 "goal": null,
                 "description": vm.profile.description,
@@ -136,7 +146,31 @@
                 "email": vm.profile.email,
                 "phone_number": vm.profile.phone_number
             };
-            Profile.update(profile);
+
+            console.log($scope.files);
+
+            $http({
+                method: 'POST',
+                url: "/api/auth/charity_profile/",
+                headers: { 'Content-Type': undefined },
+                transformRequest: function (data) {
+                    var formData = new FormData();
+                    formData.append("model", angular.toJson(data.model));
+                    for (var i = 0; i < data.files.length; i++) {
+                        formData.append("file" + i, data.files[i]);
+                    }
+                    return formData;
+                },
+                data: { model: profileObj, files: $scope.files }
+            }).then(getSuccessFn, getErrorFn);
+
+            function getSuccessFn(data, status, headers, config) {
+                //$location.url('/profile/' + vm.name + '/activities');
+            }
+
+            function getErrorFn(data, status, headers, config) {
+                console.error('Getting Search failed! ' + status);
+            }
         }
 
         // Rate update

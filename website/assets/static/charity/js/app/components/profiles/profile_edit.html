@@ -112,6 +112,7 @@
                                 <img width="130" height="130" src="/static/charity/images/no-user-image.gif" />
                             </p>
                             <div id="profilePicture">
+                                <input style="display:inline-block;" type="file" upload-files />
                                 <!--<input style="display:inline-block;" type="file" ng-model="vm.profile.picture" />-->
                             </div>
                             <p style="font-size: 30px">
@@ -357,7 +358,7 @@
         // Description Section
         desTextArea.className = "enTextArea";
         desTextArea.readOnly = false;
-        $("#profilePicture").append( '<input style="display:inline-block;" type="file" ng-model="vm.profile.picture" />' );
+//        $("#profilePicture").append( '<input style="display:inline-block;" type="file" upload-files />' );
         // Contact Section
         address.readOnly = false;
         city.readOnly = false;
@@ -404,7 +405,7 @@
         // Description Section
         desTextArea.className = "disTextArea";
         desTextArea.readOnly = true;
-        $("#profilePicture").empty();
+//        $("#profilePicture").empty();
         // Contact Section
         address.readOnly = true;
         city.readOnly = true;
