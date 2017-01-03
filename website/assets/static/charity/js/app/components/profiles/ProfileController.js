@@ -97,7 +97,7 @@
 
                 function getSuccessFn(data, status, headers, config) {
                     var finance = data.data;
-                    var donatedAmount = finance.donation_sum == null ? 0 : finance.donation_sum;
+                    vm.profile.donatedAmount = finance.donation_sum == null ? 0 : finance.donation_sum;
                 }
 
                 function getErrorFn(data, status, headers, config) {
