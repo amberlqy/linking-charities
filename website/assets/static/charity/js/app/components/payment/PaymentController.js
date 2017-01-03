@@ -21,7 +21,6 @@
 
         function activate() {
             if ($routeParams.charityName != undefined) { // Initial payment form
-                console.log('Call payment form');
                 var charity = paymentPrepService.data.charity_profile;
                 if (charity == undefined || charity == null || charity.charity_name == "") {
                     alert("There is no charity that you want to donate");
@@ -46,7 +45,6 @@
                     selected: "GBP"
                 };
             } else if ($routeParams.charity_username != undefined) { // Payment confirmation
-                console.log('Call Payment Confirmation');
                 vm.verified = "Waiting...";
                 var queryParameters = $location.search();
                 if (typeof queryParameters.tx !== "undefined"){
@@ -54,32 +52,7 @@
                 }
             }
 
-            // vm.verified = "Waiting...";
-            // vm.donate.amount = 100.00;
-            // vm.donation_currency = "USD";
-
-            // vm.donation_currency_options = {
-            //   choices: ["USD", "GBP", "JPY"],
-            //   selected: "USD"
-            // };
-
-            // Payment confirmation starts here
-            // Read which charity the user has donated to: we can only read this from the URL
-            // var charity_username = $routeParams.charity_username;
-
-            // Check if we have any GET parameters that were attached by PayPal
-            // var queryParameters = $location.search();
-            // if (typeof queryParameters.tx !== "undefined" && typeof charity_username !== "undefined"){
-            //     Payment.getPaymentVerification(queryParameters.tx, charity_username).then(verificationSuccessFn, verificationErrorFn);
-            // }
-
             function verificationSuccessFn(data, status, headers, config) {
-                console.log("start log success callback");
-                console.log(data);
-                console.log(status);
-                console.log(headers);
-                console.log(config);
-
                 if (!$cookies.get('donateInfo')) {
                     alert('This page is expired');
                     $location.url('/home');
@@ -92,11 +65,7 @@
                 // Get donateInfo
                 var donateInfoTest = $cookies.getObject('donateInfo');
 
-                // TODO: How to update charityActivity
-                // donateInfoTest.charityActivity
                 vm.charityName = donateInfoTest.charityName;
-                // donateInfoTest.donateAmount
-                // donateInfoTest.donateCurrency
                 var time = Date().toLocaleString();
 
                 // Delete cookie
@@ -168,7 +137,6 @@
                              "charityActivity": vm.volunteer.activity,
                              "volunteerDate": date
                             };
-            console.log(volunteer);
             Payment.volunteer(volunteer).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {

@@ -29,7 +29,7 @@
 
         // Save volunteer data
         function beVolunteer(volunteer) {
-            return $http.post('Change URL Here', volunteer);
+            return $http.post('/api/charity/volunteering/', volunteer);
         }
     }
 })();
