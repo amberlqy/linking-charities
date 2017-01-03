@@ -139,43 +139,46 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="maintitle">
-                            <h3 class="section-title"><strong>LAST </strong> ACTIVITY</h3>
+                            <h3 class="section-title"><strong>CURRENT </strong> INFORMATION</h3>
                             <p class="lead">
-                                Briefly detail about this activity
+                                <!-- Some text -->
                             </p>
                         </div>
                     </div>
 
                     <div class="col-md-4 col-sm-6">
-                        <div class="service-box wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
-                            <!--<img style="width: 200px; height: 100px;" src="" alt="">-->
-                            <h3>Name of activity</h3>
-                            <p>
-
-                            </p>
-                            <button type="button" class="btn btn-info btn-md"><a href="#">More Pictures</a></button>
+                        <div class="service-box wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s" ng-show="vm.profile.activityId">
+                            <img style="width: 200px; height: 115px;" src="{{vm.profile.activityImage}}">
+                            <h3>{{vm.profile.activityName}}</h3>
+                            <h4>On {{vm.profile.date | date :'dd/MMM/yyyy'}}</h4>
+                            <button type="button" class="btn btn-info btn-md"><a href="profile/{{vm.profile.name}}/activities">More Detail</a></button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-info btn-md"><a href="profile/{{vm.profile.name}}/activity/{{vm.profile.activityId}}">More Pictures</a></button>
+                        </div>
+                        <div style="height: 294px;" class="service-box wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s" ng-hide="vm.profile.activityId">
+                            <br/><h3>Last Activity</h3><br/><br/>
+                            <h4>There is no activity in this charity yet.</h4>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <div class="service-box wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                            <br/>
                             <span class="glyphicon glyphicon-stats"></span>
-                            <h3>??? Participants</h3>
-                            <p>
-                                Totally ??? people donated/participated <br/>in this activity
-                            </p>
+                            <h3>Total Participants</h3>
+                            <h1>59</h1>
+                            <h4>volunteers in our charity</h4>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <div class="service-box wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.4s">
-                            <span class="glyphicon glyphicon-usd"></span>
-                            <h3>??? Donated</h3>
-                            <p>
-                                Totally ??? money donation <br/>in this activity
-                            </p>
+                            <br/>
+                            <span class="glyphicon glyphicon-gbp"></span>
+                            <h3>Total Donated</h3>
+                            <h1>123456 &pound</h1>
+                            <h4>is donated to our charity</h4>
                         </div>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12" ng-show="vm.profile.activityId">
                         <div class="maintitle">
                             <button type="button" class="btn btn-info btn-md"><a href="profile/{{vm.profile.name}}/activities">More Activities</a></button>
                         </div>

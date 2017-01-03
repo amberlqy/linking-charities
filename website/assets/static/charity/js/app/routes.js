@@ -36,6 +36,10 @@
                 ratingPrepService: function($route, Profile){
                     var name = $route.current.params.name;
                     return Profile.getRating(name);
+                },
+                activityPrepService: function($route, Profile){
+                    var name = $route.current.params.name;
+                    return Profile.getActivity(name);
                 }
             }
         }).when('/profile/:name/new_activity', {
