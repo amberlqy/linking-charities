@@ -476,6 +476,30 @@ class CharityManagementViewTestCase(TestCase):
         self.assertEqual(len(volunteers), 1)
         self.assertEqual(volunteers[0].email, "a@b.c")
 
+    # Tests if we can get the proper count of a volunteers inside a specific activity
+    def test_get_count_of_volunteers_in_activity(self):
+        # Log in as a charity
+        response = self.client.post("/api/auth/login/", {"username": "Charity1", "password": "Woozles123"})
+        response_content = json.loads(response.content.decode('utf-8'))
+        token = response_content["token"]
+
+        # Upload a new activity
+        details = json.dumps({"name": 'Awesome event'})
+        self.client.post("/api/charity/activity/", {"model": details},
+                         HTTP_AUTHORIZATION='JWT {}'.format(token))
+
+        latest_activity = CharityActivity.objects.latest(field_name="uploaded_at")
+
+        # Volunteer as an anonymous user
+        self.client.post("/api/charity/volunteering/",
+                         {"charityActivity": latest_activity.id, "volunteerEmail": "a@b.c"})
+
+        charity_activity_id = latest_activity.id
+        response = self.client.get("/api/charity/get_activity/", {"activity_id": charity_activity_id})
+        response_content = json.loads(response.content.decode('utf-8'))
+
+        self.assertEqual(response_content["charity_activity"]["volunteer_count"], 1)
+
     # Tests if we can get the donation statistics of a charity
     def test_getting_donation_statistics(self):
 
