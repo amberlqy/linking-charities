@@ -367,6 +367,10 @@ p.lead {
     text-align: center;
     margin: auto;
 }
+#contactDetail .buttonArea {
+    text-align: right;
+    margin-top: -100px
+}
 .service-box-transbg {
 	margin-bottom:30px;
 	background-color:transparent;

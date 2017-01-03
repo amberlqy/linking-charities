@@ -93,15 +93,15 @@
                         <!-- button console -->
                         <div class="buttonArea" ng-show="vm.isMatched">
                             <!-- edit -->
-                            <button type="button" id="editButton" class="btn btn-default btn-sm" onclick="editClick();">
+                            <button type="button" name="editButton" class="btn btn-default btn-sm" onclick="editClick();">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                             <!-- save -->
-                            <button type="button" id="saveButton" class="btn btn-default btn-sm" ng-click="vm.update()" onclick="saveClick()" disabled="true">
+                            <button type="button" name="saveButton" class="btn btn-default btn-sm" ng-click="vm.update()" onclick="saveClick()" disabled="true">
                                 <span class="glyphicon glyphicon-floppy-disk"></span>
                             </button>
                             <!-- cancel -->
-                            <button type="button" id="cancelButton" class="btn btn-default btn-sm" onclick="cancelClick()" disabled="true">
+                            <button type="button" name="cancelButton" class="btn btn-default btn-sm" onclick="cancelClick()" disabled="true">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                             <br/>
@@ -195,17 +195,17 @@
                         <div class="maintitle">
                             <h3 class="section-title">FINANCE</h3>
                             <p class="lead">
-                                Financial chart
+                                Income :&pound
                             </p>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-sm-6">
                         <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
-                            <h3>Income</h3>
+                            <h3>Spending :&pound</h3>
                             <div class="financialchart">
-                                <canvas id="pie" class="chart chart-pie"
-                                        chart-data="incomedata" chart-labels="labels" chart-options="options">
+                                <canvas id="pie1" class="chart chart-pie"
+                                        chart-data="spendingdata" chart-labels="labels" chart-options="options">
                                 </canvas>
                             </div>
                         </div>
@@ -213,12 +213,27 @@
 
                     <div class="col-md-6 col-sm-6">
                         <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
-                            <h3>Spending</h3>
-                            <div class="financialchart">
-                                <canvas id="pie1" class="chart chart-pie"
-                                        chart-data="spendingdata" chart-labels="labels" chart-options="options">
-                                </canvas>
-                            </div>
+                            <h3>Spending detail :</h3>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <li><span style="background-color: rgba(151,187,205,1)"></span>Voluntary:
+                                            &pound{{ financialsJson.income_voluntary }}</li>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <li><span style="background-color: rgba(220,220,220,1)"></span>Trading to raise funds
+                                            :&pound{{ financialsJson.income_trading }}</li>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <li><span style="background-color: rgba(247,70,74,1)"></span>Investment
+                                            :&pound{{ financialsJson.income_investment }}</li>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -233,6 +248,24 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+                        <!-- button console -->
+                        <div class="buttonArea" ng-show="vm.isMatched">
+                            <!-- edit -->
+                            <button type="button" name="editButton" class="btn btn-default btn-sm" onclick="editClick();">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <!-- save -->
+                            <button type="button" name="saveButton" class="btn btn-default btn-sm" ng-click="vm.update()" onclick="saveClick()" disabled="true">
+                                <span class="glyphicon glyphicon-floppy-disk"></span>
+                            </button>
+                            <!-- cancel -->
+                            <button type="button" name="cancelButton" class="btn btn-default btn-sm" onclick="cancelClick()" disabled="true">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <br/>
+                        </div>
+
+
                         <div class="maintitle">
                             <h3 class="section-title">Contact Detail</h3>
                         </div>
@@ -324,9 +357,9 @@
     var email = document.getElementById("emailTextbox");
     var phone = document.getElementById("phoneTextbox");
     // Button
-    var editButton = document.getElementById("editButton");
-    var saveButton = document.getElementById("saveButton");
-    var cancelButton = document.getElementById("cancelButton");
+    var editButton = document.getElementsByName("editButton");
+    var saveButton = document.getElementsByName("saveButton");
+    var cancelButton = document.getElementsByName("cancelButton");
 
     function editClick() {
         // Save init value
@@ -392,9 +425,11 @@
     }
 
     function disabledButton() {
-        editButton.disabled = !editButton.disabled;
-        saveButton.disabled = !saveButton.disabled;
-        cancelButton.disabled = !cancelButton.disabled;
+        for (var i = 0; i < editButton.length; i++) {
+            editButton[i].disabled = !editButton[i].disabled;
+            saveButton[i].disabled = !saveButton[i].disabled;
+            cancelButton[i].disabled = !cancelButton[i].disabled;
+        }
     }
 
     function goToByScroll(id){
