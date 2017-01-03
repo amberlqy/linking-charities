@@ -6,15 +6,11 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Profile', '$scope', 'profilePrepService', 'ratingPrepService', '$http', 'activityPrepService'];
+    ProfileController.$inject = ['$location', 'Profile', 'profilePrepService', 'ratingPrepService', '$http', 'activityPrepService'];
 
-    function ProfileController($location, Profile, $scope, profilePrepService, ratingPrepService, $http, activityPrepService) {
+    function ProfileController($location, Profile, profilePrepService, ratingPrepService, $http, activityPrepService) {
         var vm = this;
         vm.profile = {};
-
-        $scope.labels = ["Voluntary £", "Trading to raise funds £", "Investment £"];
-        $scope.incomedata = [1234 , 201, 100];
-        $scope.spendingdata = [265, 1200, 8];
 
         activate();
 
@@ -75,6 +71,7 @@
                 var charityActivity = activityPrepService.data.charity_activities;
                 if (charityActivity != undefined && charityActivity != null) {
                     if (charityActivity.length > 0) {
+                        // Last Activity
                         var activity = charityActivity[charityActivity.length-1];
                         vm.profile.activityId = activity.id;
                         vm.profile.activityName = activity.name;
@@ -87,6 +84,26 @@
                         if (images.length > 0) {
                             vm.profile.activityImage = images[images.length-1].image;
                         }
+
+                        // Spending and volunteer
+                        var activityName = [];
+                        var spending = [];
+                        vm.profile.spendAmount = 0;
+                        vm.profile.volunteer = 0;
+                        for (var i = 0; i < charityActivity.length; i++) {
+                            // For finance section
+                            if (charityActivity[i].spending > 0) {
+                                activityName.push(charityActivity[i].name);
+                                spending.push(charityActivity[i].spending);
+                                vm.profile.spendAmount += charityActivity[i].spending;
+                            }
+                            // Sum volunteer in the charity
+                            vm.profile.volunteer += charityActivity[i].volunteer_count;
+                        }
+
+                        // For pie chart
+                        vm.profile.labels = activityName;
+                        vm.profile.spendingdata = spending;
                     }
                 }
             }

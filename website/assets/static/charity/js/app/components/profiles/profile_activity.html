@@ -111,13 +111,13 @@
                                 </button>
                                 <br/>
                             </div>
-                            <h3>Activity Name : <input type="text" id="nameTextArea" name="nameTextArea" class="disNameInput" ng-model="activity.name" maxlength="40" readonly="readonly" required></h3>
+                            <h3>Activity Name : <input type="text" id="nameTextArea" name="nameTextArea" class="disNameInput" ng-model="activity.name" maxlength="35" readonly="readonly" required></h3>
                             <h3>Activity Date &nbsp; : <input type="date" id="dateInput" name="dateInput" class="disDateInput" ng-model="activity.date" readonly/></h3>
+                            <h3 ng-show="vm.isMatched">Spending (&pound) : <input type="number" id="spendTextArea" name="spendTextArea" class="disNameInput" ng-model="activity.spending" min="0" max="99999999" readonly="readonly"></h3>
                             <h3>Activity Description :</h3>
                             <p class="descTextArea">
                                 <textarea id="desTextArea" name="desTextArea" class="disTextArea" ng-model="activity.description" rows="4" cols="45" maxlength="200" readonly="readonly"></textarea>
                             </p>
-                            <h3 ng-show="vm.isMatched">Spending : <input type="number" id="spendTextArea" name="spendTextArea" class="disNameInput" ng-model="activity.spending" maxlength="10" readonly="readonly"></h3>
                         </td>
                     </tr>
                 </table>

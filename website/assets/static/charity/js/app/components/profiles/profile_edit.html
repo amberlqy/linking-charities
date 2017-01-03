@@ -164,7 +164,7 @@
                             <br/>
                             <span class="glyphicon glyphicon-stats"></span>
                             <h3>Total Participants</h3>
-                            <h1>59</h1>
+                            <h1>{{vm.profile.volunteer}}</h1>
                             <h4>volunteers in our charity</h4>
                         </div>
                     </div>
@@ -205,10 +205,10 @@
 
                     <div class="col-md-6 col-sm-6">
                         <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
-                            <h3>Spending :&pound</h3>
+                            <h3>Spending : {{vm.profile.spendAmount}} &pound</h3>
                             <div class="financialchart">
                                 <canvas id="pie1" class="chart chart-pie"
-                                        chart-data="spendingdata" chart-labels="labels" chart-options="options">
+                                        chart-data="vm.profile.spendingdata" chart-labels="vm.profile.labels" chart-options="options">
                                 </canvas>
                             </div>
                         </div>
@@ -216,24 +216,11 @@
 
                     <div class="col-md-6 col-sm-6">
                         <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
-                            <h3>Spending detail :</h3>
+                            <h3>Activity Spending Detail :</h3>
                             <table>
-                                <tr>
+                                <tr ng-repeat="spending in vm.profile.spendingdata">
                                     <td>
-                                        <li><span style="background-color: rgba(151,187,205,1)"></span>Voluntary:
-                                            &pound{{ financialsJson.income_voluntary }}</li>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <li><span style="background-color: rgba(220,220,220,1)"></span>Trading to raise funds
-                                            :&pound{{ financialsJson.income_trading }}</li>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <li><span style="background-color: rgba(247,70,74,1)"></span>Investment
-                                            :&pound{{ financialsJson.income_investment }}</li>
+                                        <li>{{vm.profile.labels[$index]}} : {{ spending }} &pound</li>
                                     </td>
                                 </tr>
                             </table>
