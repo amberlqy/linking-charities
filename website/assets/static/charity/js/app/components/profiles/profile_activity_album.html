@@ -65,79 +65,19 @@
                     <div class="row">
                         <div class="col-md-12 sol-sm-12">
                             <div class="maintitle">
-                                <h3 class="section-title">Activity Album</h3>
+                                <h3 class="section-title">{{vm.name}} Activity</h3>
                                 <p class="lead">
-                                    {{vm.name}}' Activity id {{vm.id}} Album
+                                    Activity {{vm.activity.name}} Album
                                 </p>
                             </div>
                         </div>
 
-                        <div class="col-md-4">
-                            <a href="https://ununsplash.imgix.net/photo-1429277158984-614d155e0017?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" title="This is the description">
-                                <img src="https://ununsplash.imgix.net/photo-1429277158984-614d155e0017?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" alt="" class="image-responsive">
+                        <div class="col-md-4" ng-repeat="image in vm.activity.images track by $index">
+                            <a href="#" title="{{vm.activity.name}} picture">
+                                <img style="height: 250px;" src="{{image.image}}" alt="" class="image-responsive">
                                 <div class="description">
-                                    <span class="caption">This is <b>awesome</b></span>
+                                    <span class="caption">Picture <b>{{$index+1}}</b></span>
                                     <span class="camera"><i class="fa fa-camera"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="https://unsplash.imgix.net/uploads/14115408840644deb16b0/2dc933e3?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" title="This is the description">
-                                <img src="https://unsplash.imgix.net/uploads/14115408840644deb16b0/2dc933e3?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" alt="" class="image-responsive">
-                                <div class="description">
-                                    <span class="caption">Great <b>marathon</b></span>
-                                    <span class="camera"><i class="fa fa-link"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="https://ununsplash.imgix.net/photo-1429277096327-11ee3b761c93?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" title="This is the description">
-                                <img src="https://ununsplash.imgix.net/photo-1429277096327-11ee3b761c93?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" alt="" class="image-responsive">
-                                <div class="description">
-                                    <span class="caption">Running <b>miles</b></span>
-                                    <span class="camera"><i class="fa fa-heart"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="https://unsplash.imgix.net/uploads/141327328038701afeede/eda0fb7c?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" title="This is the description">
-                                <img src="https://unsplash.imgix.net/uploads/141327328038701afeede/eda0fb7c?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" alt="" class="image-responsive">
-                                <div class="description">
-                                    <span class="caption">Young <b>volunteers</b></span>
-                                    <span class="camera"><i class="fa fa-tachometer"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="https://ununsplash.imgix.net/photo-1418225043143-90858d2301b4?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" title="This is the description">
-                                <img src="https://ununsplash.imgix.net/photo-1418225043143-90858d2301b4?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" alt="" class="image-responsive">
-                                <div class="description">
-                                    <span class="caption">Charity <b>concerts</b></span>
-                                    <span class="camera"><i class="fa fa-microphone"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="https://unsplash.imgix.net/photo-1428908799722-0a74e26ce7f6?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" title="This is the description">
-                                <img src="https://unsplash.imgix.net/photo-1428908799722-0a74e26ce7f6?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" alt="" class="image-responsive">
-                                <div class="description">
-                                    <span class="caption">Generous <b>sponsors</b></span>
-                                    <span class="camera"><i class="fa fa-coffee"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="https://unsplash.imgix.net/photo-1428908799722-0a74e26ce7f6?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" title="This is the description">
-                                <img src="https://unsplash.imgix.net/photo-1428908799722-0a74e26ce7f6?fit=crop&amp;fm=jpg&amp;h=700&amp;q=75&amp;w=1050" alt="" class="image-responsive">
-                                <div class="description">
-                                    <span class="caption">Generous <b>sponsors</b></span>
-                                    <span class="camera"><i class="fa fa-coffee"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
                             </a>

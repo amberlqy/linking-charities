@@ -6,11 +6,11 @@
         .module('charity.profiles.controllers')
         .controller('ProfileActivityAlbumController', ProfileActivityAlbumController);
 
-    ProfileActivityAlbumController.$inject = ['$http', '$location', 'Payment', 'Profile', '$routeParams', '$scope'];
+    ProfileActivityAlbumController.$inject = ['$http', '$location', 'Profile', '$routeParams', '$scope', 'activityPrepService'];
 
-    function ProfileActivityAlbumController($http, $location, Payment, Profile, $routeParams, $scope) {
+    function ProfileActivityAlbumController($http, $location, Profile, $routeParams, $scope, activityPrepService) {
         var vm = this;
-        vm.album = {};
+        vm.activity = {};
 
         activate();
 
@@ -27,16 +27,31 @@
             }
 
             function setAlbum() {
-                // var charityActivity = activityPrepService.data.charity_activities;
-                // if (charityActivity == undefined || charityActivity == null) {
-                //     alert("Page Not Found. We could not find the page you requested.");
-                //     $location.url('/home');
-                //     return;
-                // }
-                // vm.activity = charityActivity;
+                var charityActivity = activityPrepService.data.charity_activities;
+                if (charityActivity == undefined || charityActivity == null) {
+                    alert("Page Not Found. We could not find the page you requested.");
+                    $location.url('/home');
+                    return;
+                }
 
                 vm.name = $routeParams.name; // name of charity
                 vm.id = $routeParams.id; // id of activity
+
+                var activity;
+                for (var i = 0; i < charityActivity.length; i++) {
+                    if (vm.id == charityActivity[i].id) {
+                        activity = charityActivity[i];
+                        break;
+                    }
+                }
+
+                if (activity == undefined) {
+                    alert("Page Not Found. We could not find the page you requested.");
+                    $location.url('/profile/' + vm.name + '/activities');
+                    return;
+                }
+
+                vm.activity = activity;
             }
         }
     }

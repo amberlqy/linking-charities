@@ -55,7 +55,13 @@
         }).when('/profile/:name/activity/:id', {
             controller: 'ProfileActivityAlbumController',
             controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/profiles/profile_activity_album.html'
+            templateUrl: '/static/charity/js/app/components/profiles/profile_activity_album.html',
+            resolve: {
+                activityPrepService: function($route, Profile){
+                    var name = $route.current.params.name;
+                    return Profile.getActivity(name);
+                }
+            }
         }).when('/profile/:name/setting', {
             controller: 'ProfileSettingsController',
             controllerAs: 'vm',
