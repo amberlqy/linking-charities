@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileController', ProfileController);
 
-    ProfileController.$inject = ['$location', 'Profile', 'profilePrepService', 'ratingPrepService', '$http', 'activityPrepService', '$scope'];
+    ProfileController.$inject = ['$location', 'Profile', 'profilePrepService', 'ratingPrepService', '$http', 'activityPrepService', '$scope', '$route'];
 
-    function ProfileController($location, Profile, profilePrepService, ratingPrepService, $http, activityPrepService, $scope) {
+    function ProfileController($location, Profile, profilePrepService, ratingPrepService, $http, activityPrepService, $scope, $route) {
         var vm = this;
         vm.profile = {};
 
@@ -35,7 +35,6 @@
 
             function setProfile() {
                 var charity_profile = profilePrepService.data.charity_profile;
-                console.log(charity_profile);
                 if (charity_profile == undefined || charity_profile == null || charity_profile.charity_name == "") {
                     alert("Page Not Found. We could not find the page you requested.");
                     $location.url('/home');
@@ -50,6 +49,7 @@
                 vm.profile.postcode = charity_profile.postcode;
                 vm.profile.email = charity_profile.email;
                 vm.profile.phone_number = charity_profile.phone_number;
+                vm.profile.profile_image = charity_profile.profile_image;
             }
 
             // Get rate information
@@ -69,6 +69,8 @@
 
             function getActivity() {
                 var charityActivity = activityPrepService.data.charity_activities;
+                vm.profile.spendAmount = 0;
+                vm.profile.volunteer = 0;
                 if (charityActivity != undefined && charityActivity != null) {
                     if (charityActivity.length > 0) {
                         // Last Activity
@@ -88,8 +90,7 @@
                         // Spending and volunteer
                         var activityName = [];
                         var spending = [];
-                        vm.profile.spendAmount = 0;
-                        vm.profile.volunteer = 0;
+
                         for (var i = 0; i < charityActivity.length; i++) {
                             // For finance section
                             if (charityActivity[i].spending > 0) {
@@ -147,8 +148,6 @@
                 "phone_number": vm.profile.phone_number
             };
 
-            console.log($scope.files);
-
             $http({
                 method: 'POST',
                 url: "/api/auth/charity_profile/",
@@ -165,11 +164,12 @@
             }).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
-                //$location.url('/profile/' + vm.name + '/activities');
+                $route.reload();
+                // $location.url('/profile/' + vm.profile.name);
             }
 
             function getErrorFn(data, status, headers, config) {
-                console.error('Getting Search failed! ' + status);
+                console.error('Update profile failed! ' + status);
             }
         }
 
@@ -192,7 +192,7 @@
             }
 
             function getErrorFn(data, status, headers, config) {
-                console.error('Getting Search failed! ' + status);
+                console.error('Getting rank failed! ' + status);
             }
         }
     }

@@ -95,8 +95,6 @@
               expires: expiry
             });
 
-            console.log(user_role);
-
             // Store the user-role
             $cookies.put('user_role', user_role,{
               expires: expiry

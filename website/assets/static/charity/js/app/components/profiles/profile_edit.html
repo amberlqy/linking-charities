@@ -109,11 +109,11 @@
                         <!-- profile picture -->
                         <div class="maintitle">
                             <p class="maintitle">
-                                <img width="130" height="130" src="/static/charity/images/no-user-image.gif" />
+                                <!--<img width="130" height="130" src="/static/charity/images/no-user-image.gif" />-->
+                                <img width="130" height="130" src="{{vm.profile.profile_image}}" />
                             </p>
-                            <div id="profilePicture">
-                                <input style="display:inline-block;" type="file" upload-files />
-                                <!--<input style="display:inline-block;" type="file" ng-model="vm.profile.picture" />-->
+                            <div>
+                                <input id="profilePicture" class="disFile" type="file" upload-files />
                             </div>
                             <p style="font-size: 30px">
                                 {{vm.profile.name}}
@@ -204,7 +204,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-6 col-sm-6" ng-show="vm.profile.spendAmount != 0">
                         <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
                             <h3>Spending : {{vm.profile.spendAmount}} &pound</h3>
                             <div class="financialchart">
@@ -215,7 +215,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-6 col-sm-6" ng-show="vm.profile.spendAmount != 0">
                         <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
                             <h3>Activity Spending Detail :</h3>
                             <table>
@@ -225,6 +225,14 @@
                                     </td>
                                 </tr>
                             </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12" ng-show="vm.profile.spendAmount == 0">
+                        <div class="maintitle">
+                            <div class="service-box-transbg wow flipInY" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                                <h3>This charity has not spent any money yet</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -339,7 +347,7 @@
     var initPhone;
     // Description Section
     var desTextArea = document.getElementById("desTextArea");
-    var pictureProfile = document.getElementById("profilePicture");
+    var profilePicture = document.getElementById("profilePicture");
     // Contact Section
     var address = document.getElementById("addressTextbox");
     var city = document.getElementById("cityTextbox");
@@ -358,7 +366,7 @@
         // Description Section
         desTextArea.className = "enTextArea";
         desTextArea.readOnly = false;
-//        $("#profilePicture").append( '<input style="display:inline-block;" type="file" upload-files />' );
+        profilePicture.className = "enFile";
         // Contact Section
         address.readOnly = false;
         city.readOnly = false;
@@ -405,7 +413,7 @@
         // Description Section
         desTextArea.className = "disTextArea";
         desTextArea.readOnly = true;
-//        $("#profilePicture").empty();
+        profilePicture.className = "disFile";
         // Contact Section
         address.readOnly = true;
         city.readOnly = true;

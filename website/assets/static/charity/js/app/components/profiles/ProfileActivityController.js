@@ -81,7 +81,6 @@
                 "date": date,
                 "spending": activity.spending
             };
-            console.log(activityObj);
 
             $http({
                 method: 'POST',

@@ -357,6 +357,14 @@ p.lead {
     border: none;
     background: transparent;
 }
+#description .enFile {
+    display:inline-block;
+    visibility: visible;
+}
+#description .disFile {
+    display:inline-block;
+    visibility: hidden;
+}
 #description .buttonArea {
     text-align: right;
     margin-top: -100px

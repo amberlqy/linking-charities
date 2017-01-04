@@ -56,11 +56,11 @@
                     <!--<tr ng-repeat="data in searchResults | filter : searchKeyWord | orderBy:sortKey:reverse | limitTo:pageProperties.size:(pageProperties.current-1)*pageProperties.size">-->
                     <tr ng-repeat="data in searchResults | orderBy:sortKey:reverse | limitTo:pageProperties.size:(pageProperties.current-1)*pageProperties.size">
                         <td class="showPicture">
-                            <div ng-if="$index == 0">
+                            <div ng-if="data.profile_image == null">
                                 <img class="picStyle" src="/static/charity/images/no-user-image.gif">
                             </div>
-                            <div ng-if="$index != 0">
-                                <img class="picStyle" src="/static/charity/images/no-user-image.gif">
+                            <div ng-if="data.profile_image != null">
+                                <img class="picStyle" src="{{data.profile_image}}">
                             </div>
                         </td>
                         <td class="showContent">
