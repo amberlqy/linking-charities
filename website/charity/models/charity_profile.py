@@ -8,7 +8,7 @@ from charity.models.user_profile import UserProfile
 
 # Gives a unique name to each file
 def content_file_name(instance, filename):
-    return 'charity/profile_images/' + str(uuid.uuid4()) + str(instance.charity_activity.id) + filename
+    return 'charity/profile_images/' + str(uuid.uuid4()) + str(instance.id) + filename
 
 
 # Specifies the profile of the charity
