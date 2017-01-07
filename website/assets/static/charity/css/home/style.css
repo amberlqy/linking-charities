@@ -1,0 +1,242 @@
+html, body{
+    /*font-size: 100%;*/
+	background:	#fff;
+}
+body {
+	/*font-size: 100%;*/
+}
+/*body a{*/
+	/*transition: 0.5s all ease;*/
+	/*-webkit-transition: 0.5s all ease;*/
+	/*-moz-transition: 0.5s all ease;*/
+	/*-o-transition: 0.5s all ease;*/
+	/*-ms-transition: 0.5s all ease;*/
+/*}*/
+p{
+	margin:0;
+}
+/*ul,label{*/
+	/*margin:0;*/
+	/*padding:0;*/
+/*}*/
+body a:hover{
+	text-decoration:none;
+}
+
+/*--banner-starts--*/
+.banner{
+	background: no-repeat;
+	background-size:cover;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	-ms-background-size:cover;
+	min-height:495px;
+}
+/*--banner-end--*/
+
+/*--provide-starts--*/
+.provide-left {
+	padding: 2em 20px;
+}
+.provide-one {
+	background: #00E0F2;
+}
+.provide-two {
+	background: #02CDDD;
+}
+.provide-tre {
+  background: #05B7C5;
+}
+.provide-four {
+	background: #05a6b3;
+}
+.provide-left h5{
+	color:#fff;
+	font-size:13px;
+	font-weight:400;
+	margin:0;
+}
+.provide-left h3 {
+	color: #fff;
+	font-size: 29px;
+	font-weight: 400;
+	margin: 10px 0 0 0;
+}
+.provide-left p{
+	color: #fff;
+	font-size: 15px;
+	line-height: 1.4em;
+	margin: 9px 0 0 0;
+	font-family: 'Play-Regular';
+}
+/*--provide-end--*/
+
+/*--welcome-starts--*/
+.welcome {
+	padding: 5em 0px;
+}
+.welcome-left h3{
+	color: #EF6286;
+	font-size: 2.1em;
+	font-weight: 500;
+	margin: 0;
+	text-transform: uppercase;
+}
+.welcome-left h4{
+    color: rgb(179, 177, 177);
+	/*color:#222;*/
+	font-weight:400;
+	font-size:1.3em;
+	margin:12px 0 0 0;
+	line-height: 1.2em;
+}
+.welcome-left p{
+	color: rgb(179, 177, 177);
+	font-size: 15px;
+	margin: 13px 0px 0px;
+	font-family: 'Play-Regular';
+	line-height: 1.6em;
+}
+/*.w-btn{*/
+	/*margin-top:4%;*/
+/*}*/
+/*.w-btn a{*/
+	/*border: 2px solid #05a6b3;*/
+	/*font-size: 15px;*/
+	/*font-weight: 400;*/
+	/*color: #05a6b3;*/
+	/*padding: 5px 18px;*/
+	/*font-family: 'Play-Regular';*/
+/*}*/
+/*--welcome-end--*/
+
+/*--news-starts--*/
+.news {
+	padding: 6em 0px;
+}
+.news-heading h3{
+	color: #EF6286;
+	font-size: 2.1em;
+	font-weight: 500;
+	margin: 0;
+	text-transform: uppercase;
+}
+.news-bottom h4{
+	font-family: 'Play-Regular';
+	color: #222;
+	font-weight: 400;
+	font-size: 1.3em;
+	margin: 0 0 0 0;
+	line-height: 1.2em;
+}
+.news-bottom p{
+	color: rgb(179, 177, 177);
+	font-size: 15px;
+	margin: 13px 0px 0px;
+	font-family: 'Play-Regular';
+	line-height: 1.6em;
+}
+.news-one-left img{
+	width:100%;
+}
+.news-one-right {
+	width: 59%;
+	float: right;
+}
+.news-one-left {
+	width: 38%;
+	float: left;
+}
+.news-one {
+	margin-top: 3%;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	padding-top: 3%;
+}
+.news-1 img{
+	width:100%;
+}
+.news-bottom {
+	margin-top: 3%;
+}
+.news-btm {
+	margin-top: 7%;
+}
+.news-1 {
+	position: relative;
+}
+.n-1{
+	position:absolute;
+	bottom:0;
+	width:100%;
+	padding:15px 15px;
+	background:rgba(5, 166, 179, 0.9);
+	text-align:center;
+}
+.n-1 h5{
+	color:#fff;
+	font-size:19px;
+	font-weight:400;
+	margin:0;
+}
+.n-1 p{
+	color: #fff;
+	font-size: 14px;
+	margin: 1px 0px 0px;
+	font-family: 'Play-Regular';
+	line-height: 1.6em;
+}
+/*--news-end--*/
+
+/*--pages-starts--*/
+/*h3.ghj {*/
+	/*color: #EF6286;*/
+	/*font-size: 2em !important;*/
+	/*margin: 0 0 1em;*/
+	/*text-transform: uppercase;*/
+/*}*/
+/*.pages {*/
+	/*padding: 6em 0px;*/
+/*}*/
+/*.headdings, .Buttons, .progress-bars, .alerts, .bread-crumbs, .pagenatin, .appearance, .distracted {*/
+	/*padding: 2em 0;*/
+/*}*/
+/*.progress-bars,.well,.appearance,.bs-example,*/
+/*.Buttons,ol.breadcrumb,.alerts {*/
+	/*font-family: 'Play-Regular';*/
+/*}*/
+/*h4.b4 {*/
+	/*margin: 15px 0px !important;*/
+/*}*/
+/*--pages-end--*/
+#toTop {
+	display: none;
+	text-decoration: none;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	overflow: hidden;
+	width: 50px;
+	height: 36px;
+	border: none;
+	text-indent: 100%;
+	background: url(/static/charity/images/top-arrow.png) no-repeat;
+}
+
+/* ------------------- */
+#slides_control > div{
+  height: 200px;
+}
+#slides_control img{
+  margin:auto;
+  /*width: 400px;*/
+  /*width: 100%;*/
+}
+#slides_control {
+  /*position:absolute;*/
+  /*width: 400px;*/
+    width: 100%;
+  /*left:50%;*/
+  top:20px;
+ /*margin-left:-100px;*/
+}

@@ -9,7 +9,7 @@
         ]);
 
     angular
-        .module('charity.home.controllers', ['ngRoute']);
+        .module('charity.home.controllers', ['ngRoute', 'ui.bootstrap']);
 
     angular
         .module('charity.home.services', []);
