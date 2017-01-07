@@ -196,5 +196,19 @@
                 console.error('Getting rank failed! ' + status);
             }
         }
+
+        // share facebook
+        vm.share = function() {
+            FB.ui(
+                {
+                    method: 'feed',
+                    name: vm.profile.name,
+                    description: vm.profile.description,
+                    link: 'http://ec2-54-194-73-253.eu-west-1.compute.amazonaws.com:8000/charity/profile/' + vm.profile.name,
+                    // picture: 'https://s23.postimg.org/mj3shxr97/Charity_Icon.jpg',
+                    picture: 'http://ec2-54-194-73-253.eu-west-1.compute.amazonaws.com:8000' + vm.profile.profile_image,
+                    caption: 'Welcome to our charity'
+                });
+        }
     }
 })();

@@ -56,17 +56,21 @@
             <li class="font-medium">
                 <div class="no-pointer">
                     <br/>Average Rate : <br/>
-                    <div id="stars" class="starrr" data-rating='1' ng-model="vm.profile.rate"></div>
+                    <div id="stars" class="starrr" style="color: #ffd119;" data-rating='1' ng-model="vm.profile.rate"></div>
                     <br/> {{vm.profile.rate}} Stars from {{vm.profile.total_users}} Users
                 </div>
                 <div ng-show="vm.user && !vm.isMatched">
                     User Rate : <br/>
-                    <div class="user-rate" ng-click="vm.rateChange()">
-                        <div id="stars-existing" class="starrr" data-rating='1' ng-model="vm.profile.userRate"></div>
+                    <div ng-click="vm.rateChange()">
+                        <div id="stars-existing" class="starrr" style="color: #ffd119;" data-rating='1' ng-model="vm.profile.userRate"></div>
                         <input type="hidden" id="rateCharity" />
                     </div>
                 </div>
-            </li>
+            </li><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <div id="fb-root"></div>
+            <div class="maintitle">
+                <a href="#" ng-click="vm.share()"><img src="/static/charity/images/social-icon.png" alt="" /></a>
+            </div>
         </ul>
     </div>
 </section>
@@ -336,6 +340,22 @@
         $('[data-toggle="tooltip"]').tooltip();
 
     });
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1828642534025419',
+            xfbml      : true,
+            version    : 'v2.8'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.8&appId=1828642534025419";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
     // init variables
     var initDescription;
