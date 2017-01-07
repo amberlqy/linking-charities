@@ -164,8 +164,9 @@
             }).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
-                $route.reload();
-                // $location.url('/profile/' + vm.profile.name);
+                // $route.reload();
+                // $location.url('/profile/' + vm.profile.name + '/');
+                location.reload(true);
             }
 
             function getErrorFn(data, status, headers, config) {
