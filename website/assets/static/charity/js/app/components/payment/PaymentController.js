@@ -48,6 +48,8 @@
                 vm.verified = "Waiting...";
                 var queryParameters = $location.search();
                 if (typeof queryParameters.tx !== "undefined"){
+                    console.log(queryParameters.tx);
+                    console.log($routeParams.charity_username);
                     Payment.getPaymentVerification(queryParameters.tx, $routeParams.charity_username).then(verificationSuccessFn, verificationErrorFn);
                 }
             }

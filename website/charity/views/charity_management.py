@@ -568,6 +568,7 @@ class PaymentConfirmationView(APIView):
         post_data_bytes = urlencode(post_data).encode("utf-8")
         response = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes)
         data = response.read().decode('UTF-8')
+        print(data)
 
         gross = float(data["mc_gross"])
         currency = data["mc_currency"]

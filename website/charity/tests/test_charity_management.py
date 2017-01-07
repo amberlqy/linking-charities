@@ -66,7 +66,7 @@ class CharityManagementViewTestCase(TestCase):
         response_content = json.loads(response.content.decode('utf-8'))
         token = response_content["token"]
 
-        tag_response = self.client.post("/api/charity/charity_tags/", {"tags": "kitten cat soft"},
+        self.client.post("/api/charity/charity_tags/", {"tags": "kitten cat soft"},
                                         HTTP_AUTHORIZATION='JWT {}'.format(token))
 
         charity = User.objects.get(username="Charity1")
@@ -268,6 +268,7 @@ class CharityManagementViewTestCase(TestCase):
         existing_charity = User.objects.get(username="Charity1")
         existing_charity_profile = existing_charity.charity_profile
 
+        # Like the charity as a user
         self.client.post("/api/charity/charity_like/", {"id": existing_charity_profile.id},
                                         HTTP_AUTHORIZATION='JWT {}'.format(token))
 
