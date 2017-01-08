@@ -1,6 +1,7 @@
 body{
     /*overflow-y: scroll !important;*/
     min-width: 1200px;
+    background:	#fff;
 }
 
 a:focus{

@@ -148,6 +148,7 @@
                 if (statusCode.toString().charAt(0) != "2") {
                     alert('Error occurs, please try again');
                 } else {
+                    alert("Thank you for your volunteer");
                     $location.url('/profile/' + vm.donate.charityName);
                 }
             }
