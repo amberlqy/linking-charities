@@ -317,6 +317,13 @@
                                         <input id="phoneTextbox" type="text" class="form-control" ng-model="vm.profile.phone_number" maxlength="15" readonly="readonly">
                                     </div>
                                 </div>
+                                <!-- Website -->
+                                <div class="form-group wow fadeIn animated" data-wow-delay="0.3" data-wow-duration="1.5s">
+                                    <label class="col-sm-4 control-label">Website</label>
+                                    <div class="col-sm-4">
+                                        <input id="webTextbox" type="text" class="form-control" ng-model="vm.profile.website" maxlength="100" readonly="readonly">
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -365,6 +372,7 @@
     var initPost;
     var initEmail;
     var initPhone;
+    var initWeb;
     // Description Section
     var desTextArea = document.getElementById("desTextArea");
     var profilePicture = document.getElementById("profilePicture");
@@ -375,6 +383,7 @@
     var post = document.getElementById("postTextbox");
     var email = document.getElementById("emailTextbox");
     var phone = document.getElementById("phoneTextbox");
+    var web = document.getElementById("webTextbox");
     // Button
     var editButton = document.getElementsByName("editButton");
     var saveButton = document.getElementsByName("saveButton");
@@ -394,6 +403,7 @@
         post.readOnly = false;
         email.readOnly = false;
         phone.readOnly = false;
+        web.readOnly = false;
         // Button
         disabledButton();
     }
@@ -417,6 +427,7 @@
         initPost = post.value;
         initEmail = email.value;
         initPhone = phone.value;
+        initWeb = web.value;
     }
 
     function setInit() {
@@ -427,6 +438,7 @@
         post.value = initPost;
         email.value = initEmail;
         phone.value = initPhone;
+        web.value = initWeb;
     }
 
     function disabledEdit() {
@@ -441,6 +453,7 @@
         post.readOnly = true;
         email.readOnly = true;
         phone.readOnly = true;
+        web.readOnly = true;
     }
 
     function disabledButton() {

@@ -25,6 +25,8 @@
             getActivity();
             // Get finance
             getFinance();
+            // Get exchage rate
+            getExchange();
 
             var user_role = Profile.getAuthenticatedAccount();
             if (user_role != undefined && user_role != null) {
@@ -49,6 +51,7 @@
                 vm.profile.postcode = charity_profile.postcode;
                 vm.profile.email = charity_profile.email;
                 vm.profile.phone_number = charity_profile.phone_number;
+                vm.profile.website = charity_profile.website;
                 vm.profile.profile_image = charity_profile.profile_image;
             }
 
@@ -122,6 +125,20 @@
                     console.error('Getting finance failed! ' + status);
                 }
             }
+
+            // Get exchange rate
+            function getExchange() {
+                $http.get('http://api.fixer.io/latest?base=GBP&symbols=USD,JPY').then(getSuccessFn, getErrorFn);
+
+                function getSuccessFn(data, status, headers, config) {
+                    var rateExchange = data.data.rates;
+                    // console.log(rateExchange);
+                }
+
+                function getErrorFn(data, status, headers, config) {
+                    console.error('Getting exchange failed! ' + status);
+                }
+            }
         }
 
         $scope.files = [];
@@ -145,7 +162,8 @@
                 "country": vm.profile.country,
                 "postcode": vm.profile.postcode,
                 "email": vm.profile.email,
-                "phone_number": vm.profile.phone_number
+                "phone_number": vm.profile.phone_number,
+                "website": vm.profile.website
             };
 
             $http({
