@@ -23,7 +23,11 @@
             controller: 'IndexController',
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/home/home.html',
-            activeTab: 'home'
+            resolve: {
+                searchPrepService: function(Search){
+                    return Search.search("");
+                }
+            }
         }).when('/profile/:name', {
             controller: 'ProfileController',
             controllerAs: 'vm',
