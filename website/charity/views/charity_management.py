@@ -571,6 +571,8 @@ class PaymentConfirmationView(APIView):
         #data_str = response.read().decode('UTF-8')
         #data = json.loads(data_str)
 
+        print(data)
+
         gross = float(data["mc_gross"])
         currency = data["mc_currency"]
 
