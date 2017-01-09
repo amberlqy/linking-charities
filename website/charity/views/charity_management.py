@@ -13,6 +13,7 @@ import json
 from urllib.request import urlopen
 from django.utils.http import urlencode
 from django.db.models import Q, Avg, Sum
+import requests
 
 from assets import settings
 from charity.models.charity_activity import CharityActivity
@@ -566,9 +567,9 @@ class PaymentConfirmationView(APIView):
 
         post_data = [('tx', transaction_id), ("at", charity_identity_token), ("cmd", "_notify-synch"), ]
         post_data_bytes = urlencode(post_data).encode("utf-8")
-        response = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes)
-        data_str = response.read().decode('UTF-8')
-        data = json.loads(data_str)
+        data = requests.post('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes).json()
+        #data_str = response.read().decode('UTF-8')
+        #data = json.loads(data_str)
 
         gross = float(data["mc_gross"])
         currency = data["mc_currency"]
