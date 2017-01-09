@@ -505,13 +505,19 @@ class CharityManagementViewTestCase(TestCase):
     def test_getting_donation_statistics(self):
 
         charity_profile = CharityProfile.objects.get(charity_name="Charity1")
-        Payment.objects.create(charity_profile=charity_profile, gross=200.0, txn_id="Atrus is a great chap.")
-        Payment.objects.create(charity_profile=charity_profile, gross=250.0, txn_id="Yeesha")
+        Payment.objects.create(charity_profile=charity_profile, gross=200.0, currency="USD", txn_id="Atrus is a great chap.")
+        Payment.objects.create(charity_profile=charity_profile, gross=250.0, currency="USD", txn_id="Yeesha")
+        Payment.objects.create(charity_profile=charity_profile, gross=500.0, currency="JPY", txn_id="Tomanha")
 
         response = self.client.get("/api/charity/donation_statistics/", {"charity_name": "Charity1"})
         response_content = json.loads(response.content.decode('utf-8'))
 
-        self.assertEqual(response_content["donation_sum"], 450.0)
+        donations = []
+        for donation in response_content["donation_sum"]:
+            donations.append(donation["donation_sum"])
+
+        self.assertIn(450.0, donations)
+        self.assertIn(500.0, donations)
 
     # Helper method to register charities
     def register_charity(self, name, email):

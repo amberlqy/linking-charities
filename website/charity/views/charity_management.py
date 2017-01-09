@@ -602,13 +602,14 @@ class DonationStatisticsView(APIView):
             return HttpResponseBadRequest(response_data, content_type='application/json')
 
         # Sum past donations
-        charity_profile = CharityProfile.objects.filter(charity_name=charity_name).annotate(donation_sum=Sum('payments__gross')).first()
-        if not charity_profile:
-            response_data = json.dumps(
-                {"error": "Charity profile does not exist with the provided username: " + str(charity_name)})
-            return HttpResponseBadRequest(response_data, content_type='application/json')
+        # charity_profile = CharityProfile.objects.filter(charity_name=charity_name).annotate(donation_sum=Sum('payments__gross')).first()
+        charity_donations = CharityProfile.objects.filter(charity_name=charity_name).values('payments__currency').annotate(donation_sum=Sum('payments__gross'))
+        # if not charity_profile:
+        #     response_data = json.dumps(
+        #         {"error": "Charity profile does not exist with the provided username: " + str(charity_name)})
+        #     return HttpResponseBadRequest(response_data, content_type='application/json')
 
-        json_reponse = JSONRenderer().render({"donation_sum": charity_profile.donation_sum})
+        json_reponse = JSONRenderer().render({"donation_sum": charity_donations})
         return HttpResponse(json_reponse, content_type='application/json')
 
 
