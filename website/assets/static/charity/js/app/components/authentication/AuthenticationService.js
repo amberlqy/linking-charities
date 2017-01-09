@@ -48,9 +48,15 @@
             }).then(loginSuccessFn, loginErrorFn);
 
             function loginSuccessFn(data, status, headers, config) {
-                var response = data.data;
-                Authentication.setAuthenticatedAccount(response.token, response.username, response.user_role);
-                window.location = 'home';
+                var statusCode = data.status;
+                // Check http status return
+                if (statusCode.toString().charAt(0) != "2") {
+                    alert('Please confirm your account or input a correct password');
+                } else {
+                    var response = data.data;
+                    Authentication.setAuthenticatedAccount(response.token, response.username, response.user_role);
+                    window.location = 'home';
+                }
             }
 
             function loginErrorFn(data, status, headers, config) {
