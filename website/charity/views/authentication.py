@@ -147,6 +147,7 @@ class CharityProfileView(APIView):
             postcode = data['postcode']
             email = data['email']
             phone_number = data['phone_number']
+            website = data['website']
 
             # paypal_email = data['paypal_email']
             # paypal_identity_token = data['paypal_identity_token']
@@ -161,6 +162,7 @@ class CharityProfileView(APIView):
             charity_profile.email = email
             charity_profile.phone_number = phone_number
             charity_profile.description = description
+            charity_profile.website = website
 
             # charity_profile.paypal_email = paypal_email
             # charity_profile.paypal_identity_token = paypal_identity_token

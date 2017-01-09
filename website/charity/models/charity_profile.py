@@ -32,6 +32,8 @@ class CharityProfile(models.Model):
 
     profile_image = models.FileField(upload_to=content_file_name, null=True)
 
+    website = models.CharField(max_length=255, null=True)
+
 # Register the charity profile for tagging purpose
 register(CharityProfile)
 

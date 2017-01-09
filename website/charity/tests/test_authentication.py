@@ -99,7 +99,8 @@ class AuthenticationViewTestCase(TestCase):
                                "city": "Tomahna",
                                "country": "Myst",
                                "postcode": "1234",
-                               "email": "a@b.c"})
+                               "email": "a@b.c",
+                               "website": "www.sdsd.hu"})
         response = self.client.post("/api/auth/charity_profile/", {"model": details}, HTTP_AUTHORIZATION='JWT {}'.format(token))
 
         charity = User.objects.get(username="Charity1")
