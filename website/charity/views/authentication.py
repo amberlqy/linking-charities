@@ -48,15 +48,7 @@ class RegistrationView(APIView):
             UserRole.objects.create(name=user_type, user=user)
 
             if user_type == 'charity':
-                # Send confirm email
-                email_tilte = 'Welcome ' + username + ' to Linking Charities Worldwide, Please confirm your account'
-                verify_token = get_random_string(length=64)
-                reversed_url = reverse('charity_verification')
-                generated_url = ''.join(['http://', get_current_site(request).domain, reversed_url, '?email=', email, '&token=',
-                     verify_token])
-                email_content = 'Please confirm your account by click ' + generated_url
-                email_sending = EmailMessage(email_tilte, email_content, to=[email])
-                email_sending.send()
+
                 # TODO: I already did the most difficult task :P, Hence you must finish it
                 # 1. Add column 'token' into auth_user table
                 # 2. When create a new account, insert verify_token into field 'token'
@@ -94,16 +86,17 @@ class RegistrationView(APIView):
 
                     if not existing_charity_data.token:
                         # Send verification email. Right now we just pretend sending by actually printing in the shell.
+                        email_tilte = 'Welcome ' + username + ' to Linking Charities Worldwide, Please confirm your account'
                         verification_token = get_random_string(length=64)
                         reversed_url = reverse('charity_verification')
-                        generated_url = ''.join(['http://', get_current_site(request).domain, reversed_url, '?email=', email, '&token=', verification_token])
-                        send_mail(
-                            'Linking Charities - Verify your account!',
-                            'Please click on this link to finish registration on our website: ' + generated_url,
-                            'linking@charities.com',
-                            [email],
-                            fail_silently=False,
-                        )
+                        generated_url = ''.join(
+                            ['http://', get_current_site(request).domain, reversed_url, '?email=', email, '&token=',
+                             verification_token])
+                        email_content = 'Please confirm your account by click ' + generated_url
+                        email_sending = EmailMessage(email_tilte, email_content, to=[email])
+                        email_sending.send()
+
+                        reverse('charity_verification')
                         existing_charity_data.token = verification_token
                         existing_charity_data.save()
 
