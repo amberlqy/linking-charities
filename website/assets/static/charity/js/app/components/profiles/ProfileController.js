@@ -23,9 +23,7 @@
             getRating();
             // Get Activity
             getActivity();
-            // Get finance
-            getFinance();
-            // Get exchage rate
+            // Get exchange rate + finance
             getExchange();
 
             var user_role = Profile.getAuthenticatedAccount();
@@ -53,6 +51,7 @@
                 vm.profile.phone_number = charity_profile.phone_number;
                 vm.profile.website = charity_profile.website;
                 vm.profile.profile_image = charity_profile.profile_image;
+                vm.profile.verified = charity_profile.verified;
             }
 
             // Get rate information
@@ -113,12 +112,28 @@
             }
 
             // Get financial information
-            function getFinance() {
+            function getFinance(exchange_rate) {
                 $http.get('/api/charity/donation_statistics/', {params: {"charity_name": vm.profile.name}}).then(getSuccessFn, getErrorFn);
 
                 function getSuccessFn(data, status, headers, config) {
-                    var finance = data.data;
-                    vm.profile.donatedAmount = finance.donation_sum == null ? 0 : finance.donation_sum;
+                    var jpy = exchange_rate.JPY;
+                    var usd = exchange_rate.USD;
+                    var finance = data.data.donation_sum;
+                    var sum = 0;
+                    if (finance.length > 0) {
+                        for (var i = 0; i < finance.length; i++) {
+                            var amount = finance[i].donation_sum == null ? 0 : finance[i].donation_sum;
+                            var currency = finance[i].payments__currency;
+                            if (currency == "USD") {
+                                sum += (amount / usd);
+                            } else if (currency == "JPY") {
+                                sum += (amount / jpy);
+                            } else if (currency == "GBP") {
+                                sum += amount
+                            }
+                        }
+                    }
+                    vm.profile.donatedAmount = sum.toFixed(2);
                 }
 
                 function getErrorFn(data, status, headers, config) {
@@ -132,7 +147,7 @@
 
                 function getSuccessFn(data, status, headers, config) {
                     var rateExchange = data.data.rates;
-                    // console.log(rateExchange);
+                    getFinance(rateExchange);
                 }
 
                 function getErrorFn(data, status, headers, config) {
@@ -151,7 +166,7 @@
             });
         });
 
-        // TODO : update profile
+        // Update profile
         vm.update = function(){
             var profileObj = {
                 "charity_name": vm.profile.name,
@@ -182,8 +197,6 @@
             }).then(getSuccessFn, getErrorFn);
 
             function getSuccessFn(data, status, headers, config) {
-                // $route.reload();
-                // $location.url('/profile/' + vm.profile.name + '/');
                 location.reload(true);
             }
 

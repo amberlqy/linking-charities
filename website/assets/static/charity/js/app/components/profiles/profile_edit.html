@@ -70,7 +70,11 @@
             <div id="fb-root"></div>
             <div>
                 Share us &nbsp;
-                <a href="#" ng-click="vm.share()"><img src="/static/charity/images/social-icon.png" alt="" /></a>
+                <a href="#" ng-click="vm.share()"><img src="/static/charity/images/social-icon.png" /></a>
+            </div><br/><br/><br/><br/><br/><br/>
+            <div style="text-align: center" ng-show="vm.profile.verified == true">
+                <img height="75" width="75" src="/static/charity/images/verified_icon.png" /><br/>
+                By UK Commission
             </div>
         </ul>
     </div>

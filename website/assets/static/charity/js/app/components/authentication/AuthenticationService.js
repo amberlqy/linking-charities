@@ -51,7 +51,7 @@
                 var statusCode = data.status;
                 // Check http status return
                 if (statusCode.toString().charAt(0) != "2") {
-                    alert('Please confirm your account or input a correct password');
+                    alert('Please input a correct password');
                 } else {
                     var response = data.data;
                     Authentication.setAuthenticatedAccount(response.token, response.username, response.user_role);

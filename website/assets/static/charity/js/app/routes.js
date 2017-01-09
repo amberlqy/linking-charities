@@ -24,8 +24,13 @@
             controllerAs: 'vm',
             templateUrl: '/static/charity/js/app/components/home/home.html',
             resolve: {
-                searchPrepService: function(Search){
-                    return Search.search("");
+                topDonatePrepService: function(Search){
+                    var searchKey = {"filter": 1};
+                    return Search.advanceSearch(searchKey);
+                },
+                topRatePrepService: function(Search){
+                    var searchKey = {"filter": 2};
+                    return Search.advanceSearch(searchKey);
                 }
             }
         }).when('/profile/:name', {
