@@ -109,6 +109,38 @@
                     } else {
                         return Search.advanceSearch(searchKey);
                     }
+                },
+                searchNamePrepService: function($route, $location, Search){
+                    var prefixKey = $route.current.params.searchKey;
+                    var searchKey = $location.search();
+                    if (prefixKey != "key") {
+                        alert("Page Not Found. We could not find the page you requested.");
+                        $location.url('/home');
+                        return;
+                    }
+
+                    var searchObj = {
+                        "name": searchKey.name
+                    }
+                    return Search.search(searchObj);
+                },
+                searchTagPrepService: function($route, $location, Search){
+                    var prefixKey = $route.current.params.searchKey;
+                    var searchKey = $location.search();
+                    if (prefixKey != "key") {
+                        alert("Page Not Found. We could not find the page you requested.");
+                        $location.url('/home');
+                        return;
+                    }
+
+                    var searchObj = {
+                        "name": null,
+                        "filter": null,
+                        "country": null,
+                        "city": null,
+                        "tag": searchKey.name
+                    }
+                    return Search.advanceSearch(searchObj);
                 }
             }
         }).when('/payment/:charityName', {
