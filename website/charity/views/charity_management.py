@@ -31,6 +31,8 @@ from charity.utilities.zip_to_csv_converter import import_zip
 
 from charity.serializers.charity_profile_serializer import CharityProfileSerializer
 
+from django.core.mail import EmailMessage
+
 
 # Returns the default home page
 class IndexView(APIView):
@@ -648,6 +650,13 @@ class VolunteerRegistrationView(APIView):
 
         Volunteer.objects.create(charity_activity=activity, date=date, forename=volunteer_forename,
                                  surname=volunteer_surname, email=volunteer_email, phone=volunteer_phone)
+
+        # Sending email to volunteer
+        email_tilte = 'Thank you for your volunteer in ' + activity.name
+        email_content = 'You have registered for being a volunteer in ' + activity.name
+
+        email_sending = EmailMessage(email_tilte, email_content, to=[volunteer_email])
+        email_sending.send()
 
         json_reponse = JSONRenderer().render({"success": True})
         return HttpResponse(json_reponse, content_type='application/json')
