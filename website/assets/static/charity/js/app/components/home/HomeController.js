@@ -34,7 +34,6 @@
             if (topRateResult.length > 0) {
                 var topRateCharity = topRateResult[0];
                 var topDonateCharity = topDonateResult[0];
-                console.log(topRateCharity);
                 // Random charity
                 var min = 0;
                 var max = topRateResult.length - 1;
