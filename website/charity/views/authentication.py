@@ -7,7 +7,7 @@ from rest_framework_jwt.settings import api_settings
 
 import json
 from django.contrib.auth import logout
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.http import QueryDict
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
@@ -225,13 +225,9 @@ class CharityVerificationView(APIView):
                 charity_profile.verified = True
                 charity_profile.save()
 
-            # TODO This should LOGIN with that account automatically instead of print verified
-            response_data = json.dumps({"verified": True})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseRedirect("/charity/home/")
         else:
-            # TODO message alert and re-direct to login page
-            response_data = json.dumps({"verified": False})
-            return HttpResponse(response_data, content_type='application/json')
+            return HttpResponseRedirect("/charity/home/")
 
 
 class LoginView(APIView):
