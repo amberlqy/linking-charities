@@ -5,17 +5,48 @@
         .module('charity.search.controllers')
         .controller('SearchController', SearchController);
 
-    SearchController.$inject = ['$scope', '$http', 'Search', '$location', '$anchorScroll', '$modal', 'searchPrepService'];
+    SearchController.$inject = ['$scope', '$location', '$anchorScroll', 'searchPrepService' , 'searchNamePrepService', 'searchTagPrepService'];
 
-    function SearchController($scope, $http, Search, $location, $anchorScroll, $modal, searchPrepService) {
-        var searchKey = $location.search();
-
+    function SearchController($scope, $location, $anchorScroll, searchPrepService, searchNamePrepService, searchTagPrepService) {
         // search function
         search();
 
         function search() {
-            var searchResult = searchPrepService.data.charity_profiles;
+            var searchKey = $location.search();
+            // Count key value
+            var count = 0;
+            for (var key in searchKey) {
+                if (searchKey.hasOwnProperty(key)) {
+                    count++;
+                }
+            }
+
+            var searchResult;
+            // Normal Search
+            if (count == 1 && (searchKey.name != undefined && searchKey.name != "")) {
+                var searchNameResult = searchNamePrepService.data.charity_profiles;
+                var searchTagResult = searchTagPrepService.data.charity_profiles;
+                var concatResult = searchNameResult.concat(searchTagResult);
+                searchResult = UniqueArraybyName(concatResult ,"charity_name");
+            } else {
+                searchResult = searchPrepService.data.charity_profiles;
+            }
+
             $scope.searchResults = searchResult;
+
+            function UniqueArraybyName(collection, keyname) {
+                var output = [],
+                    keys = [];
+
+                angular.forEach(collection, function(item) {
+                    var key = item[keyname];
+                    if(keys.indexOf(key) === -1) {
+                        keys.push(key);
+                        output.push(item);
+                    }
+                });
+                return output;
+            };
         }
 
         // filtered data
