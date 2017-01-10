@@ -84,21 +84,20 @@ class RegistrationView(APIView):
                 existing_charity_data = CharityData.objects.filter(email=email).first()
                 if existing_charity_data:
 
-                    if not existing_charity_data.token:
-                        # Send verification email. Right now we just pretend sending by actually printing in the shell.
-                        email_tilte = 'Welcome ' + username + ' to Linking Charities Worldwide, Please confirm your account'
-                        verification_token = get_random_string(length=64)
-                        reversed_url = reverse('charity_verification')
-                        generated_url = ''.join(
-                            ['http://', get_current_site(request).domain, reversed_url, '?email=', email, '&token=',
-                             verification_token])
-                        email_content = 'Please confirm your account by click ' + generated_url
-                        email_sending = EmailMessage(email_tilte, email_content, to=[email])
-                        email_sending.send()
+                    # Send verification email. Right now we just pretend sending by actually printing in the shell.
+                    email_tilte = 'Welcome ' + username + ' to Linking Charities Worldwide, Please confirm your account'
+                    verification_token = get_random_string(length=64)
+                    reversed_url = reverse('charity_verification')
+                    generated_url = ''.join(
+                        ['http://', get_current_site(request).domain, reversed_url, '?email=', email, '&token=',
+                         verification_token])
+                    email_content = 'Please confirm your account by click ' + generated_url
+                    email_sending = EmailMessage(email_tilte, email_content, to=[email])
+                    email_sending.send()
 
-                        reverse('charity_verification')
-                        existing_charity_data.token = verification_token
-                        existing_charity_data.save()
+                    reverse('charity_verification')
+                    existing_charity_data.token = verification_token
+                    existing_charity_data.save()
 
             if user_type == 'user':
                 # Read user specific parameters
