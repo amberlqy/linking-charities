@@ -567,21 +567,30 @@ class PaymentConfirmationView(APIView):
         post_data = [('tx', transaction_id), ("at", charity_identity_token), ("cmd", "_notify-synch"), ]
         post_data_bytes = urlencode(post_data).encode("utf-8")
         response = urlopen('https://www.sandbox.paypal.com/cgi-bin/webscr', post_data_bytes)
-        response_byte = response.readall()
+        response_byte = response.read()
         response_string = response_byte.decode('utf-8')
-        data = json.loads(response_string)
+        response_elements = response_string.split('\n')
 
-        gross = float(data["mc_gross"])
-        currency = data["mc_currency"]
+        gross = None
+        currency = None
+        for element in response_elements:
+            if "mc_gross" in element:
+                sub_elements = element.split("=")
+                gross = sub_elements[1]
+            if "mc_currency" in element:
+                sub_elements = element.split("=")
+                currency = sub_elements[1]
 
         # Check if the user is logged in
         user = request.user
         if user.is_authenticated():
-            # TODO: get real values from 'response'
+            if user.role == roles.charity:
+                response_data = json.dumps({"error": "A charity is not allowed to donate."})
+                return HttpResponseBadRequest(response_data, content_type='application/json')
+
             Payment.objects.create(user_profile=user.user_profile, charity_profile=charity_profile,
                                    gross=gross, currency=currency, txn_id=transaction_id)
         else:
-            # TODO: get real values from 'response'
             Payment.objects.create(user_profile=None, charity_profile=charity_profile,
                                    gross=gross, currency=currency, txn_id=transaction_id)
 
