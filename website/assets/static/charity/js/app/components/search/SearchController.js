@@ -130,6 +130,7 @@
         $scope.locations = [];
         $scope.locationsID = [];
         $scope.locationsName = [];
+        $scope.locationsImage = [];
         $scope.pushLocations = function () {
             if ($scope.locations.length == 0) {
                 for (var j = 0; j < $scope.filteredItems.length; j++) {
@@ -137,6 +138,7 @@
                         $scope.locations.push($scope.filteredItems[j].country + "&nbsp" + $scope.filteredItems[j].city + "&nbsp" + $scope.filteredItems[j].postcode);
                         $scope.locationsID.push($scope.filteredItems[j].id);
                         $scope.locationsName.push($scope.filteredItems[j].charity_name);
+                        $scope.locationsImage.push($scope.filteredItems[j].profile_image);
                     }
                 }
             }
@@ -153,7 +155,7 @@
             var nextAddress = 0;
             var delay = 100;
 
-            var geocodeAddress = function (address, id, name, tagIsFirstData) {
+            var geocodeAddress = function (address, id, name, tagIsFirstData, image) {
                 if (tagIsFirstData == 0) {
                     geocoder.geocode({"address": address}, function (results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
@@ -163,7 +165,7 @@
                             var p = results[0].geometry.location;
                             var lat = p.lat();
                             var lng = p.lng();
-                            createMarker(address, id, name, lat, lng);
+                            createMarker(address, id, name, lat, lng, image);
                         }
                         else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
                             nextAddress--;
@@ -181,7 +183,7 @@
                             var p = results[0].geometry.location;
                             var lat = p.lat();
                             var lng = p.lng();
-                            createMarker(address, id, name, lat, lng);
+                            createMarker(address, id, name, lat, lng, image);
                         }
                         else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
                             nextAddress--;
@@ -194,13 +196,14 @@
                 }
             };
 
-            var createMarker = function (address, id, name, lat, lng) {
+            var createMarker = function (address, id, name, lat, lng, image) {
+                var imageSrc = image == null ? "/static/charity/images/no-user-image.gif" : image;
                 //set style of info window content
                 var contentString = '<table class="infoTable">' +
                     '<tbody>' +
                     '<tr>' +
                     '<td class="showPicture">' +
-                    '<img class="picStyle" src="/static/charity/images/no-user-image.gif">' +
+                    '<img class="picStyle" src="' + imageSrc + '">' +
                     '</td>' +
                     '<td class="infoShowContent">' +
                     '<a href= "/charity/profile/' + name + '">' + name + '</a>' +
@@ -232,7 +235,7 @@
             };
 
             for (; nextAddress < $scope.locations.length; nextAddress++) {
-                geocodeAddress($scope.locations[nextAddress], $scope.locationsID[nextAddress], $scope.locationsName[nextAddress], nextAddress);
+                geocodeAddress($scope.locations[nextAddress], $scope.locationsID[nextAddress], $scope.locationsName[nextAddress], nextAddress, $scope.locationsImage[nextAddress]);
                 // if (nextAddress == $scope.locations.length - 1) {
                 //     map.fitBounds(bounds);
                 //     map.setCenter(bounds.getCenter())

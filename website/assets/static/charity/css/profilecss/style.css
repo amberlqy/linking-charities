@@ -47,6 +47,7 @@ table tr th { color: #688a7e;}
     height: 93%;
     position: fixed;
     background: #394a59;
+    color: white;
 }
 
 ul.sidebar-menu , ul.sidebar-menu li ul.sub{
@@ -109,6 +110,7 @@ ul.sidebar-menu li.sub-menu{
 
 ul.sidebar-menu li a span{
     display: inline-block;
+    color: white;
 }
 
 ul.sidebar-menu li a{
@@ -169,6 +171,7 @@ ul.sidebar-menu li.active a i {
 
 .font-medium {
     font-size: medium;
+    color: white;
 }
 
 .no-pointer {
