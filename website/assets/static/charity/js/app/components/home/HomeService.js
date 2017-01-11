@@ -6,9 +6,9 @@
         .module('charity.home.services')
         .factory('Home', Home);
 
-    Home.$inject = ['$http'];
+    Home.$inject = [];
 
-    function Home($http) {
+    function Home() {
         return {}
     }
 })();

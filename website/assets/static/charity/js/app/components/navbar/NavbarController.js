@@ -6,9 +6,9 @@
         .module('charity.navbar.controllers')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$scope', '$http', 'Authentication', '$location', 'Search'];
+    NavbarController.$inject = ['$scope', 'Authentication', '$location', 'Search'];
 
-    function NavbarController($scope, $http, Authentication, $location, Search) {
+    function NavbarController($scope,Authentication, $location, Search) {
         var vm = this;
         vm.search = {};
         var userDetails = Authentication.getAuthenticatedAccount();
