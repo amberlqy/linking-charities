@@ -14,7 +14,6 @@ angular
             'charity.home',
             'charity.snackbar',
             'charity.profiles',
-            'charity.dashboard',
             'charity.search',
             'charity.payment',
             'charity.user'
@@ -29,12 +28,8 @@ angular
     angular
         .module('linkingCharitiesWorldwideAppApp')
         .factory('httpRequestInterceptor', httpRequestInterceptor)
-        .config(function($httpProvider, $mdThemingProvider) {
+        .config(function($httpProvider) {
             $httpProvider.interceptors.push('httpRequestInterceptor');
-
-            $mdThemingProvider.theme('default')
-                .primaryPalette('blue')
-                .accentPalette('blue');
         })
         .run(run);
 
