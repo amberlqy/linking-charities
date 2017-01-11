@@ -12,7 +12,6 @@ angular
             'charity.authentication',
             'charity.navbar',
             'charity.home',
-            'charity.snackbar',
             'charity.profiles',
             'charity.search',
             'charity.payment',
