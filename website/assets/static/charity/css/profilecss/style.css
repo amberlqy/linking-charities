@@ -611,3 +611,7 @@ p.lead {
 	display:inline-block;
 }
 /* End of Activity Album */
+
+.parent-div {
+    background-color: #eeeeee;
+}

@@ -21,8 +21,7 @@
                 {transaction_id: transactionId});
         }
 
-        // TODO : temporary get charity all info
-        // Need URL that return only all activities in the charity, paypal email, paypal token
+        // Get charity information
         function getCharityInfo(charityName) {
             return $http.get('/api/charity/get_charity/', {params: {"name": charityName}});
         }

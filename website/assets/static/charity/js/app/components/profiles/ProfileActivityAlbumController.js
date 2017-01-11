@@ -6,9 +6,9 @@
         .module('charity.profiles.controllers')
         .controller('ProfileActivityAlbumController', ProfileActivityAlbumController);
 
-    ProfileActivityAlbumController.$inject = ['$http', '$location', 'Profile', '$routeParams', '$scope', 'activityPrepService'];
+    ProfileActivityAlbumController.$inject = ['$location', 'Profile', '$routeParams', 'activityPrepService'];
 
-    function ProfileActivityAlbumController($http, $location, Profile, $routeParams, $scope, activityPrepService) {
+    function ProfileActivityAlbumController($location, Profile, $routeParams, activityPrepService) {
         var vm = this;
         vm.activity = {};
 

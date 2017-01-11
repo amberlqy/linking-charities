@@ -72,8 +72,6 @@ class CharitySettingsView(APIView):
         charity_profile.paypal_identity_token = paypal_token
         charity_profile.save()
 
-        # TODO: update password as well
-
         return Response({'success': True}, status=status.HTTP_201_CREATED)
 
     # Gets the tags and the paypal information of a charity
@@ -306,7 +304,6 @@ class CharityActivityView(APIView):
             existing_charity_activity.date = date
             existing_charity_activity.save()
 
-            # TODO: handle image deletes as well
             files = request.FILES
             if files:
                 for image_name in files:

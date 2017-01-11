@@ -6,12 +6,10 @@
         .module('charity.profiles.services')
         .factory('Profile', Profile);
 
-    Profile.$inject = ['$http', 'Authentication', '$resource'];
+    Profile.$inject = ['$http', 'Authentication'];
 
-    function Profile($http, Authentication, $resource) {
+    function Profile($http, Authentication) {
         return {
-            destroy: destroy,
-            get: get,
             update: update,
             getProfile: getSpecificCharityProfile,
             getAuthenticatedAccount: getAuthenticatedAccount,
@@ -20,16 +18,6 @@
             setSetting: setSettingInfo,
             getRating: getRatingInfo
         };
-
-        function destroy(profile) {
-            // TODO: outdated
-            return $http.delete('/api/auth/accounts/' + profile.id + '/');
-        }
-
-        function get(username) {
-            // TODO: outdated
-            return $http.get('/api/auth/accounts/' + username + '/');
-        }
 
         // Return the specific profile information.
         function getSpecificCharityProfile(profileName) {

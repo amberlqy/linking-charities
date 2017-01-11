@@ -48,25 +48,13 @@ class RegistrationView(APIView):
             UserRole.objects.create(name=user_type, user=user)
 
             if user_type == 'charity':
-
-                # TODO: I already did the most difficult task :P, Hence you must finish it
-                # 1. Add column 'token' into auth_user table
-                # 2. When create a new account, insert verify_token into field 'token'
-                # 3. When create a new account, is_active in auth_user must set to 0 (0 should be the default value)
-                # 4. When charities click confirm link which they get from email,
-                #    it will go to CharityVerificationView (More detail in CharityVerificationView)
-                # P.S. At least, we will get the website that can send email and confirm account
-                # You still have to include the method of checking genuine charity (Maybe just email string matching)
-
                 # Read charity specific parameters
-                #charity_name = data.get('charity_name', None)
                 goal = data.get('goal', None)
                 description = data.get('description', None)
                 address = data.get('address', None)
                 city = data.get('city', None)
                 country = data.get('country', None)
                 postcode = data.get('postcode', None)
-                #email = data.get('email', None)
                 phone_number = data.get('phone_number', None)
                 CharityProfile.objects.create(charity_name=username,
                                               goal=goal,
@@ -163,10 +151,6 @@ class CharityProfileView(APIView):
             charity_profile.description = description
             charity_profile.website = website
 
-            # charity_profile.paypal_email = paypal_email
-            # charity_profile.paypal_identity_token = paypal_identity_token
-
-            # TODO: handle image deletes as well
             files = request.FILES
             if files:
                 for image_name in files:
@@ -193,7 +177,6 @@ class CharityProfileView(APIView):
 
             return HttpResponse(json_charity_profile, content_type='application/json')
         else:
-            # TODO: return user profile
             response_data = json.dumps({"authenticated": False})
             return HttpResponse(response_data, content_type='application/json')
 
@@ -207,13 +190,6 @@ class CharityVerificationView(APIView):
         # Read required parameters
         email = request.GET.get('email', None)
         token = request.GET.get('token', None)
-
-        # TODO : Update Verify
-        # There are only 2 case :
-        # 1. Select record in auth_user that has the same email and token
-        # 1.1 if record exist, update is_active = 1, and then automatically login that account >> home page
-        # 1.2 if record is not exist, alert message, and redirect to login page
-        # P.S. There is no need to check this account already verify or not.
 
         existing_charity_data = CharityData.objects.filter(email=email).first()
         if existing_charity_data and existing_charity_data.token == token:
