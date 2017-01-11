@@ -230,3 +230,8 @@ h2{
     height: 0px;
 }
 /* End Search bar */
+
+.login {
+    margin: auto;
+    padding: 10px;
+}

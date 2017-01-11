@@ -9,7 +9,7 @@
         ]);
 
     angular
-        .module('charity.authentication.controllers', []);
+        .module('charity.authentication.controllers', ['ngMaterial']);
 
     angular
         .module('charity.authentication.services', ['ngCookies']);

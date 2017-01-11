@@ -85,10 +85,6 @@
                     return Profile.getSetting(name);
                 }
             }
-        }).when('/dashboard', {
-            controller: 'DashboardController',
-            controllerAs: 'vm',
-            templateUrl: '/static/charity/js/app/components/dashboard/dashboard.html'
         }).when('/search/:searchKey', {
             controller: 'SearchController',
             controllerAs: 'vm',
