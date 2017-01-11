@@ -171,10 +171,6 @@
                             nextAddress--;
                             delay++;
                         }
-                        else {
-                            //console.log("Geocode was not successful for the following reason: " + status);
-                        }
-                        //next();
                     });
                 }
                 else if (tagIsFirstData != 0) {
@@ -188,9 +184,6 @@
                         else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
                             nextAddress--;
                             delay++;
-                        }
-                        else {
-                            //console.log("Geocode was not successful for the following reason: " + status);
                         }
                     });
                 }
@@ -236,27 +229,8 @@
 
             for (; nextAddress < $scope.locations.length; nextAddress++) {
                 geocodeAddress($scope.locations[nextAddress], $scope.locationsID[nextAddress], $scope.locationsName[nextAddress], nextAddress, $scope.locationsImage[nextAddress]);
-                // if (nextAddress == $scope.locations.length - 1) {
-                //     map.fitBounds(bounds);
-                //     map.setCenter(bounds.getCenter())
-                // }
             }
         };
-
-
-        // $scope.uploadPictureFunction = function () {
-        //     var modalInstance = $modal.open({
-        //         templateUrl: '/static/charity/js/app/components/imgcrop/uploadimg.html',
-        //         controller: 'UploadimgController'
-        //     });
-        // };
-        //
-        // $scope.updateImageFunction = function(){
-        //     var modalInstance = $modal.open({
-        //         templateUrl: '/static/charity/js/app/components/imgcrop/imgcrop.html',
-        //         controller: 'ImgcropController'
-        //     });
-        // };
     }
 })
 ();

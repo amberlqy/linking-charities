@@ -21,7 +21,7 @@
     <div ng-if="numberOfPages()>=1">
     <div class="searchMap" ng-if="isMap == 1" ng-init="pushLocations()">
         <div class="col-md-8 col-md-offset-2">
-            <div id="map" style="width:100%;height:470px" ng-init="mapFunction()"></div>
+            <div id="map" class="mapDiv" ng-init="mapFunction()"></div>
         </div>
     </div>
     <div class="searchList" ng-if="isMap == 0">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="pull-right">
                     <label>
-                        <button class="btn clickDesign" style="font-weight:900" onclick="this.blur()"
+                        <button class="btn clickDesign" class="sortButton" onclick="this.blur()"
                                 ng-click="sortClick('Name')">Sort By Name
                         </button>
                     </label>

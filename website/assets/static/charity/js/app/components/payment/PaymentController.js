@@ -31,8 +31,6 @@
                 vm.donate.charityName = $routeParams.charityName;
                 vm.donate.activity = "";
 
-                // TODO: It's temporary URL because we need only one URL that return
-                // all activities of the charity, the charity paypal email and token
                 // Get all activities of the charity
                 $http.get('/api/charity/get_activity/', {params: {"name": vm.donate.charityName}}).then(activitySuccessFn, activityErrorFn);
 
